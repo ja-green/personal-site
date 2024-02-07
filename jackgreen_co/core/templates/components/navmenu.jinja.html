@@ -1,0 +1,66 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro navmenu() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 {{ class_ }}">
+    <div class="container flex h-14 items-center">
+        {{ caller() }}
+    </div>
+</header>
+{% endmacro %}
+
+{% macro navmenu_left() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="mr-4 hidden md:flex {{ class_ }}">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro navmenu_right() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro navmenu_nav(text) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<nav class="flex items-center ms-4">
+    <ul class="flex gap-6 text-sm {{ class_ }}">
+        {{ caller() }}
+    </ul>
+</nav>
+{% endmacro %}
+
+{% macro navmenu_nav_link(text, url, active=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+{% if active %}
+<li class="inline-block" aria-current="page">
+    <a href="{{ url }}" class="transition-colors hover:text-foreground/80 text-foreground {{ class_ }}">{{ text }}</a>
+</li>
+{% else %}
+<li class="inline-block">
+    <a href="{{ url }}" class="transition-colors hover:text-foreground/80 text-foreground/60 {{ class_ }}">{{ text }}</a>
+</li>
+{% endif %}
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}

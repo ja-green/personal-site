@@ -1,0 +1,54 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro header() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<header class="grid grid-cols-3 gap-2 py-8 md:py-12 md:pb-8">
+    {{ caller() }}
+</header>
+{% endmacro %}
+
+{% macro header_title(text) %}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set subtitle = kwargs.pop('subtitle', '') %}
+
+<div class="col-span-2 flex flex-col gap-2">
+    {% if subtitle %}
+    <hgroup>
+        <h1 class="text-2xl font-bold leading-tight tracking-tighter mb-2 md:text-3xl lg:leading-[1.1] {{ class_ }}">
+            {{ text }}
+        </h1>
+        <p class="text-muted-foreground">
+            {{ subtitle }}
+        </p>
+    </hgroup>
+    {% else %}
+    <h1 class="text-2xl font-bold leading-tight tracking-tighter md:text-3xl lg:leading-[1.1] {{ class_ }}">
+        {{ text }}
+    </h1>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% macro header_extra() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="grid justify-end content-center gap-2">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}

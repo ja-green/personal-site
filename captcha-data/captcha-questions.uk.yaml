@@ -1,0 +1,226 @@
+categories:
+  - id: common_knowledge
+    questions:
+      - id: object_color
+        templates: ["What colour is {object}?"]
+        substitution_sets:
+          - substitutions:
+              - param: object
+                value: "a banana"
+            answers: ["yellow"]
+          - substitutions:
+              - param: object
+                value: "the sky on a clear day"
+            answers: ["blue"]
+      - id: writing_object
+        templates: ["What do you use to write: {object1} or {object2}?", "Which one is more suitable to write with: {object1} or {object2}?"]
+        substitution_sets:
+          - substitutions:
+              - param: object1
+                value: "a pen"
+              - param: object2
+                value: "a rock"
+            answers: ["pen", "a pen"]
+          - substitutions:
+              - param: object1
+                value: "a shoe"
+              - param: object2
+                value: "a pencil"
+            answers: ["pencil", "a pencil"]
+          - substitutions:
+              - param: object1
+                value: "a marker"
+              - param: object2
+                value: "a spoon"
+            answers: ["marker", "a marker"]
+      - id: vehicle_wheels
+        templates: ["How many wheels does a {vehicle} have?"]
+        substitution_sets:
+          - substitutions:
+              - param: vehicle
+                value: "bicycle"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: vehicle
+                value: "car"
+            answers: ["4", "four"]
+  - id: pattern_recognition
+    questions:
+      - id: num_next_sequence
+        templates: ["What comes next in the sequence: {sequence}?"]
+        substitution_sets:
+          - substitutions:
+              - param: sequence
+                value: "1, 2, 3"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: sequence
+                value: "2, 4, 6"
+            answers: ["8", "eight"]
+      - id: num_missing_sequence
+        templates: ["Which number is missing in the sequence: {sequence}?"]
+        substitution_sets:
+          - substitutions:
+              - param: sequence
+                value: "1, 2, _, 4"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: sequence
+                value: "2, _, 6, 8"
+            answers: ["4", "four"]
+      - id: letter_next_sequence
+        templates: ["What letter comes next in the sequence: {sequence}?"]
+        substitution_sets:
+          - substitutions:
+              - param: sequence
+                value: "A, B, C"
+            answers: ["d"]
+          - substitutions:
+              - param: sequence
+                value: "G, H, I"
+            answers: ["j"]
+  - id: categorization
+    questions:
+      - id: category_type
+        templates: ["Which is a type of {category}: {item1} or {item2}?"]
+        substitution_sets:
+          - substitutions:
+              - param: category
+                value: "fruit"
+              - param: item1
+                value: "apple"
+              - param: item2
+                value: "chair"
+            answers: ["apple"]
+          - substitutions:
+              - param: category
+                value: "clothing"
+              - param: item1
+                value: "car"
+              - param: item2
+                value: "shirt"
+            answers: ["shirt"]
+      - id: category_count
+        templates: ["The following list contains how many {category}: {items}?"]
+        substitution_sets:
+          - substitutions:
+              - param: category
+                value: "colours"
+              - param: items
+                value: "pink, red, chair, blue, compass, hand"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: category
+                value: "vehicles"
+              - param: items
+                value: "glass, leaf, bus, piano"
+            answers: ["1", "one"]
+  - id: time
+    questions:
+      - id: hour_ago
+        templates: ["If the time now is {time}, what time was it one hour ago?"]
+        substitution_sets:
+          - substitutions:
+              - param: time
+                value: "8AM"
+            answers: ["7AM", "7", "7:00", "07:00"]
+          - substitutions:
+              - param: time
+                value: "11PM"
+            answers: ["10PM", "10", "10:00", "22", "22:00"]
+      - id: day_ago
+        templates: ["If today is {day}, what day was it yesterday?"]
+        substitution_sets:
+          - substitutions:
+              - param: day
+                value: "Sunday"
+            answers: ["saturday"]
+          - substitutions:
+              - param: day
+                value: "Saturday"
+            answers: ["friday"]
+          - substitutions:
+              - param: day
+                value: "Friday"
+            answers: ["thursday"]
+          - substitutions:
+              - param: day
+                value: "Thursday"
+            answers: ["wednesday"]
+          - substitutions:
+              - param: day
+                value: "Wednesday"
+            answers: ["tuesday"]
+          - substitutions:
+              - param: day
+                value: "Tuesday"
+            answers: ["monday"]
+  - id: comparisons
+    questions:
+      - id: heavier_object
+        templates: ["Which is heavier: {object1} or {object2}?"]
+        substitution_sets:
+          - substitutions:
+              - param: object1
+                value: "feather"
+              - param: object2
+                value: "rock"
+            answers: ["rock"]
+          - substitutions:
+              - param: object1
+                value: "paperweight"
+              - param: object2
+                value: "paper"
+            answers: ["paperweight"]
+          - substitutions:
+              - param: object1
+                value: "book"
+              - param: object2
+                value: "car"
+            answers: ["car"]
+      - id: largest_number
+        templates: ["Which of {num1}, {num2}, {num3} and {num4} is the largest?"]
+        substitution_sets:
+          - substitutions:
+              - param: num1
+                value: "34"
+              - param: num2
+                value: "76"
+              - param: num3
+                value: "68"
+              - param: num4
+                value: "22"
+            answers: ["76"]
+          - substitutions:
+              - param: num1
+                value: "37"
+              - param: num2
+                value: "20"
+              - param: num3
+                value: "31"
+              - param: num4
+                value: "16"
+            answers: ["37"]
+  - id: observation
+    questions:
+      - id: wall_color
+        templates: ["In a room with {color1} walls and a {color2} carpet, what colour are the walls?"]
+        substitution_sets:
+          - substitutions:
+              - param: color1
+                value: "red"
+              - param: color2
+                value: "black"
+            answers: ["red"]
+          - substitutions:
+              - param: color1
+                value: "green"
+              - param: color2
+                value: "blue"
+            answers: ["green"]
+          - substitutions:
+              - param: color1
+                value: "blue"
+              - param: color2
+                value: "red"
+            answers: ["blue"]

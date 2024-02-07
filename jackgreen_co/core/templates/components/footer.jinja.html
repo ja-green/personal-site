@@ -1,0 +1,42 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro footer() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<footer class="border-t border-border py-6">
+    <div class="container flex flex-col md:flex-row justify-between items-center text-muted-foreground">
+        {{ caller() }}
+    </div>
+</footer>
+{% endmacro %}
+
+{% macro footer_left() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="w-full md:w-3/4 md:justify-start">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro footer_right() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="w-full md:w-1/4 mt-3 md:mt-0 flex md:justify-end">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}

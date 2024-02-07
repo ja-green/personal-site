@@ -1,0 +1,64 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+<!doctype html>
+<html lang="en-GB" class="dark">
+    <head>
+        {% if title %}
+            {% set title = '%s | Jack Green' | format(title | safe) %}
+        {% elif messages[endpoint | replace(".", "_") + '_title'] %}
+            {% set title = '%s | Jack Green' | format(messages[endpoint | replace(".", "_") + '_title'] | safe) %}
+        {% else %}
+            {% set title = 'Jack Green' %}
+        {% endif %}
+
+        <title>{{ title | safe }}</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <meta name="author" content="{{ config['SITE_AUTHOR'] }}" />
+
+        {% if endpoint %}
+            <meta name="robots" content="index, follow" />
+
+            {% if messages[endpoint | replace(".", "_") + '_description'] %}
+                <meta name="description" content="{{ messages[endpoint | replace(".", "_") + '_description'] }}" />
+            {% endif %}
+
+        {% else %}
+            <meta name="robots" content="noindex, follow" />
+        {% endif %}
+
+        <link rel="icon" href="{{ url_for('static', filename='media/favicons/favicon.svg') }}" type="image/svg+xml" sizes="any"/>
+        <link rel="alternate icon" href="{{ url_for('static', filename='media/favicons/favicon.png') }}" sizes="32x32" />
+        <link rel="alternate icon" href="{{ url_for('static', filename='media/favicons/favicon.ico') }}" sizes="any" />
+        <link rel="apple-touch-icon" href="{{ url_for('static', filename='media/favicons/apple-touch-icon.png') }}" />
+        <link rel="manifest" href="{{ url_for('core.webmanifest') }}" />
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+
+        {% block base_stylesheet %}{% endblock base_stylesheet %}
+    </head>
+
+    <body class="min-h-screen bg-background antialiased">
+        {% block base_content %}{% endblock base_content %}
+
+        {% block base_script %}{% endblock base_script %}
+
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>
+</html>
+
+{# vim: set ft=htmldjango: #}

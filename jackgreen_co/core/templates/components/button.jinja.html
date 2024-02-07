@@ -1,0 +1,70 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro button(text, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 {{ class_ }}" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</button>
+{% endmacro %}
+
+{% macro button_secondary(text, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 {{ class_ }}" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</button>
+{% endmacro %}
+
+{% macro button_outline(text, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</button>
+{% endmacro %}
+
+{% macro button_link(text, href, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<a href="{{ href }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 {{ class_ }}" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</a>
+{% endmacro %}
+
+{% macro button_link_secondary(text, href, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<a href="{{ href }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 {{ class_ }}" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</a>
+{% endmacro %}
+
+{% macro button_link_outline(text, href, disabled=false) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<a href="{{ href }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 {{ class_ }}" {% if disabled %}disabled aria-disabled="true"{% else %}aria-disabled="false"{% endif %}>
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</a>
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}

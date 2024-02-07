@@ -1,0 +1,58 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/default.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/card.jinja.html" import card, card_content %}
+{% from "components/form.jinja.html" import form, form_field, form_fieldset, form_submit %}
+
+{% block header %}
+{% include 'main/partials/navmenu.jinja.html' %}
+{% endblock header %}
+
+{% block content %}
+{% call header() %}
+    {{ header_title(messages["main_contact_heading"], subtitle=messages["main_contact_subheading"]) }}
+{% endcall %}
+
+<p class="text-muted-foreground">{{ messages["main_contact_lead"] }}</p>
+
+{% for message in get_flashed_messages() %}
+    {% call card() %}
+        {% call card_content() %}
+            <p>{{ message }}</p>
+        {% endcall %}
+    {% endcall %}
+{% endfor %}
+
+{% call form(contact_form) %}
+    {% call form_fieldset(class_="flex flex-col md:flex-row md:space-x-4") %}
+        {{ form_field(contact_form.first_name) }}
+        {{ form_field(contact_form.last_name) }}
+    {% endcall %}
+    {{ form_field(contact_form.email) }}
+    {{ form_field(contact_form.message, rows=10) }}
+    <p class="text-muted-foreground my-6">{{ messages["main_contact_form_captcha_lead"] }}</p>
+    {{ form_field(contact_form.captcha) }}
+    {{ form_submit() }}
+{% endcall %}
+{% endblock content %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}

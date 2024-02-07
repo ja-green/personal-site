@@ -1,0 +1,99 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro form(form) -%}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set method = kwargs.pop('method', 'post') %}
+{% set id = kwargs.pop('id', form.html_id | replace("_", "-")) %}
+
+<form id="{{ id }}" name="{{ id }}" aria-label="{{ id }}" class="w-full py-12 {{ class_ }}" action="{{ form.action }}" method="{{ method }}" autocomplete="on">
+    {% if method == 'post' %}
+        {% for field in form %}
+            {% if field.widget.input_type == 'hidden' %}
+                {{ field() }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {{ caller() }}
+</form>
+{% endmacro %}
+
+{% macro form_field(field) -%}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set placeholder = kwargs.pop('placeholder', '') %}
+{% set show_errors = kwargs.pop('show_errors', true) %}
+{% set id = kwargs.pop('id', field.id) %}
+
+{% do kwargs.update({'aria-errormessage': '%s-error' | format(id)}) %}
+
+{% if field.description %}
+    {% do kwargs.update({'aria-describedby': '%s-description' | format(id)}) %}
+{% endif %}
+
+{% set class_ = class_ + ' flex w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50' %}
+
+{% if field.type != "TextAreaField" %}
+    {% set class_ = class_ + ' h-9' %}
+{% endif %}
+
+<div class="flex-1 mb-6">
+    {% if field.label %}
+        <label for="{{ id }}" class="flex font-medium leading-none mb-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            {{ field.label.text }}{% if field.flags.required %}<span class="font-semibold text-red-500 ml-1" aria-hidden="true"> &ast;</span>{% endif %}
+        </label>
+    {% endif %}
+
+    {% if placeholder %}
+        {{ field(class_=class_, id=id, placeholder=placeholder, **kwargs) }}
+    {% else %}
+        {{ field(class_=class_, id=id, **kwargs) }}
+    {% endif %}
+
+    {% if field.description %}
+        <p id="{{ id }}-description" class="text-[0.8rem] mt-2 text-muted-foreground">{{ field.description }}</p>
+    {% endif %}
+
+    {% if show_errors %}
+        <p id="{{ id }}-error" class="text-[0.8rem] text-red-500 mt-1" role="alert" aria-live="polite">
+            {% if field.errors %}{{ field.errors[0] }}{% endif %}
+        </p>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% macro form_fieldset() %}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set legend = kwargs.pop('legend', '') %}
+
+<fieldset class="{{ class_ }}">
+    {% if legend %}
+    <legend class="text-xl font-medium text-primary-foreground">{{ legend }}</legend>
+    {% endif %}
+
+    {{ caller() }}
+</fieldset>
+{% endmacro %}
+
+{% macro form_submit() %}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set text = kwargs.pop('text', 'Submit') %}
+{% set id = kwargs.pop('id', 'submit') %}
+
+<button type="submit" id="{{ id }}" aria-disabled="false" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 group-invalid:pointer-events-none group-invalid:opacity-50 {{ class_ }}">
+    {{ text }}
+</button>
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}

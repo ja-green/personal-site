@@ -1,0 +1,31 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/hero.jinja.html" %}
+
+{% from "components/button.jinja.html" import button_link %}
+
+{% block content %}
+<div class="text-left">
+    <hgroup>
+        <h1 class="mb-4 max-w-2xl text-4xl scroll-m-20 font-bold tracking-tight leading-none md:text-7xl xl:text-8xl">{{ messages["core_e400_heading"] }}</h1>
+        <p class="max-w-2xl mb-6 lg:mb-8 md:text-lg text-muted-foreground">{{ messages["core_e400_subheading"] }}</p>
+    </hgroup>
+    {{ button_link(messages["core_error_action"], url_for("main.index")) }}
+</div>
+
+{% endblock content %}
+
+{# vim: set ft=htmldjango: #}

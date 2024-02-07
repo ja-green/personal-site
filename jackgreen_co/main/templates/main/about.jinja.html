@@ -1,0 +1,36 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/default.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+
+{% block header %}
+{% include 'main/partials/navmenu.jinja.html' %}
+{% endblock header %}
+
+{% block content %}
+{% call header() %}
+    {{ header_title(messages["main_about_heading"], subtitle=messages["main_about_subheading"]) }}
+{% endcall %}
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium fusce id velit ut tortor pretium. Vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames. Sed odio morbi quis commodo odio aenean sed adipiscing diam. Massa enim nec dui nunc mattis enim ut tellus. Id eu nisl nunc mi. Curabitur gravida arcu ac tortor dignissim. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. At lectus urna duis convallis convallis tellus id. Egestas pretium aenean pharetra magna ac placerat. Pretium lectus quam id leo in vitae. Nullam vehicula ipsum a arcu. Enim neque volutpat ac tincidunt vitae semper quis. Morbi tristique senectus et netus et malesuada. Nisl vel pretium lectus quam id leo in. Enim sit amet venenatis urna cursus.</p>
+{% endblock content %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}
