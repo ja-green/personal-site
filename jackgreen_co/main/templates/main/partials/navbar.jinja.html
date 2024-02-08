@@ -13,17 +13,20 @@
    You should have received a copy of the GNU General Public License
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
-{% extends "main/base.jinja.html" %}
+{% from "components/navbar.jinja.html" import navbar, navbar_left, navbar_nav, navbar_nav_link %}
 
-{% block header %}
-{% include 'main/partials/header.jinja.html' %}
-{% endblock header %}
+{% call navbar() %}
+    {% call navbar_left() %}
+        <a class="mr-6 flex items-center text-xl" href="/">
+            <span class="font-bold inline-block">JG</span>
+        </a>
 
-{% block content %}
-{% endblock content %}
-
-{% block footer %}
-{% include 'main/partials/footer.jinja.html' %}
-{% endblock footer %}
+        {% call navbar_nav() %}
+            {{ navbar_nav_link("Home", url_for('main.index'), active=endpoint=='main.index') }}
+            {{ navbar_nav_link("About", url_for('main.about'), active=endpoint=='main.about') }}
+            {{ navbar_nav_link("Contact", url_for('main.contact'), active=endpoint=='main.contact') }}
+        {% endcall %}
+    {% endcall %}
+{% endcall %}
 
 {# vim: set ft=htmldjango: #}

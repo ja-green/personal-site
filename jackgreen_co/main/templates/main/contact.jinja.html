@@ -19,15 +19,17 @@
 {% from "components/card.jinja.html" import card, card_content %}
 {% from "components/form.jinja.html" import form, form_field, form_fieldset, form_submit %}
 
-{% block header %}
-{% include 'main/partials/navmenu.jinja.html' %}
-{% endblock header %}
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
 
-{% block content %}
+{% block header %}
 {% call header() %}
     {{ header_title(messages["main_contact_heading"], subtitle=messages["main_contact_subheading"]) }}
 {% endcall %}
+{% endblock header %}
 
+{% block content %}
 <p class="text-muted-foreground">{{ messages["main_contact_lead"] }}</p>
 
 {% for message in get_flashed_messages() %}

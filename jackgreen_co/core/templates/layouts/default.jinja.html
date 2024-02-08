@@ -21,10 +21,11 @@
 
 {% block base_content %}
 <div class="relative flex min-h-screen flex-col bg-background">
-    {% block header %}{% endblock header %}
+    {% block navbar %}{% endblock navbar %}
 
     <main class="flex-1">
         <div class="container relative">
+            {% block header %}{% endblock header %}
             {% block content %}{% endblock content %}
         </div>
     </main>

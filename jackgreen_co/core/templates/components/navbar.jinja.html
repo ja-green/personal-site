@@ -13,7 +13,7 @@
    You should have received a copy of the GNU General Public License
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
-{% macro navmenu() %}
+{% macro navbar() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
 <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 {{ class_ }}">
@@ -23,7 +23,7 @@
 </header>
 {% endmacro %}
 
-{% macro navmenu_left() %}
+{% macro navbar_left() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
 <div class="mr-4 hidden md:flex {{ class_ }}">
@@ -31,7 +31,7 @@
 </div>
 {% endmacro %}
 
-{% macro navmenu_right() %}
+{% macro navbar_right() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
 <div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
@@ -39,7 +39,7 @@
 </div>
 {% endmacro %}
 
-{% macro navmenu_nav(text) %}
+{% macro navbar_nav(text) %}
 {% set class_ = kwargs.pop('class_', '') %}
 
 <nav class="flex items-center ms-4">
@@ -49,7 +49,7 @@
 </nav>
 {% endmacro %}
 
-{% macro navmenu_nav_link(text, url, active=false) %}
+{% macro navbar_nav_link(text, url, active=false) %}
 {% set class_ = kwargs.pop('class_', '') %}
 
 {% if active %}
