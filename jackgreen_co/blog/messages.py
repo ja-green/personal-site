@@ -13,36 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-
-class FeatureFlags(object):
-    pass
+from jackgreen_co.core import messages
 
 
-class FeatureFlagsDev(FeatureFlags):
-    BLOG = True
+class Messages(messages.Messages):
+    blog_posts_description = "TODO: Add a description here."
+    blog_posts_heading = "Posts"
+    blog_posts_subheading = "Explore and read my blog posts."
 
-
-class FeatureFlagsProd(FeatureFlags):
-    BLOG = False
-
-
-class Features(object):
-    def __init__(self):
-        pass
-
-    def parse_feature_flags(self, obj):
-        flags = {}
-        for key in dir(obj):
-            if key.isupper():
-                flags[key] = getattr(obj, key)
-        return flags
-
-    def init_app(self, app):
-        if app.config["ENV"] == "development":
-            flags = self.parse_feature_flags(FeatureFlagsDev)
-        else:
-            flags = self.parse_feature_flags(FeatureFlagsProd)
-        app.features = flags
-
-
-features = Features()
+    blog_error_action = "Go back to posts"

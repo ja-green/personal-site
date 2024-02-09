@@ -25,6 +25,9 @@
             {{ navbar_nav_link("Home", url_for('main.index'), active=endpoint=='main.index') }}
             {{ navbar_nav_link("About", url_for('main.about'), active=endpoint=='main.about') }}
             {{ navbar_nav_link("Contact", url_for('main.contact'), active=endpoint=='main.contact') }}
+            {% if features["BLOG"] %}
+                {{ navbar_nav_link("Blog", url_for('blog.posts', page=1), active=endpoint.startswith('blog.')) }}
+            {% endif %}
         {% endcall %}
     {% endcall %}
 {% endcall %}

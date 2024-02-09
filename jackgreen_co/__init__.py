@@ -16,6 +16,7 @@
 from flask import Flask
 
 from jackgreen_co import core
+from jackgreen_co.blog import blog as bp_blog
 from jackgreen_co.core import context, errors, hook, routes, session
 from jackgreen_co.main import main as bp_main
 from jackgreen_co.util import assets, config, features
@@ -47,6 +48,8 @@ def init():
     app.jinja_env.add_extension("jinja2.ext.do")
 
     app.register_blueprint(bp_main)
+    if app.features["BLOG"]:
+        app.register_blueprint(bp_blog)
 
     if app.config["ENV"] == "development":
         app.after_request(hook.after_request)

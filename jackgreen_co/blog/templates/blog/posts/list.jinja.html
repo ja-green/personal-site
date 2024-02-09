@@ -1,0 +1,56 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/two-column/right-sidebar.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
+
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
+
+{% block header %}
+{% call header() %}
+    {{ header_title(messages["blog_posts_heading"], subtitle=messages["blog_posts_subheading"]) }}
+{% endcall %}
+{% endblock header %}
+
+{% block content %}
+{% call card(class_="mb-6") %}
+    {% call card_aside() %}
+        <a href="{{ url_for("main.index") }}">
+            <img src="https://via.placeholder.com/200" class="object-cover h-full rounded-l-lg" />
+        </a>
+    {% endcall %}
+    {% call card_body() %}
+        {% call card_header() %}
+            {{ card_title("Example Blog Post", subtitle="A subtitle") }}
+        {% endcall %}
+        {% call card_content() %}
+            <p>This is a preview of example blog post.</p>
+        {% endcall %}
+    {% endcall %}
+{% endcall %}
+{% endblock content %}
+
+{% block sidebar %}
+{% endblock sidebar %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}

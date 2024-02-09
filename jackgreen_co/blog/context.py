@@ -13,36 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-
-class FeatureFlags(object):
-    pass
-
-
-class FeatureFlagsDev(FeatureFlags):
-    BLOG = True
+from jackgreen_co.blog import blog
+from jackgreen_co.blog.messages import Messages
 
 
-class FeatureFlagsProd(FeatureFlags):
-    BLOG = False
-
-
-class Features(object):
-    def __init__(self):
-        pass
-
-    def parse_feature_flags(self, obj):
-        flags = {}
-        for key in dir(obj):
-            if key.isupper():
-                flags[key] = getattr(obj, key)
-        return flags
-
-    def init_app(self, app):
-        if app.config["ENV"] == "development":
-            flags = self.parse_feature_flags(FeatureFlagsDev)
-        else:
-            flags = self.parse_feature_flags(FeatureFlagsProd)
-        app.features = flags
-
-
-features = Features()
+@blog.context_processor
+def messages():
+    return dict(messages=Messages)

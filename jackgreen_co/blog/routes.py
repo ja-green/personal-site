@@ -13,36 +13,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from flask import redirect, render_template, request, url_for
 
-class FeatureFlags(object):
-    pass
-
-
-class FeatureFlagsDev(FeatureFlags):
-    BLOG = True
+from jackgreen_co.blog import blog
 
 
-class FeatureFlagsProd(FeatureFlags):
-    BLOG = False
+@blog.route("/")
+def index():
+    return redirect(url_for("blog.posts", page=1), code=301)
 
 
-class Features(object):
-    def __init__(self):
-        pass
-
-    def parse_feature_flags(self, obj):
-        flags = {}
-        for key in dir(obj):
-            if key.isupper():
-                flags[key] = getattr(obj, key)
-        return flags
-
-    def init_app(self, app):
-        if app.config["ENV"] == "development":
-            flags = self.parse_feature_flags(FeatureFlagsDev)
-        else:
-            flags = self.parse_feature_flags(FeatureFlagsProd)
-        app.features = flags
-
-
-features = Features()
+@blog.route("/posts")
+def posts():
+    page = request.args.get("page", 1, type=int)
+    return render_template("blog/posts/list.jinja.html", page=page)
