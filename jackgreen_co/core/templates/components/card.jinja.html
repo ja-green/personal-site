@@ -16,7 +16,23 @@
 {% macro card() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<div class="rounded-lg border bg-card text-card-foreground shadow-sm {{ class_ }}">
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm flex {{ class_ }}">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro card_body() %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="flex-1 flex flex-col">
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro card_aside(text) %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div class="flex-none">
     {{ caller() }}
 </div>
 {% endmacro %}
@@ -31,18 +47,22 @@
 
 {% macro card_title(text) %}
 {% set class_ = kwargs.pop('class_', '') %}
+{% set subtitle = kwargs.pop('subtitle', '') %}
 
+{% if subtitle %}
+<hgroup>
+    <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
+        {{ text }}
+    </h3>
+    <p class="text-sm text-muted-foreground">
+        {{ subtitle }}
+    </p>
+</hgroup>
+{% else %}
 <h3 class="font-semibold leading-none tracking-tight {{ class_ }}">
     {{ text }}
 </h3>
-{% endmacro %}
-
-{% macro card_subtitle(text) %}
-{% set class_ = kwargs.pop('class_', '') %}
-
-<p class="text-sm text-muted-foreground {{ class_ }}">
-    {{ text }}
-</p>
+{% endif %}
 {% endmacro %}
 
 {% macro card_content() %}
