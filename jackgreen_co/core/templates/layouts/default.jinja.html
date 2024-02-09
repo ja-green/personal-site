@@ -20,18 +20,16 @@
 {% endblock base_stylesheet %}
 
 {% block base_content %}
-<div class="relative flex min-h-screen flex-col bg-background">
-    {% block navbar %}{% endblock navbar %}
+{% block navbar %}{% endblock navbar %}
 
-    <main class="flex-1">
-        <div class="container relative">
-            {% block header %}{% endblock header %}
-            {% block content %}{% endblock content %}
-        </div>
-    </main>
+<main class="flex flex-1 flex-col">
+    <div class="container mx-auto">
+        {% block header %}{% endblock header %}
+        {% block content %}{% endblock content %}
+    </div>
+</main>
 
-    {% block footer %}{% endblock footer %}
-</div>
+{% block footer %}{% endblock footer %}
 {% endblock base_content %}
 
 {% block base_script %}
