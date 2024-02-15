@@ -29,16 +29,23 @@ import yaml
 
 PROJECT_ROOT = subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").strip()
 
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["jackgreen_co"]
+captcha_col = db["captcha"]
 
-def load_questions_into_db(yaml_file, locale, db_uri, db_name, collection_name):
+
+def clean_database():
+    captcha_col.delete_many({})
+
+
+def insert_captcha_question(captcha_data):
+    result = captcha_col.insert_one(captcha_data)
+    return result.inserted_id
+
+
+def load_questions_into_db(yaml_file, locale):
     with open(yaml_file, "r") as file:
         data = yaml.safe_load(file)
-
-    client = pymongo.MongoClient(db_uri)
-    db = client[db_name]
-    col_captcha = db[collection_name]
-
-    col_captcha.delete_many({})
 
     for category in data["categories"]:
         for question in category["questions"]:
@@ -60,17 +67,21 @@ def load_questions_into_db(yaml_file, locale, db_uri, db_name, collection_name):
                         "answers": answers,
                     }
 
-                    col_captcha.insert_one(question_document)
-    client.close()
+                    insert_captcha_question(question_document)
 
 
-db_uri = "mongodb://localhost:27017/"
-db_name = "jackgreen_co"
-collection_name = "captcha"
+def read_and_process_captcha_files(dir):
+    for file in os.listdir(dir):
+        if file.endswith(".yaml"):
+            locale = file.split(".")[1]
+            load_questions_into_db(os.path.join(dir, file), locale)
 
-for file in os.listdir(os.path.join(PROJECT_ROOT, "captcha-data")):
-    if file.endswith(".yaml"):
-        locale = file.split(".")[1]
-        load_questions_into_db(
-            os.path.join(PROJECT_ROOT, "captcha-data", file), locale, db_uri, db_name, collection_name
-        )
+
+def main():
+    clean_database()
+    read_and_process_captcha_files(os.path.join(PROJECT_ROOT, "captcha-data"))
+    print("inserted %d questions" % captcha_col.count_documents({}))
+
+
+if __name__ == "__main__":
+    main()
