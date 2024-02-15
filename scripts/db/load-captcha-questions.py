@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# file: captcha-questions.py
+# file: load-captcha-questions.py
 # date: 2024-01-30
 # lang: python3
 #
