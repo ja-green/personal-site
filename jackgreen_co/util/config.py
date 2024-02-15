@@ -31,6 +31,7 @@ class Config(object):
     SITE_AUTHOR = "Jack Green"
     ASSETS_MANIFEST = "manifest.txt"
     SESSION_LIFETIME = timedelta(minutes=10)
+    BLOG_POSTS_PER_PAGE = 2
 
 
 class ConfigDev(Config):

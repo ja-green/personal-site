@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from flask import redirect, render_template, request, url_for
+from flask import abort, redirect, render_template, request, url_for
 
 from jackgreen_co.blog import blog
+from jackgreen_co.blog.services import post_service
 
 
 @blog.route("/")
@@ -25,5 +26,18 @@ def index():
 
 @blog.route("/posts")
 def posts():
+    # TODO: change the example posts and then commit
     page = request.args.get("page", 1, type=int)
-    return render_template("blog/posts/list.jinja.html", page=page)
+    posts, total_pages = post_service.get(page=page)
+    return render_template("blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages)
+
+
+@blog.route("/posts/<slug>")
+def post(slug):
+    posts, _ = post_service.get({"slug": slug})
+    if not posts:
+        abort(404)
+    if len(posts) > 1:
+        abort(500)
+
+    return render_template("blog/posts/single.jinja.html", post=posts[0])
