@@ -15,6 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+# file: load-blog-posts.py
+# date: 2024-01-30
+# lang: python3
+#
+# load blog posts from markdown files into mongodb
+
 import os
 import re
 import subprocess
