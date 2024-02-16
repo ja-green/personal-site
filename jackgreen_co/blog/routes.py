@@ -28,6 +28,8 @@ def index():
 def posts():
     page = request.args.get("page", 1, type=int)
     posts, total_pages = post_service.get(page=page)
+    if not posts or len(posts) == 0:
+        abort(404)
     return render_template("blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages)
 
 
