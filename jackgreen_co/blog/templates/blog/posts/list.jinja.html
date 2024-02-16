@@ -17,6 +17,7 @@
 
 {% from "components/header.jinja.html" import header, header_title %}
 {% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
+{% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -46,6 +47,44 @@
         {% endcall %}
     {% endcall %}
 {% endfor %}
+
+{% call pagination() %}
+    {% if page == 1 %}
+        {{ pagination_previous(href=url_for("blog.posts", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_previous(href=url_for("blog.posts", page=page-1)) }}
+    {% endif %}
+
+    {{ pagination_page(1, href=url_for("blog.posts", page=1), current=(page==1)) }}
+    {% if page > 4 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% set start_page = [page - 3, 2] | max %}
+    {% set end_page = [page + 3, total_pages - 1] | min %}
+
+    {% for i in range(start_page, end_page + 1) %}
+        {% if page == i or page - 1 == i or page + 1 == i %}
+            {{ pagination_page(text=i, href=url_for("blog.posts", page=i), current=(page==i)) }}
+        {% else %}
+            {{ pagination_page(i, href=url_for("blog.posts", page=i), class_="hidden sm:inline-flex") }}
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages - 3 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% if total_pages > 1 %}
+        {{ pagination_page(total_pages, href=url_for("blog.posts", page=total_pages), current=(page==total_pages)) }}
+    {% endif %}
+
+    {% if page == total_pages %}
+        {{ pagination_next(href=url_for("blog.posts", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_next(href=url_for("blog.posts", page=page+1)) }}
+    {% endif %}
+{% endcall %}
 {% endblock content %}
 
 {% block sidebar %}
