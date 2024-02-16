@@ -26,7 +26,6 @@ def index():
 
 @blog.route("/posts")
 def posts():
-    # TODO: change the example posts and then commit
     page = request.args.get("page", 1, type=int)
     posts, total_pages = post_service.get(page=page)
     return render_template("blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages)
