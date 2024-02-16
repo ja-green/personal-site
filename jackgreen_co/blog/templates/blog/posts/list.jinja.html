@@ -39,7 +39,15 @@
         {% endcall %}
         {% call card_body() %}
             {% call card_header() %}
-                {{ card_title(post.title, subtitle=post.date) }}
+                {% call card_title(post.title) %}
+                    <time datetime="{{ post.date.strftime("%Y-%m-%d") }}" class="mr-1">
+                        {{ post.date.strftime("%B %-d, %Y") }}
+                    </time>
+                    &middot;
+                    <span class="ml-1">
+                        {{ post.read_time }} minute read
+                    </span>
+                {% endcall %}
             {% endcall %}
             {% call card_content() %}
                 <p>{{ post.preview }}</p>
