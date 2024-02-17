@@ -33,7 +33,8 @@ report_fatal() {
 }
 
 opts_scriptname="optimise-image.sh"
-opts_longopts="help,version,verbose,input:,output:,lqip"
+opts_cache_dir="/tmp/${opts_scriptname}.cache"
+opts_longopts="help,version,verbose,input:,output:,lqip,clean-cache,no-cache"
 opts_shortopts="hvVi:o:"
 opts_usage="usage: ${opts_scriptname} [-h|--help] [-v|--version] [-i|--input <file>] [-o|--output <path>]"
 opts_version="0.0.1"
@@ -76,6 +77,14 @@ while true; do
             lqip=true
             shift
             ;;
+        --clean-cache)
+            rm -rf "${opts_cache_dir}"
+            exit 0
+            ;;
+        --no-cache)
+            no_cache=true
+            shift
+            ;;
         --)
             shift
             break
@@ -98,6 +107,8 @@ fi
 if test ! -f "${input_file}"; then
     report_fatal "input file does not exist"
 fi
+
+mkdir -p "${opts_cache_dir}"
 
 # fn/convert_image
 # opts:
@@ -144,6 +155,9 @@ convert_image() {
             -o "${output_path}/${image_name}-${width}.webp"
 
         rm -f "${output_path}/${image_name}-original.${image_extn}"
+
+        update_cache "${image_hash}" "${output_path}/${image_name}-${width}.jpg"
+        update_cache "${image_hash}" "${output_path}/${image_name}-${width}.webp"
     done
 
     if test "${lqip}"; then
@@ -177,7 +191,96 @@ convert_image() {
             -o "${output_path}/${image_name}-lqip.webp"
 
         rm -f "${output_path}/${image_name}-original.${image_extn}"
+
+        update_cache "${image_hash}" "${output_path}/${image_name}-lqip.jpg"
+        update_cache "${image_hash}" "${output_path}/${image_name}-lqip.webp"
     fi
 }
 
-convert_image "${input_file}" "${output_path}"
+# fn/generate_hash
+# opts:
+# - 1: image
+#
+# generate a sha1 hash for an image
+generate_hash() {
+    (printf "${1}:${lqip}" && cat "${1}") | sha1sum | awk '{print $1}'
+}
+
+# fn/create_cache
+# opts:
+# - 1: image hash
+#
+# create the image cache directory
+create_cache() {
+    local image_hash="${1}"
+
+    mkdir -p "${opts_cache_dir}/${image_hash}"
+}
+
+# fn/check_cache
+# opts:
+# - 1: image name
+# - 2: image hash
+#
+# check if an image hash is in the cache
+check_cache() {
+    local image_name="${1}"
+    local image_hash="${2}"
+    local cache_dir="${opts_cache_dir}/${image_hash}"
+
+    if [[ -d "${cache_dir}" ]]; then
+        if test "${verbose}"; then
+            printf "${image_name} is up to date in cache. restoring...\n"
+        fi
+
+        return 0
+    fi
+
+    return 1
+}
+
+# fn/update_cache
+# opts:
+# - 1: image hash
+# - 2: image path
+#
+# update the image cache with the the processed image
+update_cache() {
+    local image_hash="${1}"
+    local image_path="${2}"
+    local cache_dir="${opts_cache_dir}/${image_hash}"
+
+    cp "${image_path}" "${cache_dir}"
+}
+
+# fn/restore_from_cache
+# opts:
+# - 1: image hash
+# - 2: output path
+#
+# restore an image from the cache
+restore_from_cache() {
+    local image_hash="${1}"
+    local output_path="${2}"
+    local cache_dir="${opts_cache_dir}/${image_hash}"
+
+    cp "${cache_dir}"/* "${output_path}"
+}
+
+# fn/main
+#
+# main entry point
+main() {
+    local image_hash=$(generate_hash "${input_file}")
+
+    if ! test "${no_cache}" && check_cache "${input_file}" "${image_hash}"; then
+        restore_from_cache "${image_hash}" "${output_path}"
+        return
+    fi
+
+    create_cache "${image_hash}"
+
+    convert_image "${input_file}" "${output_path}"
+}
+
+main
