@@ -214,6 +214,7 @@ def read_and_process_markdown_files(dir):
                 post_document = {
                     "title": post_metadata["title"],
                     "date": post_metadata["date"],
+                    "image": post_metadata["image"],
                     "preview": preview,
                     "read_time": read_time,
                     "slug": slug,

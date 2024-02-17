@@ -14,14 +14,12 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
-from flask import url_for
-
-
 class Post:
     def __init__(self, data):
         self.object_id = data.get("_id")
         self.title = data.get("title")
         self.date = data.get("date")
+        self.image = data.get("image")
         self.content = data.get("content")
         self.preview = data.get("preview")
         self.read_time = data.get("read_time")

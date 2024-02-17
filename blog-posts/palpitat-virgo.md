@@ -3,7 +3,7 @@ title: "Palpitat Virgo"
 date: 2023-02-07
 categories: ["CategoryB", "CategoryD"]
 tags: ["TagB", "TagC", "TagE"]
-image: "images/palpitat-virgo.png"
+image: "media/images/placeholder.jpg"
 ---
 
 ## Tabuit omnes culmina pater probatque

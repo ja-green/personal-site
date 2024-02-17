@@ -3,7 +3,7 @@ title: "Rapit Nec Lycum"
 date: 2023-02-14
 categories: ["CategoryA", "CategoryD"]
 tags: ["TagA", "TagB", "TagE"]
-image: "images/rapit-nec-lycum.png"
+image: "media/images/placeholder.jpg"
 ---
 
 ## Cinyra perbibit at dumque viridis pressoque fessos

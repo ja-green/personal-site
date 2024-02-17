@@ -3,7 +3,7 @@ title: "Regnat Capillis Maternaque"
 date: 2023-02-21
 categories: ["CategoryA", "CategoryC"]
 tags: ["TagA", "TagB", "TagC"]
-image: "images/regnat-capillis-maternaque.png"
+image: "media/images/placeholder.jpg"
 ---
 
 ## Tunc sonos
