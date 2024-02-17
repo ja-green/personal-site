@@ -33,9 +33,9 @@ report_fatal() {
 }
 
 opts_scriptname="optimise-image.sh"
-opts_longopts="help,version,verbose,no-convert,no-resize,input:,output:"
-opts_shortopts="hvVCRi:o:"
-opts_usage="usage: ${opts_scriptname} [-h|--help] [-v|--version]"
+opts_longopts="help,version,verbose,input:,output:,lqip"
+opts_shortopts="hvVi:o:"
+opts_usage="usage: ${opts_scriptname} [-h|--help] [-v|--version] [-i|--input <file>] [-o|--output <path>]"
 opts_version="0.0.1"
 
 opts_parsed=$(getopt \
@@ -71,6 +71,10 @@ while true; do
         -o|--output)
             output_path="${2}"
             shift 2
+            ;;
+        --lqip)
+            lqip=true
+            shift
             ;;
         --)
             shift
@@ -114,7 +118,9 @@ convert_image() {
             printf "converting ${image} to ${width}...\n"
         fi
 
-        cp "${image}" "${output_path}/${image_name}-${width}.${image_extn}"
+        cp "${image}" "${output_path}/${image_name}-original.${image_extn}"
+
+        magick "${output_path}/${image_name}-original.${image_extn}" "${output_path}/${image_name}-${width}.jpg"
 
         mogrify \
             -path "${output_path}" \
@@ -132,42 +138,46 @@ convert_image() {
             -define png:exclude-chunk=all \
             -interlace none \
             -colorspace sRGB \
-            -strip "${output_path}/${image_name}-${width}.${image_extn}"
+            -strip "${output_path}/${image_name}-${width}.jpg"
 
-        cwebp -m 6 -pass 10 -mt -quiet -q 80 "${output_path}/${image_name}-${width}.${image_extn}" \
+        cwebp -m 6 -pass 10 -mt -quiet -q 80 "${output_path}/${image_name}-${width}.jpg" \
             -o "${output_path}/${image_name}-${width}.webp"
 
-        rm -f "${output_path}/${image_name}-${width}.${image_extn}"
+        rm -f "${output_path}/${image_name}-original.${image_extn}"
     done
 
-    if test "${verbose}"; then
-        printf "converting ${image} to lqip...\n"
-    fi 
+    if test "${lqip}"; then
+        if test "${verbose}"; then
+            printf "converting ${image} to lqip...\n"
+        fi
 
-    cp "${image}" "${output_path}/${image_name}-lqip.${image_extn}"
+        cp "${image}" "${output_path}/${image_name}-original.${image_extn}"
 
-    mogrify \
-        -path "${output_path}" \
-        -filter Triangle \
-        -define filter:support=2 \
-        -thumbnail "20" \
-        -unsharp 0.25x0.25+8+0.065 \
-        -dither None \
-        -posterize 136 \
-        -quality 82 \
-        -define jpeg:fancy-upsampling=off \
-        -define png:compression-filter=5 \
-        -define png:compression-level=9 \
-        -define png:compression-strategy=1 \
-        -define png:exclude-chunk=all \
-        -interlace none \
-        -colorspace sRGB \
-        -strip "${output_path}/${image_name}-lqip.${image_extn}"
+        magick "${output_path}/${image_name}-original.${image_extn}" "${output_path}/${image_name}-lqip.jpg" 
 
-    cwebp -m 6 -pass 10 -mt -quiet -q 80 "${output_path}/${image_name}-lqip.${image_extn}" \
-        -o "${output_path}/${image_name}-lqip.webp"
+        mogrify \
+            -path "${output_path}" \
+            -filter Triangle \
+            -define filter:support=2 \
+            -thumbnail "20" \
+            -unsharp 0.25x0.25+8+0.065 \
+            -dither None \
+            -posterize 136 \
+            -quality 82 \
+            -define jpeg:fancy-upsampling=off \
+            -define png:compression-filter=5 \
+            -define png:compression-level=9 \
+            -define png:compression-strategy=1 \
+            -define png:exclude-chunk=all \
+            -interlace none \
+            -colorspace sRGB \
+            -strip "${output_path}/${image_name}-lqip.jpg"
 
-    rm -f "${output_path}/${image_name}-lqip.${image_extn}"
+        cwebp -m 6 -pass 10 -mt -quiet -q 80 "${output_path}/${image_name}-lqip.jpg" \
+            -o "${output_path}/${image_name}-lqip.webp"
+
+        rm -f "${output_path}/${image_name}-original.${image_extn}"
+    fi
 }
 
 convert_image "${input_file}" "${output_path}"
