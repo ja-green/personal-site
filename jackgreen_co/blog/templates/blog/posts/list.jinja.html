@@ -31,32 +31,35 @@
 {% endblock header %}
 
 {% block content %}
+<ul>
 {% for post in posts %}
-    {% call card(class_="mb-6") %}
-        {% call card_aside() %}
-            <a href="{{ url_for("blog.post", slug=post.slug) }}" class="block h-full w-full">
-                {{ image(post.image, post.title, width=200, height=200, class_="object-cover h-full rounded-l-lg") }}
-            </a>
-        {% endcall %}
-        {% call card_body() %}
-            {% call card_header() %}
-                {% call card_title(post.title, href=url_for("blog.post", slug=post.slug)) %}
-                    <time datetime="{{ post.date.strftime("%Y-%m-%d") }}" class="mr-1">
-                        {{ post.date.strftime("%B %-d, %Y") }}
-                    </time>
-                    &middot;
-                    <span class="ml-1">
-                        {{ post.read_time }} minute read
-                    </span>
+    <li>
+        {% call card(class_="mb-6") %}
+            {% call card_aside() %}
+                <a href="{{ url_for("blog.post", slug=post.slug) }}" class="block h-full w-full">
+                    {{ image(post.image, post.title, width=200, height=200, class_="object-cover h-full rounded-l-lg") }}
+                </a>
+            {% endcall %}
+            {% call card_body() %}
+                {% call card_header() %}
+                    {% call card_title(post.title, href=url_for("blog.post", slug=post.slug)) %}
+                        <time datetime="{{ post.date.strftime("%Y-%m-%d") }}" class="mr-1">
+                            {{ post.date.strftime("%B %-d, %Y") }}
+                        </time>
+                        &middot;
+                        <span class="ml-1">
+                            {{ post.read_time }} minute read
+                        </span>
+                    {% endcall %}
+                {% endcall %}
+                {% call card_content() %}
+                    <p>{{ post.preview }}</p>
                 {% endcall %}
             {% endcall %}
-            {% call card_content() %}
-                <p>{{ post.preview }}</p>
-            {% endcall %}
         {% endcall %}
-    {% endcall %}
+    </li>
 {% endfor %}
-
+</ul>
 
 {% call pagination() %}
     {% if page == 1 %}
