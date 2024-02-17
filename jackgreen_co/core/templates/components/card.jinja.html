@@ -47,21 +47,38 @@
 
 {% macro card_title(text) %}
 {% set class_ = kwargs.pop('class_', '') %}
+{% set href = kwargs.pop('href', '') %}
 {% set subtitle = kwargs.pop('subtitle', '') %}
 
 {% if subtitle %}
 <hgroup>
+    {% if href %}
+    <a href="{{ href }}" class="transition-colors hover:text-foreground/80">
+        <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
+            {{ text }}
+        </h3>
+    </a>
+    {% else %}
     <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
         {{ text }}
     </h3>
+    {% endif %}
     <p class="text-sm text-muted-foreground">
         {{ subtitle }}
     </p>
 </hgroup>
 {% elif caller %}
+{% if href %}
+<a href="{{ href }}" class="transition-colors hover:text-foreground/80">
+    <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
+        {{ text }}
+    </h3>
+</a>
+{% else %}
 <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
     {{ text }}
 </h3>
+{% endif %}
 <div class="text-sm text-muted-foreground">
     {{ caller() }}
 </div>
