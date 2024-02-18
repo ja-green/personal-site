@@ -61,9 +61,12 @@ clean:
 build-css:
 	@echo "building css"
 	@$(MKDIR_P) $(DIR_DIST)/css
-	@$(eval HASH := $(shell md5sum $(DIR_ASSETS)/css/main.css | awk '{print $$1}'))
-	@echo "main.css:css/$(HASH).css" >> $(DIR_DIST)/manifest.txt
-	@$(TAILWIND) -i $(DIR_ASSETS)/css/main.css -o $(DIR_DIST)/css/$(HASH).css $(TAILWIND_FLAGS) >/dev/null 2>&1
+	@shopt -s nullglob; for file in $(DIR_ASSETS)/css/*; do \
+		filename=$$(basename $$file); \
+		filehash=$$(md5sum $$file | awk '{print $$1}'); \
+		echo "css/$$filename:css/$$filehash.css" >> $(DIR_DIST)/manifest.txt; \
+		$(TAILWIND) -i $$file -o $(DIR_DIST)/css/$$filehash.css $(TAILWIND_FLAGS) >/dev/null 2>&1; \
+	done
 
 # fn/build-js
 # 
@@ -72,9 +75,12 @@ build-css:
 build-js:
 	@echo "building js"
 	@$(MKDIR_P) $(DIR_DIST)/js
-	@$(eval HASH := $(shell md5sum $(DIR_ASSETS)/js/main.js | awk '{print $$1}'))
-	@echo "main.js:js/$(HASH).js" >> $(DIR_DIST)/manifest.txt
-	@$(CP_R) $(DIR_ASSETS)/js/main.js $(DIR_DIST)/js/$(HASH).js
+	@shopt -s nullglob; for file in $(DIR_ASSETS)/js/*; do \
+		filename=$$(basename $$file); \
+		filehash=$$(md5sum $$file | awk '{print $$1}'); \
+		echo "js/$$filename:js/$$filehash.js" >> $(DIR_DIST)/manifest.txt; \
+		$(CP_R) $$file $(DIR_DIST)/js/$$filehash.js; \
+	done
 
 # fn/build-images
 #

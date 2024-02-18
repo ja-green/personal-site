@@ -47,7 +47,7 @@
         <link rel="apple-touch-icon" href="{{ url_for('static', filename='media/favicons/apple-touch-icon.png') }}" />
         <link rel="manifest" href="{{ url_for('core.webmanifest') }}" />
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 
         {% block base_stylesheet %}{% endblock base_stylesheet %}
     </head>
@@ -56,8 +56,6 @@
         {% block base_content %}{% endblock base_content %}
 
         {% block base_script %}{% endblock base_script %}
-
-        <script src="{{ url_for('static', filename='main.js') }}"></script>
     </body>
 </html>
 
