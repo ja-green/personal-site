@@ -30,6 +30,9 @@ import markdown2
 import pymongo
 import yaml
 from bs4 import BeautifulSoup
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 
 PROJECT_ROOT = subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").strip()
 AVERAGE_READ_SPEED_WPM = 200
@@ -190,6 +193,49 @@ def insert_post(post_data):
     return result.inserted_id
 
 
+def apply_pygments(html_content):
+    soup = BeautifulSoup(html_content, "html.parser")
+    code_blocks = soup.find_all("code")
+    for block in code_blocks:
+        lang = None
+        for class_ in block.get("class", []):
+            if class_.startswith("language-"):
+                lang = class_[len("language-") :]
+                break
+
+        if not lang:
+            lang = "text"
+
+        try:
+            lexer = get_lexer_by_name(lang, stripall=True)
+        except ValueError:
+            lexer = get_lexer_by_name("text", stripall=True)
+
+        formatter = HtmlFormatter(nowrap=True)
+        highlighted_code = highlight(block.string, lexer, formatter)
+
+        new_html = f'<pre><code class="language-{lang}">{highlighted_code}</code></pre>'
+        block.parent.replace_with(BeautifulSoup(new_html, "html.parser"))
+
+    return str(soup)
+
+
+def markdown_to_html(markdown_content):
+    extras = ["fenced-code-blocks", "highlightjs-lang", "toc", "target-blank-links", "smarty-pants"]
+
+    html_content = markdown2.markdown(
+        markdown_content,
+        extras=extras,
+    )
+
+    return apply_pygments(html_content)
+
+
+def html_to_text(html_content):
+    soup = BeautifulSoup(html_content, "html.parser")
+    return soup.get_text()
+
+
 def read_and_process_markdown_files(dir):
     for filename in os.listdir(dir):
         if filename.endswith(".md"):
@@ -201,16 +247,13 @@ def read_and_process_markdown_files(dir):
                 if "date" in post_metadata:
                     post_metadata["date"] = datetime.combine(post_metadata["date"], datetime.min.time())
 
-                html_content = markdown2.markdown(
-                    markdown_content, extras=["fenced-code-blocks", "highlightjs-lang", "toc"]
-                )
-
-                soup = BeautifulSoup(html_content, "html.parser")
-                text_content = soup.get_text()
+                html_content = markdown_to_html(markdown_content)
+                text_content = html_to_text(html_content)
                 preview = generate_preview(text_content)
                 read_time = calculate_read_time(text_content)
                 slug = generate_slug(post_metadata["title"])
                 category_ids, tag_ids = process_categories_and_tags(post_metadata["categories"], post_metadata["tags"])
+
                 post_document = {
                     "title": post_metadata["title"],
                     "date": post_metadata["date"],

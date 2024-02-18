@@ -28,7 +28,9 @@
 {% endblock header %}
 
 {% block content %}
-{{ post.content | safe }}
+<article class="prose mb-12">
+    {{ post.content | safe }}
+</article>
 {% endblock content %}
 
 {% block sidebar %}

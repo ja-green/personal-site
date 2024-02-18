@@ -27,7 +27,7 @@ RM_RF         := $(shell command -v rm) -rf
 CP_R          := $(shell command -v cp) -R
 TOUCH         := $(shell command -v touch)
 PYTHON        := $(shell command -v python)
-TAILWIND      := $(shell command -v tailwind)
+TAILWIND      := $(shell command -v tailwindcss)
 
 DIR_SCRIPTS   := $(PROJECT_ROOT)/scripts
 DIR_ASSETS    := $(PROJECT_ROOT)/assets
