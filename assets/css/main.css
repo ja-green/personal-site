@@ -120,6 +120,38 @@
     }
 }
 
+pre > button {
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+    border-radius: calc(var(--radius) - 2px);
+    transition-property: color, background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+pre > button:hover {
+    color: hsl(var(--accent-foreground));
+    background-color: hsl(var(--accent));
+}
+
+pre > button > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 pre > code > .k,
 pre > code > .kd,
 pre > code > .kp,

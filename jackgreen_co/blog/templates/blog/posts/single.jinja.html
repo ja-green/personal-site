@@ -40,4 +40,8 @@
 {% include 'main/partials/footer.jinja.html' %}
 {% endblock footer %}
 
+{% block script %}
+<script src="{{ url_for('static', filename='js/post.js') }}"></script>
+{% endblock script %}
+
 {# vim: set ft=htmldjango: #}

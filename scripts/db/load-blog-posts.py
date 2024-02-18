@@ -214,7 +214,21 @@ def apply_pygments(html_content):
         formatter = HtmlFormatter(nowrap=True)
         highlighted_code = highlight(block.string, lexer, formatter)
 
-        new_html = f'<pre><code class="language-{lang}">{highlighted_code}</code></pre>'
+        new_html = (
+            f"<pre>"
+            f'<code class="language-{lang}">'
+            f"{highlighted_code}"
+            f"</code>"
+            f'<button title="Copy to clipboard">'
+            f'<span aria-live="polite">Copy to clipboard</span>'
+            f'<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+            f'<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>'
+            f'<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>'
+            f"</svg>"
+            f"</button>"
+            f"</pre>"
+        )
+
         block.parent.replace_with(BeautifulSoup(new_html, "html.parser"))
 
     return str(soup)

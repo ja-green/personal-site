@@ -63,6 +63,7 @@ module.exports = {
                             borderRadius: "var(--radius)",
                             backgroundColor: "hsl(var(--background))",
                             borderWidth: "1px",
+                            position: "relative",
                         },
                         li: {
                             marginTop: "0.2rem",
