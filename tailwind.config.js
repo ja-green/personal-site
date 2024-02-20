@@ -64,6 +64,7 @@ module.exports = {
                             backgroundColor: "hsl(var(--background))",
                             borderWidth: "1px",
                             position: "relative",
+                            fontSize: "small",
                         },
                         li: {
                             marginTop: "0.2rem",
