@@ -18,13 +18,29 @@ import secrets
 from datetime import timedelta
 
 
-def load(mode=os.environ.get("FLASK_ENV")):
-    if mode == "production":
-        return ConfigProd
-    return ConfigDev
-
-
 class Config(object):
+    def load(self, env=os.environ.get("FLASK_ENV")):
+        if env == "production":
+            return ConfigProd
+        return ConfigDev
+
+    def parse(self, env=os.environ.get("FLASK_ENV"), obj=None):
+        config = {}
+        if not obj:
+            obj = self.load(env)
+
+        for key in dir(obj):
+            if key.isupper():
+                config[key] = getattr(obj, key)
+
+        return config
+
+    def init_app(self, app):
+        c = self.parse()
+        app.config.from_mapping(c)
+
+
+class BaseConfig(object):
     SECRET_KEY = secrets.token_hex(64)
     WTF_CSRF_SECRET_KEY = SECRET_KEY
     SITE_NAME = "Jack Green"
@@ -34,7 +50,7 @@ class Config(object):
     BLOG_POSTS_PER_PAGE = 2
 
 
-class ConfigDev(Config):
+class ConfigDev(BaseConfig):
     ENV = "development"
     DEBUG = True
     SERVER_NAME = "jackgreen.co:8000"
@@ -45,7 +61,10 @@ class ConfigDev(Config):
     REDIS_PORT = 6379
 
 
-class ConfigProd(Config):
+class ConfigProd(BaseConfig):
     ENV = "production"
     DEBUG = False
     SERVER_NAME = "jackgreen.co"
+
+
+config = Config()

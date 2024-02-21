@@ -15,11 +15,12 @@
 
 from flask import Flask
 
+from config import config
 from jackgreen_co import core
 from jackgreen_co.blog import blog as bp_blog
 from jackgreen_co.core import context, errors, hook, routes, session
 from jackgreen_co.main import main as bp_main
-from jackgreen_co.util import assets, config, features
+from jackgreen_co.util import assets, features
 
 
 def init():
@@ -31,8 +32,7 @@ def init():
         subdomain_matching=True,
     )
 
-    app.config.from_object(config.load())
-
+    config.init_app(app)
     assets.init_app(app)
     features.features.init_app(app)
     core.db_client.init_app(app)
