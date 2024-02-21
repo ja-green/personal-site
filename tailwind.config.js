@@ -75,6 +75,11 @@ module.exports = {
                             fontWeight: "normal",
                             borderLeftColor: "hsl(var(--foreground))",
                         },
+                        figcaption: {
+                            color: "hsl(var(--muted-foreground))",
+                            fontStyle: "italic",
+                            textAlign: "center",
+                        },
                     },
                 },
             },

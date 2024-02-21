@@ -19,6 +19,8 @@ quondam quique fuerat rectum; est qui altera dea mons.
 4. Enim cum sis an dolor
 5. Hortaturque Simois
 
+![Placeholder Image](/assets/media/images/placeholder.jpg)
+
 Vero quod facies omnique, luce aras silvis traxerunt et adfectasse vittam,
 postmodo. Idomeneus poma. Ore quam, quae Athin, aspergine dedisti. Ruere cuncta
 rara foedabis; est ora est, Peripha!

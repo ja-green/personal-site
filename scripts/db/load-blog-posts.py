@@ -24,6 +24,7 @@
 import os
 import re
 import subprocess
+import sys
 from datetime import datetime
 
 import markdown2
@@ -35,6 +36,12 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 PROJECT_ROOT = subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").strip()
+if PROJECT_ROOT not in sys.path:
+    sys.path.append(PROJECT_ROOT)
+
+from config import config
+
+CONFIG = config.parse()
 AVERAGE_READ_SPEED_WPM = 200
 STOP_WORDS = set(
     [
@@ -193,6 +200,64 @@ def insert_post(post_data):
     return result.inserted_id
 
 
+def convert_images(html_content):
+    soup = BeautifulSoup(html_content, "html.parser")
+    img_tags = soup.find_all("img")
+
+    if CONFIG["ENV"] == "development":
+        base_url = f"http://{CONFIG['SERVER_NAME']}"
+    else:
+        base_url = f"https://{CONFIG['SERVER_NAME']}"
+
+    figure_index = 1
+
+    for img in img_tags:
+        img_name = re.search(r"([^\/]+)(?=\.\w+$)", img["src"]).group(0)
+        img_alt = img.get("alt", "")
+
+        figure = soup.new_tag("figure")
+        picture = soup.new_tag("picture")
+
+        figure["id"] = f"figure-{figure_index}"
+
+        source_webp = soup.new_tag("source", type="image/webp")
+        source_webp["srcset"] = (
+            f"{base_url}/assets/media/images/{img_name}-1920.webp 1920w, "
+            f"{base_url}/assets/media/images/{img_name}-1600.webp 1600w, "
+            f"{base_url}/assets/media/images/{img_name}-1366.webp 1366w, "
+            f"{base_url}/assets/media/images/{img_name}-1024.webp 1024w, "
+            f"{base_url}/assets/media/images/{img_name}-768.webp 768w, "
+            f"{base_url}/assets/media/images/{img_name}-640.webp 640w"
+        )
+        picture.append(source_webp)
+
+        source_jpeg = soup.new_tag("source", type="image/jpeg")
+        source_jpeg["srcset"] = (
+            f"{base_url}/assets/media/images/{img_name}-1920.jpg 1920w, "
+            f"{base_url}/assets/media/images/{img_name}-1600.jpg 1600w, "
+            f"{base_url}/assets/media/images/{img_name}-1366.jpg 1366w, "
+            f"{base_url}/assets/media/images/{img_name}-1024.jpg 1024w, "
+            f"{base_url}/assets/media/images/{img_name}-768.jpg 768w, "
+            f"{base_url}/assets/media/images/{img_name}-640.jpg 640w"
+        )
+        picture.append(source_jpeg)
+
+        new_img = soup.new_tag("img", src=f"/assets/media/images/{img_name}-640.jpg", alt=img_alt)
+
+        picture.append(new_img)
+        figure.append(picture)
+
+        if img_alt:
+            figcaption = soup.new_tag("figcaption")
+            figcaption.string = f"Figure {figure_index}: {img_alt}"
+            figure.append(figcaption)
+
+        figure_index += 1
+
+        img.replace_with(figure)
+    return str(soup)
+
+
 def apply_pygments(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
     code_blocks = soup.find_all("code")
@@ -242,7 +307,10 @@ def markdown_to_html(markdown_content):
         extras=extras,
     )
 
-    return apply_pygments(html_content)
+    html_content = convert_images(html_content)
+    html_content = apply_pygments(html_content)
+
+    return html_content
 
 
 def html_to_text(html_content):
