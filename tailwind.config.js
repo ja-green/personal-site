@@ -58,6 +58,15 @@ module.exports = {
                         ":where(ol > li)::marker": {
                             color: "hsl(var(--muted-foreground))",
                         },
+                        ":where(ul > li)::marker": {
+                            color: "hsl(var(--muted-foreground))",
+                        },
+                        "ol > li": {
+                            paddingLeft: "0.375rem",
+                        },
+                        "ul > li": {
+                            paddingLeft: "0.375rem",
+                        },
                         pre: {
                             color: "hsl(var(--foreground))",
                             borderRadius: "var(--radius)",
