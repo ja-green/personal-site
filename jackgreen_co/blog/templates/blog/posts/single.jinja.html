@@ -17,6 +17,7 @@
 
 {% from "components/header.jinja.html" import header, header_title, header_extra %}
 {% from "components/breadcrumb.jinja.html" import breadcrumb, breadcrumb_item %}
+{% from "components/link.jinja.html" import link %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -45,6 +46,14 @@
 <nav class="prose mb-6 text-sm prose-ul:list-none prose-ul:ps-0">
     {{ post.toc | safe }}
 </nav>
+<h2 class="text-lg font-semibold mb-4">{{ messages["blog_post_categories_heading"] }}</h2>
+<ul class="text-sm text-muted-foreground mb-6">
+    {% for category in post.categories %}
+        <li class="pl-1.5 mt-[0.2rem] mb-[0.2rem]">
+            {{ link(category.title, "#") }}
+        </li>
+    {% endfor %}
+</ul>
 {% endblock sidebar %}
 
 {% block footer %}
