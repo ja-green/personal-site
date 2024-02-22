@@ -15,7 +15,8 @@
 
 {% extends "layouts/two-column/right-sidebar.jinja.html" %}
 
-{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/header.jinja.html" import header, header_title, header_extra %}
+{% from "components/breadcrumb.jinja.html" import breadcrumb, breadcrumb_item %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -23,7 +24,13 @@
 
 {% block header %}
 {% call header() %}
-    {{ header_title(post.title) }}
+    {{ header_title(post.title, subtitle=post.date.strftime("%B %d, %Y")) }}
+    {% call header_extra() %}
+        {% call breadcrumb() %}
+            {{ breadcrumb_item(messages["blog_posts_heading"], url_for("blog.posts", page=1)) }}
+            {{ breadcrumb_item(post.title, active=true) }}
+        {% endcall %}
+    {% endcall %}
 {% endcall %}
 {% endblock header %}
 
