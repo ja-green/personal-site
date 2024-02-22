@@ -21,4 +21,6 @@ class Messages(messages.Messages):
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
 
+    blog_post_toc_heading = "Contents"
+
     blog_error_action = "Go back to posts"

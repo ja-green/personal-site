@@ -307,10 +307,12 @@ def markdown_to_html(markdown_content):
         extras=extras,
     )
 
+    toc = html_content.toc_html
+
     html_content = convert_images(html_content)
     html_content = apply_pygments(html_content)
 
-    return html_content
+    return html_content, toc
 
 
 def html_to_text(html_content):
@@ -329,7 +331,7 @@ def read_and_process_markdown_files(dir):
                 if "date" in post_metadata:
                     post_metadata["date"] = datetime.combine(post_metadata["date"], datetime.min.time())
 
-                html_content = markdown_to_html(markdown_content)
+                html_content, toc = markdown_to_html(markdown_content)
                 text_content = html_to_text(html_content)
                 preview = generate_preview(text_content)
                 read_time = calculate_read_time(text_content)
@@ -344,6 +346,7 @@ def read_and_process_markdown_files(dir):
                     "read_time": read_time,
                     "slug": slug,
                     "content": html_content,
+                    "toc": toc,
                     "categories": category_ids,
                     "tags": tag_ids,
                 }

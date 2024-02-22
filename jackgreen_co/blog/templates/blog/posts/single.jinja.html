@@ -41,6 +41,10 @@
 {% endblock content %}
 
 {% block sidebar %}
+<h2 class="text-lg font-semibold mb-4">{{ messages["blog_post_toc_heading"] }}</h2>
+<nav class="prose mb-6 text-sm prose-ul:list-none prose-ul:ps-0">
+    {{ post.toc | safe }}
+</nav>
 {% endblock sidebar %}
 
 {% block footer %}

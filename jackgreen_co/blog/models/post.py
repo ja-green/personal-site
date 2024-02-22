@@ -21,6 +21,7 @@ class Post:
         self.date = data.get("date")
         self.image = data.get("image")
         self.content = data.get("content")
+        self.toc = data.get("toc")
         self.preview = data.get("preview")
         self.read_time = data.get("read_time")
         self.slug = data.get("slug")
