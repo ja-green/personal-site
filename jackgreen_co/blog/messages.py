@@ -23,5 +23,6 @@ class Messages(messages.Messages):
 
     blog_post_toc_heading = "Contents"
     blog_post_categories_heading = "Categories"
+    blog_post_tags_heading = "Tags"
 
     blog_error_action = "Go back to posts"
