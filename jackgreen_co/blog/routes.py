@@ -16,7 +16,7 @@
 from flask import abort, redirect, render_template, request, url_for
 
 from jackgreen_co.blog import blog
-from jackgreen_co.blog.services import post_service
+from jackgreen_co.blog.services import category_service, post_service
 
 
 @blog.route("/")
@@ -28,9 +28,12 @@ def index():
 def posts():
     page = request.args.get("page", 1, type=int)
     posts, total_pages = post_service.get(page=page)
+    categories, _ = category_service.get(limit=5)
     if not posts or len(posts) == 0:
         abort(404)
-    return render_template("blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages)
+    return render_template(
+        "blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages, categories=categories
+    )
 
 
 @blog.route("/posts/<slug>")
@@ -42,3 +45,23 @@ def post(slug):
         abort(500)
 
     return render_template("blog/posts/single.jinja.html", post=posts[0])
+
+
+@blog.route("/categories")
+def categories():
+    page = request.args.get("page", 1, type=int)
+    categories, total_pages = category_service.get(page=page)
+    all_categories, _ = category_service.get()
+    posts = {
+        category.object_id: post_service.get({"categories": category.object_id}, limit=3)[0] for category in categories
+    }
+    if not categories or len(categories) == 0:
+        abort(404)
+    return render_template(
+        "blog/categories/list.jinja.html",
+        page=page,
+        categories=categories,
+        total_pages=total_pages,
+        posts=posts,
+        all_categories=all_categories,
+    )

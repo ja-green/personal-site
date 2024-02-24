@@ -20,9 +20,18 @@ class Messages(messages.Messages):
     blog_posts_description = "TODO: Add a description here."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
+    blog_posts_viewcategories = "View all categories"
 
     blog_post_toc_heading = "Contents"
     blog_post_categories_heading = "Categories"
     blog_post_tags_heading = "Tags"
+
+    blog_categories_description = "TODO: Add a description here."
+    blog_categories_heading = "Categories"
+    blog_categories_subheading = "Explore my blog posts by category."
+    blog_categories_seeall = "See all posts in %s"
+    blog_categories_showing_singular = "Showing %s of %s post"
+    blog_categories_showing_plural = "Showing %s of %s posts"
+    blog_categories_all_heading = "All Categories"
 
     blog_error_action = "Go back to posts"

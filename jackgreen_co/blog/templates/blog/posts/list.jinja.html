@@ -18,6 +18,7 @@
 {% from "components/header.jinja.html" import header, header_title %}
 {% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
 {% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
+{% from "components/link.jinja.html" import link %}
 {% from "components/image.jinja.html" import image %}
 
 {% block navbar %}
@@ -101,6 +102,15 @@
 {% endblock content %}
 
 {% block sidebar %}
+<h2 class="text-lg font-semibold mb-4">{{ messages["blog_categories_heading"] }}</h2>
+<ul class="text-sm text-muted-foreground mb-4">
+    {% for category in categories %}
+        <li class="pl-1.5 mt-[0.2rem] mb-[0.2rem]">
+            {{ link(category.title, "#") }}
+        </li>
+    {% endfor %}
+</ul>
+{{ link(messages["blog_posts_viewcategories"], href=url_for("blog.categories", page=1), class_="pl-1.5 text-sm text-muted-foreground mb-6") }}
 {% endblock sidebar %}
 
 {% block footer %}
