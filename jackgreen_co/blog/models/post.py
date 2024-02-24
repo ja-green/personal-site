@@ -46,6 +46,7 @@ class Tag:
     def __init__(self, data):
         self.object_id = data.get("_id")
         self.title = data.get("title")
+        self.post_count = data.get("post_count")
 
     def __repr__(self):
         return f"<Tag {self.title}>"

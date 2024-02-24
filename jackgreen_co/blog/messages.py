@@ -21,6 +21,7 @@ class Messages(messages.Messages):
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
     blog_posts_viewcategories = "View all categories"
+    blog_posts_viewtags = "View all tags"
 
     blog_post_toc_heading = "Contents"
     blog_post_categories_heading = "Categories"
@@ -33,5 +34,13 @@ class Messages(messages.Messages):
     blog_categories_showing_singular = "Showing %s of %s post"
     blog_categories_showing_plural = "Showing %s of %s posts"
     blog_categories_all_heading = "All Categories"
+
+    blog_tags_description = "TODO: Add a description here."
+    blog_tags_heading = "Tags"
+    blog_tags_subheading = "Explore my blog posts by tag."
+    blog_tags_seeall = 'See all posts tagged "%s"'
+    blog_tags_showing_singular = "Showing %s of %s post"
+    blog_tags_showing_plural = "Showing %s of %s posts"
+    blog_tags_all_heading = "All Tags"
 
     blog_error_action = "Go back to posts"

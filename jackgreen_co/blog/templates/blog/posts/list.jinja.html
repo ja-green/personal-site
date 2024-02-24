@@ -20,6 +20,7 @@
 {% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
 {% from "components/link.jinja.html" import link %}
 {% from "components/image.jinja.html" import image %}
+{% from "components/badge.jinja.html" import badge_link_secondary %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -102,15 +103,26 @@
 {% endblock content %}
 
 {% block sidebar %}
-<h2 class="text-lg font-semibold mb-4">{{ messages["blog_categories_heading"] }}</h2>
-<ul class="text-sm text-muted-foreground mb-4">
-    {% for category in categories %}
-        <li class="pl-1.5 mt-[0.2rem] mb-[0.2rem]">
-            {{ link(category.title, "#") }}
-        </li>
-    {% endfor %}
-</ul>
-{{ link(messages["blog_posts_viewcategories"], href=url_for("blog.categories", page=1), class_="pl-1.5 text-sm text-muted-foreground mb-6") }}
+<div class="mb-6">
+    <h2 class="text-lg font-semibold mb-4">{{ messages["blog_categories_heading"] }}</h2>
+    <ul class="text-sm text-muted-foreground mb-4">
+        {% for category in categories %}
+            <li class="pl-1.5 mt-[0.2rem] mb-[0.2rem]">
+                {{ link(category.title, "#") }}
+            </li>
+        {% endfor %}
+    </ul>
+    {{ link(messages["blog_posts_viewcategories"], href=url_for("blog.categories", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
+</div>
+    <div class="mb-6">
+    <h2 class="text-lg font-semibold mb-4">{{ messages["blog_tags_heading"] }}</h2>
+    <ul class="flex pl-1.5 text-sm text-muted-foreground mb-4">
+        {% for tag in tags %}
+            {{ badge_link_secondary(tag.title, href="#", class_="mr-1") }}
+        {% endfor %}
+    </ul>
+    {{ link(messages["blog_posts_viewtags"], href=url_for("blog.tags", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
+</div>
 {% endblock sidebar %}
 
 {% block footer %}

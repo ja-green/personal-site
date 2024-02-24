@@ -1,0 +1,131 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/two-column/right-sidebar.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
+{% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
+{% from "components/image.jinja.html" import image %}
+{% from "components/link.jinja.html" import link %}
+{% from "components/badge.jinja.html" import badge_link_secondary %}
+
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
+
+{% block header %}
+{% call header() %}
+    {{ header_title(messages["blog_tags_heading"], subtitle=messages["blog_tags_subheading"]) }}
+{% endcall %}
+{% endblock header %}
+
+{% block content %}
+{% for tag in tags %}
+    <hgroup class="mb-4 items-center">
+        <h2 class="text-lg font-bold leading-tight tracking-tight md:text-xl mb-2">{{ tag.title }}</h2>
+        {% if tag.post_count == 1 %}
+            <p class="text-sm text-muted-foreground">{{ messages["blog_tags_showing_singular"] | format(posts[tag.object_id] | length, tag.post_count) }}</p>
+        {% else %}
+            <p class="text-sm text-muted-foreground">{{ messages["blog_tags_showing_plural"] | format(posts[tag.object_id] | length, tag.post_count) }}</p>
+        {% endif %}
+    </hgroup>
+    <div class="mb-12">
+        <ul>
+            {% for post in posts[tag.object_id] %}
+                <li>
+                    {% call card(class_="mb-6") %}
+                        {% call card_aside() %}
+                            <a href="{{ url_for("blog.post", slug=post.slug) }}" class="block h-full w-full">
+                                {{ image(post.image, post.title, width=200, height=200, class_="object-cover h-full rounded-l-lg") }}
+                            </a>
+                        {% endcall %}
+                        {% call card_body() %}
+                            {% call card_header() %}
+                                {% call card_title(post.title, href=url_for("blog.post", slug=post.slug)) %}
+                                    <time datetime="{{ post.date.strftime("%Y-%m-%d") }}" class="mr-1">
+                                        {{ post.date.strftime("%B %-d, %Y") }}
+                                    </time>
+                                    &middot;
+                                    <span class="ml-1">
+                                        {{ post.read_time }} minute read
+                                    </span>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call card_content() %}
+                                <p>{{ post.preview }}</p>
+                            {% endcall %}
+                        {% endcall %}
+                    {% endcall %}
+                </li>
+            {% endfor %}
+        </ul>
+        {{ link(messages["blog_tags_seeall"] | format(tag.title), href="#") }}
+    </div>
+{% endfor %}
+
+{% call pagination() %}
+    {% if page == 1 %}
+        {{ pagination_previous(href=url_for("blog.tags", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_previous(href=url_for("blog.tags", page=page-1)) }}
+    {% endif %}
+
+    {{ pagination_page(1, href=url_for("blog.tags", page=1), current=(page==1)) }}
+    {% if page > 4 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% set start_page = [page - 3, 2] | max %}
+    {% set end_page = [page + 3, total_pages - 1] | min %}
+
+    {% for i in range(start_page, end_page + 1) %}
+        {% if page == i or page - 1 == i or page + 1 == i %}
+            {{ pagination_page(text=i, href=url_for("blog.tags", page=i), current=(page==i)) }}
+        {% else %}
+            {{ pagination_page(i, href=url_for("blog.tags", page=i), class_="hidden sm:inline-flex") }}
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages - 3 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% if total_pages > 1 %}
+        {{ pagination_page(total_pages, href=url_for("blog.tags", page=total_pages), current=(page==total_pages)) }}
+    {% endif %}
+
+    {% if page == total_pages %}
+        {{ pagination_next(href=url_for("blog.tags", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_next(href=url_for("blog.tags", page=page+1)) }}
+    {% endif %}
+{% endcall %}
+{% endblock content %}
+
+{% block sidebar %}
+<h2 class="text-lg font-semibold mb-4">{{ messages["blog_tags_all_heading"] }}</h2>
+<ul class="flex pl-1.5 text-sm text-muted-foreground mb-4">
+    {% for tag in all_tags %}
+        {{ badge_link_secondary(tag.title, href="#", class_="mr-1") }}
+    {% endfor %}
+</ul>
+{% endblock sidebar %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}
