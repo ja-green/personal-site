@@ -19,17 +19,26 @@ from jackgreen_co import core
 from jackgreen_co.blog.models import post
 
 
-def get(terms={}, page=1):
+def get(terms={}, page=None, limit=None):
     posts_per_page = current_app.config.get("BLOG_POSTS_PER_PAGE", 10)
     total_posts = core.db.posts.count_documents(terms)
-    total_pages = max((total_posts + posts_per_page - 1) // posts_per_page, 1)
-    skip = (page - 1) * posts_per_page
+
+    if limit is not None:
+        skip = 0
+        posts_to_fetch = limit
+        total_pages = 1
+    elif page is not None:
+        total_pages = max((total_posts + posts_per_page - 1) // posts_per_page, 1)
+        skip = (page - 1) * posts_per_page
+        posts_to_fetch = posts_per_page
+    else:
+        total_pages = max((total_posts + posts_per_page - 1) // posts_per_page, 1)
+        skip = 0
+        posts_to_fetch = total_posts
 
     pipeline = [
         {"$match": terms},
         {"$sort": {"date": -1}},
-        {"$skip": skip},
-        {"$limit": posts_per_page},
         {"$lookup": {"from": "categories", "localField": "categories", "foreignField": "_id", "as": "categories"}},
         {"$lookup": {"from": "tags", "localField": "tags", "foreignField": "_id", "as": "tags"}},
         {
@@ -39,6 +48,11 @@ def get(terms={}, page=1):
             }
         },
     ]
+
+    if skip > 0:
+        pipeline.append({"$skip": skip})
+    if limit is not None or page is not None:
+        pipeline.append({"$limit": posts_to_fetch})
 
     post_documents = list(core.db.posts.aggregate(pipeline))
     posts = [post.Post(post_data) for post_data in post_documents]
