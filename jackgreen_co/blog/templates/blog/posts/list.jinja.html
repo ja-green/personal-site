@@ -105,9 +105,9 @@
 {% block sidebar %}
 <div class="mb-6">
     <h2 class="text-lg font-semibold mb-4">{{ messages["blog_categories_heading"] }}</h2>
-    <ul class="text-sm text-muted-foreground mb-4">
+    <ul class="pl-1.5 text-sm text-muted-foreground mb-4">
         {% for category in categories %}
-            <li class="pl-1.5 mt-[0.2rem] mb-[0.2rem]">
+            <li class="mt-[0.2rem] mb-[0.2rem]">
                 {{ link(category.title, "#") }}
             </li>
         {% endfor %}
