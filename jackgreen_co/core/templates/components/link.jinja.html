@@ -16,7 +16,10 @@
 {%- macro link(text, href) -%}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<a href="{{ href }}" class="underline underline-offset-4 transition-colors hover:text-foreground/80 {{ class_ }}">{{ text }}</a>
+<a href="{{ href }}" class="underline underline-offset-4 transition-colors hover:text-foreground/80 {{ class_ }}">
+    {% if text %}{{ text }}{% endif %}
+    {% if caller %}{{ caller() }}{% endif %}
+</a>
 {%- endmacro -%}
 
 {# vim: set ft=htmldjango: #}
