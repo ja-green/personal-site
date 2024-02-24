@@ -139,7 +139,7 @@ def clean_database():
 def find_or_create_category(title):
     category = categories_col.find_one({"title": title})
     if not category:
-        result = categories_col.insert_one({"title": title, "post_count": 1})
+        result = categories_col.insert_one({"title": title, "slug": title.lower().replace(" ", "-"), "post_count": 1})
         category_id = result.inserted_id
     else:
         category_id = category["_id"]
