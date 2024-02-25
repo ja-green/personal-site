@@ -41,6 +41,8 @@
             {% endif %}
         {% endif %}
 
+        {% block base_head %}{% endblock base_head %}
+
         <link rel="icon" href="{{ url_for('static', filename='media/favicons/favicon.svg') }}" type="image/svg+xml" sizes="any"/>
         <link rel="alternate icon" href="{{ url_for('static', filename='media/favicons/favicon.png') }}" sizes="32x32" />
         <link rel="alternate icon" href="{{ url_for('static', filename='media/favicons/favicon.ico') }}" sizes="any" />
