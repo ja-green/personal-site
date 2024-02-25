@@ -15,7 +15,8 @@
 
 {% extends "layouts/two-column/right-sidebar.jinja.html" %}
 
-{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/header.jinja.html" import header, header_title, header_extra %}
+{% from "components/breadcrumb.jinja.html" import breadcrumb, breadcrumb_item %}
 {% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
 {% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
 {% from "components/link.jinja.html" import link %}
@@ -30,6 +31,13 @@
 {% block header %}
 {% call header() %}
     {{ header_title(tag.title, subtitle=messages["blog_tag_subheading"] | format(tag.title)) }}
+    {% call header_extra() %}
+        {% call breadcrumb() %}
+            {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
+            {{ breadcrumb_item(messages["blog_tags_heading"], href=url_for("blog.tags", page=1)) }}
+            {{ breadcrumb_item(tag.title, active=true) }}
+        {% endcall %}
+    {% endcall %}
 {% endcall %}
 {% endblock header %}
 
