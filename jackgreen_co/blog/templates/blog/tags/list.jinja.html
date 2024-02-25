@@ -72,7 +72,7 @@
                 </li>
             {% endfor %}
         </ul>
-        {{ link(messages["blog_tags_seeall"] | format(tag.title), href="#") }}
+        {{ link(messages["blog_tags_seeall"] | format(tag.title), href=url_for("blog.tag", slug=tag.slug)) }}
     </div>
 {% endfor %}
 
@@ -119,7 +119,7 @@
 <h2 class="text-lg font-semibold mb-4">{{ messages["blog_tags_all_heading"] }}</h2>
 <ul class="flex pl-1.5 text-sm text-muted-foreground mb-4">
     {% for tag in all_tags %}
-        {{ badge_link_secondary(tag.title, href="#", class_="mr-1") }}
+        {{ badge_link_secondary(tag.title, href=url_for("blog.tag", slug=tag.slug), class_="mr-1") }}
     {% endfor %}
 </ul>
 {% endblock sidebar %}

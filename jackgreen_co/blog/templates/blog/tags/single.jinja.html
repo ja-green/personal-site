@@ -28,7 +28,7 @@
 
 {% block header %}
 {% call header() %}
-    {{ header_title(messages["blog_posts_heading"], subtitle=messages["blog_posts_subheading"]) }}
+    {{ header_title(tag.title, subtitle=messages["blog_tag_subheading"] | format(tag.title)) }}
 {% endcall %}
 {% endblock header %}
 

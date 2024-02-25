@@ -150,7 +150,7 @@ def find_or_create_category(title):
 def find_or_create_tag(title):
     tag = tags_col.find_one({"title": title})
     if not tag:
-        result = tags_col.insert_one({"title": title, "post_count": 1})
+        result = tags_col.insert_one({"title": title, "slug": generate_slug(title), "post_count": 1})
         tag_id = result.inserted_id
     else:
         tag_id = tag["_id"]

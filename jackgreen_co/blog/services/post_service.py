@@ -50,7 +50,7 @@ def get(terms={}, page=None, limit=None):
                         "in": {"title": "$$category.title", "slug": "$$category.slug"},
                     }
                 },
-                "tags": {"$map": {"input": "$tags", "as": "tag", "in": {"title": "$$tag.title"}}},
+                "tags": {"$map": {"input": "$tags", "as": "tag", "in": {"title": "$$tag.title", "slug": "$$tag.slug"}}},
             }
         },
     ]
