@@ -13,6 +13,8 @@
    You should have received a copy of the GNU General Public License
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
+{% from "macros/meta.jinja.html" import meta_opengraph, meta_jsonld with context %}
+
 <!doctype html>
 <html lang="en-GB" class="dark">
     <head>
@@ -39,6 +41,17 @@
             {% if messages[endpoint | replace(".", "_") + '_description'] %}
                 <meta name="description" content="{{ messages[endpoint | replace(".", "_") + '_description'] }}" />
             {% endif %}
+
+            {% call meta_opengraph(title=title, post=post, category=category, tag=tag) %}
+                <meta property="og:url" content="{{ request.url_root[:-1] + request.path }}" />
+                <meta property="og:type" content="website" />
+            {% endcall %}
+
+            {% call meta_jsonld(title=title, post=post, category=category, tag=tag) %}
+                "@type": "WebPage",
+                "name": "{{ title }}",
+                "url": "{{ request.url_root[:-1] + request.path }}",
+            {% endcall %}
         {% endif %}
 
         {% block base_head %}{% endblock base_head %}

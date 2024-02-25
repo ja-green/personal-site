@@ -14,52 +14,52 @@
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
 {% macro meta_opengraph() %}
-    {% set title    = kwargs.pop('title', '') %}
-    {% set post     = kwargs.pop('post', '') %}
+    {% set title = kwargs.pop('title', '') %}
+    {% set post = kwargs.pop('post', '') %}
     {% set category = kwargs.pop('category', '') %}
-    {% set tag      = kwargs.pop('tag', '') %}
+    {% set tag = kwargs.pop('tag', '') %}
 
-    {% if endpoint %}
-        <meta property="og:title" content="{{ title }}" />
-        <meta property="og:site_name" content="{{ config['SITE_NAME'] }}" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:site_name" content="{{ config["SITE_NAME"] }}" />
 
-        {% if messages[endpoint | replace(".", "_") + '_description'] %}
-            <meta property="og:description" content="{{ messages[endpoint | replace(".", "_") + '_description'] }}" />
-        {% endif %}
+    {% if messages[endpoint | replace(".", "_") + "_description"] %}
+        <meta property="og:description" content="{{ messages[endpoint | replace(".", "_") + "_description"] }}" />
+    {% endif %}
 
-        {% if post %}
-            <meta property="og:url" content="{{ post.urlpath }}" />
-            <meta property="og:type" content="article" />
-            <meta property="og:image" content="{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.webp', _external=True) }}" />
-            <meta property="og:image:secure_url" content="{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.webp', _external=True) }}" />
-            <meta property="og:image:type" content="image/webp" />
-            <meta property="og:image:width" content="1920" />
-            <meta property="og:image:height" content="1078" />
-            <meta property="og:image:alt" content="{{ post.title }}" />
-            <meta property="og:image" content="{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.jpg', _external=True) }}" />
-            <meta property="og:image:secure_url" content="{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.jpg', _external=True) }}" />
-            <meta property="og:image:type" content="image/jpeg" />
-            <meta property="og:image:width" content="1920" />
-            <meta property="og:image:height" content="1078" />
-            <meta property="og:image:alt" content="{{ post.title }}" />
-            <meta property="og:article:published_time" content="{{ post.date.strftime('%Y-%m-%d') }}" />
-            <meta property="og:article:author" content="{{ config['SITE_AUTHOR'] }}" />
-            <meta property="og:article:section" content="{{ post.categories[0].title }}" />
+    {% if post %}
+        <meta property="og:url" content="{{ url_for("blog.post", slug=post.slug) }}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="{{ url_for("static", filename=post.image.rsplit(".", 1)[0] ~ "-1920.webp", _external=true) }}" />
+        <meta property="og:image:secure_url" content="{{ url_for("static", filename=post.image.rsplit(".", 1)[0] ~ "-1920.webp", _external=true) }}" />
+        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image:width" content="1920" />
+        <meta property="og:image:height" content="1920" />
+        <meta property="og:image:alt" content="{{ post.title }}" />
+        <meta property="og:image" content="{{ url_for("static", filename=post.image.rsplit(".", 1)[0] ~ "-1920.jpg", _external=true) }}" />
+        <meta property="og:image:secure_url" content="{{ url_for("static", filename=post.image.rsplit(".", 1)[0] ~ "-1920.jpg", _external=true) }}" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1920" />
+        <meta property="og:image:height" content="1920" />
+        <meta property="og:image:alt" content="{{ post.title }}" />
+        <meta property="og:article:published_time" content="{{ post.date.strftime("%Y-%m-%d") }}" />
+        <meta property="og:article:author" content="{{ config["SITE_AUTHOR"] }}" />
+        <meta property="og:article:section" content="{{ post.categories[0].title }}" />
 
-            {% for tag in post.tags %}
-                <meta property="og:article:tag" content="{{ tag.title }}" />
-            {% endfor %}
+        {% for tag in post.tags %}
+            <meta property="og:article:tag" content="{{ tag.title }}" />
+        {% endfor %}
 
-        {% elif category %}
-            <meta property="og:url" content="{{ url_for(endpoint, category=category.title.lower(), _external=True) }}" />
-            <meta property="og:type" content="website" />
-        {% elif tag %}
-            <meta property="og:url" content="{{ url_for(endpoint, tag=tag.title.lower(), _external=True) }}" />
-            <meta property="og:type" content="website" />
-        {% else %}
-            <meta property="og:url" content="{{ url_for(endpoint, _external=True) }}" />
-            <meta property="og:type" content="website" />
-        {% endif %}
+    {% elif category %}
+        <meta property="og:url" content="{{ url_for("blog.category", slug=category.slug, _external=true) }}" />
+        <meta property="og:type" content="website" />
+    {% elif tag %}
+        <meta property="og:url" content="{{ url_for("blog.tag", slug=tag.slug, _external=true) }}" />
+        <meta property="og:type" content="website" />
+    {% elif caller %}
+        {{ caller() }}
+    {% else %}
+        <meta property="og:url" content="{{ url_for(endpoint, _external=true) }}" />
+        <meta property="og:type" content="website" />
     {% endif %}
 {% endmacro %}
 
@@ -73,11 +73,10 @@
     {
         "@context": "https://schema.org/",
 
-    {% if endpoint %}
         {% if post %}
         "@type": "BlogPosting",
         "name": "{{ post.title }}",
-        "url": "{{ post.urlpath }}",
+        "url": "{{ url_for('blog.post', slug=post.slug, _external=true) }}",
         "headline": "{{ post.title }}",
         "dateCreated": "{{ post.date.strftime('%Y-%m-%d') }}",
         "datePublished": "{{ post.date.strftime('%Y-%m-%d') }}",
@@ -85,8 +84,8 @@
         "image": {
             "@type": "ImageObject",
             "height": "1920",
-            "width": "1078",
-            "contentUrl": "{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.jpg', _external=True) }}"
+            "width": "1920",
+            "contentUrl": "{{ url_for('static', filename=post.image.rsplit('.', 1)[0] ~ '-1920.jpg', _external=true) }}"
         },
         "inLanguage": "en-GB",
         "isFamilyFriendly": "true",
@@ -99,36 +98,20 @@
         "isAccessibleForFree": "true",
         "mainEntityOfPage": "true",
         "articleSection": "{{ post.categories[0].title }}",
-        "articleBody": "{{ post.content_plain | replace('\\', '\\\\') | replace('"', '\\"') | safe }}",
+        "articleBody": "{{ post.preview | replace('\\', '\\\\') | replace('"', '\\"') }}",
 
         {% elif category %}
         "@type": "WebPage",
         "name": "{{ title }}",
-        "url": "{{ category.urlpath }}",
+        "url": "{{ url_for("blog.category", slug=category.slug, _external=true) }}",
         {% elif tag %}
         "@type": "WebPage",
         "name": "{{ title }}",
-        "url": "{{ tag.urlpath }}",
-        {% elif endpoint == 'main.index' %}
-        "@type": "WebSite",
-        "name": "{{ config['SITE_NAME'] }}",
-        "description": "{{ messages['main_meta_description'] }}",
-        "sameAs": "{{ config['EXTERNAL_LINK_LINKEDIN'] }}",
-        "url": "{{ url_for(endpoint, _external=True) }}",
-        {% elif endpoint == 'blog.posts' %}
-        "@type": "Blog",
-        "name": "{{ title }}",
-        "url": "{{ url_for(endpoint, _external=True) }}",
-        {% if messages[endpoint | replace(".", "_") + '_description'] %}
-        "description": "{{ messages[endpoint | replace(".", "_") + '_description'] }}",
+        "url": "{{ url_for("blog.tag", slug=category.slug, _external=true) }}",
         {% endif %}
-        {% else %}
-        "@type": "WebPage",
-        "name": "{{ title }}",
-        "url": "{{ url_for(endpoint, _external=True) }}",
-        {% if messages[endpoint | replace(".", "_") + '_description'] %}
-        "description": "{{ messages[endpoint | replace(".", "_") + '_description'] }}",
-        {% endif %}
+
+        {% if caller %}
+        {{ caller() }}
         {% endif %}
 
         "author": {
@@ -160,13 +143,6 @@
             }
         ],
         "accessibilitySummary": "Short image descriptions are provided; long descriptions of the images are not needed for comprehension.",
-
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "{{ url_for('blog.search', _external=True) }}?q={q}",
-            "query-input": "required maxlength=64 name=q"
-        }
-        {% endif %}
     }
 </script>
 {% endmacro %}
