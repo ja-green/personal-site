@@ -30,15 +30,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
         <meta name="author" content="{{ config['SITE_AUTHOR'] }}" />
 
-        {% if endpoint %}
+        {% if is_error or not endpoint %}
+            <meta name="robots" content="noindex, follow" />
+        {% else %}
             <meta name="robots" content="index, follow" />
+            <link rel="canonical" href="{{ request.url_root[:-1] + request.path }}" />
 
             {% if messages[endpoint | replace(".", "_") + '_description'] %}
                 <meta name="description" content="{{ messages[endpoint | replace(".", "_") + '_description'] }}" />
             {% endif %}
-
-        {% else %}
-            <meta name="robots" content="noindex, follow" />
         {% endif %}
 
         <link rel="icon" href="{{ url_for('static', filename='media/favicons/favicon.svg') }}" type="image/svg+xml" sizes="any"/>
