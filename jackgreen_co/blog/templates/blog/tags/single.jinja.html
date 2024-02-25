@@ -21,6 +21,7 @@
 {% from "components/link.jinja.html" import link %}
 {% from "components/image.jinja.html" import image %}
 {% from "components/badge.jinja.html" import badge_link_secondary %}
+{% from "components/button.jinja.html" import button_link_outline %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -123,6 +124,12 @@
     </ul>
     {{ link(messages["blog_posts_viewtags"], href=url_for("blog.tags", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
 </div>
+{% call button_link_outline(href=url_for("blog.tags", page=1), class_="mt-6") %}
+    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 me-2">
+        <path d="M8.84160 3.13508C8.64015 2.94621 8.32373 2.95642 8.13486 3.15788L4.38490 7.15788C4.20460 7.35020 4.20460 7.64949 4.38490 7.84182L8.13486 11.84180C8.32373 12.04330 8.64015 12.05350 8.84160 11.86460C9.04306 11.67570 9.05327 11.35930 8.86440 11.15790L5.43500 7.49985L8.86440 3.84182C9.05327 3.64036 9.04306 3.32394 8.84160 3.13508" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+    </svg>
+    {{ messages["blog_back_to_tags"] }}
+{% endcall %}
 {% endblock sidebar %}
 
 {% block footer %}

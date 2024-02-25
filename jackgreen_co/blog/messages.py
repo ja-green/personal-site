@@ -17,6 +17,10 @@ from jackgreen_co.core import messages
 
 
 class Messages(messages.Messages):
+    blog_back_to_posts = "Back to posts"
+    blog_back_to_categories = "Back to categories"
+    blog_back_to_tags = "Back to tags"
+
     blog_posts_description = "TODO: Add a description here."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
