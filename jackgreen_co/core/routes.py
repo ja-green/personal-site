@@ -15,7 +15,10 @@
 
 from urllib.parse import urlparse
 
-from flask import current_app, make_response, render_template, request
+from flask import current_app, make_response, render_template, request, url_for
+
+from jackgreen_co.blog.services import (category_service, post_service,
+                                        tag_service)
 
 
 def sitemap():
@@ -35,6 +38,21 @@ def sitemap():
                 subdomain = bp.subdomain + "." if bp.subdomain else ""
                 url = {"loc": "%s://%s%s%s" % (host_components.scheme, subdomain, host_components.netloc, str(rule))}
                 static_urls.append(url)
+
+    posts, _ = post_service.get()
+    for post in posts:
+        url = {"loc": "%s" % (url_for("blog.post", slug=post.slug)), "lastmod": post.date.strftime("%Y-%m-%d")}
+        dynamic_urls.append(url)
+
+    categories, _ = category_service.get()
+    for category in categories:
+        url = {"loc": "%s" % (url_for("blog.category", slug=category.slug))}
+        dynamic_urls.append(url)
+
+    tags, _ = tag_service.get()
+    for tag in tags:
+        url = {"loc": "%s" % (url_for("blog.tag", slug=tag.slug))}
+        dynamic_urls.append(url)
 
     body = render_template("sitemap.jinja.xml", static_urls=static_urls, dynamic_urls=dynamic_urls)
     response = make_response(body)
