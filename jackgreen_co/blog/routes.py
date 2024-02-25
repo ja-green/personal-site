@@ -29,7 +29,7 @@ def index():
 def posts():
     page = request.args.get("page", 1, type=int)
     if page < 1:
-        abort(404)
+        return redirect(url_for("blog.posts", page=1), code=301)
     posts, total_pages = post_service.get(page=page)
     if not posts or len(posts) == 0:
         abort(404)
@@ -55,7 +55,7 @@ def post(slug):
 def categories():
     page = request.args.get("page", 1, type=int)
     if page < 1:
-        abort(404)
+        return redirect(url_for("blog.categories", page=1), code=301)
     categories, total_pages = category_service.get(page=page)
     if not categories or len(categories) == 0:
         abort(404)
@@ -77,7 +77,7 @@ def categories():
 def category(slug):
     page = request.args.get("page", 1, type=int)
     if page < 1:
-        abort(404)
+        return redirect(url_for("blog.category", slug=slug, page=1), code=301)
     categories, _ = category_service.get({"slug": slug})
     if not categories:
         abort(404)
@@ -104,7 +104,7 @@ def category(slug):
 def tags():
     page = request.args.get("page", 1, type=int)
     if page < 1:
-        abort(404)
+        return redirect(url_for("blog.tags", page=1), code=301)
     tags, total_pages = tag_service.get(page=page)
     if not tags or len(tags) == 0:
         abort(404)
@@ -119,7 +119,7 @@ def tags():
 def tag(slug):
     page = request.args.get("page", 1, type=int)
     if page < 1:
-        abort(404)
+        return redirect(url_for("blog.tag", slug=slug, page=1), code=301)
     tags, _ = tag_service.get({"slug": slug})
     if not tags:
         abort(404)
