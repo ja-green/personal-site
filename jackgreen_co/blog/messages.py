@@ -35,6 +35,9 @@ class Messages(messages.Messages):
     blog_categories_showing_plural = "Showing %s of %s posts"
     blog_categories_all_heading = "All Categories"
 
+    blog_category_description = "TODO: Add a description here."
+    blog_category_subheading = "Explore posts in %s"
+
     blog_tags_description = "TODO: Add a description here."
     blog_tags_heading = "Tags"
     blog_tags_subheading = "Explore my blog posts by tag."

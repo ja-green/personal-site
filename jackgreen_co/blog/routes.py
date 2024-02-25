@@ -69,6 +69,31 @@ def categories():
     )
 
 
+@blog.route("/categories/<slug>")
+def category(slug):
+    categories, _ = category_service.get({"slug": slug})
+    if not categories:
+        abort(404)
+    if len(categories) > 1:
+        abort(500)
+    category = categories[0]
+    page = request.args.get("page", 1, type=int)
+    posts, total_pages = post_service.get({"categories": category.object_id}, page=page)
+    if not posts or len(posts) == 0:
+        abort(404)
+    categories, _ = category_service.get(limit=5)
+    tags, _ = tag_service.get(limit=10)
+    return render_template(
+        "blog/categories/single.jinja.html",
+        category=category,
+        page=page,
+        posts=posts,
+        total_pages=total_pages,
+        categories=categories,
+        tags=tags,
+    )
+
+
 @blog.route("/tags")
 def tags():
     page = request.args.get("page", 1, type=int)

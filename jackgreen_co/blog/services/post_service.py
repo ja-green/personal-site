@@ -43,7 +43,13 @@ def get(terms={}, page=None, limit=None):
         {"$lookup": {"from": "tags", "localField": "tags", "foreignField": "_id", "as": "tags"}},
         {
             "$addFields": {
-                "categories": {"$map": {"input": "$categories", "as": "category", "in": {"title": "$$category.title"}}},
+                "categories": {
+                    "$map": {
+                        "input": "$categories",
+                        "as": "category",
+                        "in": {"title": "$$category.title", "slug": "$$category.slug"},
+                    }
+                },
                 "tags": {"$map": {"input": "$tags", "as": "tag", "in": {"title": "$$tag.title"}}},
             }
         },
