@@ -127,7 +127,7 @@
 <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
     {% for category in all_categories %}
         <li class="mt-[0.2rem] mb-[0.2rem]">
-            {{ link(category.title, href=url_for("blog.category", slug=category.slug)) }}
+            {{ link(category.title, href=url_for("blog.category", slug=category.slug, page=1)) }}
         </li>
     {% endfor %}
 </ul>

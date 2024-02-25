@@ -52,7 +52,7 @@
 <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
     {% for category in post.categories %}
         <li class="mt-[0.2rem] mb-[0.2rem]">
-            {{ link(category.title, href=url_for("blog.category", slug=category.slug)) }}
+            {{ link(category.title, href=url_for("blog.category", slug=category.slug, page=1)) }}
         </li>
     {% endfor %}
 </ul>
@@ -60,7 +60,7 @@
 <ul class="flex pl-1.5 text-sm text-muted-foreground mb-6">
     {% for tag in post.tags %}
         <li class="mt-[0.2rem] mb-[0.2rem]">
-            {{ badge_link_secondary(tag.title, href=url_for("blog.tag", slug=tag.slug), class_="mr-1") }}
+            {{ badge_link_secondary(tag.title, href=url_for("blog.tag", slug=tag.slug, page=1), class_="mr-1") }}
         </li>
     {% endfor %}
 </ul>
