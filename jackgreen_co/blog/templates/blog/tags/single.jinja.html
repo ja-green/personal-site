@@ -59,7 +59,7 @@
                         </time>
                         &middot;
                         <span class="ml-1">
-                            {{ post.read_time }} minute read
+                            {{ messages["blog_minute_read"] | format(post.read_time) }}
                         </span>
                     {% endcall %}
                 {% endcall %}
