@@ -107,7 +107,7 @@
         {% elif tag %}
         "@type": "WebPage",
         "name": "{{ title }}",
-        "url": "{{ url_for("blog.tag", slug=category.slug, _external=true) }}",
+        "url": "{{ url_for("blog.tag", slug=tag.slug, _external=true) }}",
         {% endif %}
 
         {% if caller %}
