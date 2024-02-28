@@ -22,11 +22,15 @@ class Messages(messages.Messages):
     blog_back_to_tags = "Back to tags"
     blog_minute_read = "%s minute read"
 
+    blog_rss_heading = "Posts RSS Feed"
+    blog_rss_description = "TODO: Add a description here."
+
     blog_posts_description = "TODO: Add a description here."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
     blog_posts_viewcategories = "View all categories"
     blog_posts_viewtags = "View all tags"
+    blog_posts_viewrss = "View posts RSS feed"
 
     blog_post_toc_heading = "Contents"
     blog_post_categories_heading = "Categories"

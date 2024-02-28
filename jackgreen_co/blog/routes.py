@@ -13,7 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from flask import abort, redirect, render_template, request, url_for
+from flask import (abort, make_response, redirect, render_template, request,
+                   url_for)
 
 from jackgreen_co.blog import blog
 from jackgreen_co.blog.services import (category_service, post_service,
@@ -140,3 +141,14 @@ def tag(slug):
         categories=categories,
         tags=tags,
     )
+
+
+@blog.route("/rss")
+def rss():
+    posts, _ = post_service.get()
+
+    body = render_template("blog/rss.jinja.xml", posts=posts)
+    response = make_response(body)
+    response.headers["Content-Type"] = "application/rss+xml"
+
+    return response

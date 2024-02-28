@@ -16,7 +16,7 @@
 {% extends "layouts/two-column/right-sidebar.jinja.html" %}
 
 {% from "components/badge.jinja.html" import badge_link_secondary %}
-{% from "components/button.jinja.html" import button_link_outline %}
+{% from "components/button.jinja.html" import button_link_outline, button_link_secondary %}
 {% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
 {% from "components/header.jinja.html" import header, header_title %}
 {% from "components/image.jinja.html" import image %}
@@ -115,7 +115,7 @@
     </ul>
     {{ link(messages["blog_posts_viewcategories"], href=url_for("blog.categories", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
 </div>
-    <div class="mb-6">
+<div class="mb-6">
     <h2 class="text-lg font-semibold mb-4">{{ messages["blog_tags_heading"] }}</h2>
     <ul class="flex pl-1.5 text-sm text-muted-foreground mb-4">
         {% for tag in tags %}
@@ -124,6 +124,14 @@
     </ul>
     {{ link(messages["blog_posts_viewtags"], href=url_for("blog.tags", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
 </div>
+{% call button_link_secondary(href=url_for("blog.rss"), class_="mt-6") %}
+    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 me-2">
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13 19a8 8 0 00-8-8"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M19 19c0-7.732-6.268-14-14-14"/>
+        <circle cx="6" cy="18" r="2" fill="currentColor"/>
+    </svg>
+    {{ messages["blog_posts_viewrss"] }}
+{% endcall %}
 {% endblock sidebar %}
 
 {% block footer %}
