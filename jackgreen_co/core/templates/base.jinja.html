@@ -16,7 +16,7 @@
 {% from "macros/meta.jinja.html" import meta_opengraph, meta_jsonld with context %}
 
 <!doctype html>
-<html lang="en-GB" class="dark">
+<html lang="en-GB" class="{% if request.cookies.get("theme", "dark") == "dark" %}dark{% endif %}">
     <head>
         {% if title %}
             {% set title = '%s | Jack Green' | format(title | safe) %}
@@ -70,6 +70,7 @@
     <body class="min-h-screen bg-background antialiased flex flex-col">
         {% block base_content %}{% endblock base_content %}
 
+        <script src="{{ url_for('static', filename='js/theme.js') }}" defer></script>
         {% block base_script %}{% endblock base_script %}
     </body>
 </html>
