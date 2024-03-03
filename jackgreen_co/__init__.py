@@ -68,5 +68,6 @@ def init():
     app.context_processor(context.messages)
     app.context_processor(context.endpoint)
     app.context_processor(context.features)
+    app.context_processor(context.theme)
 
     return app

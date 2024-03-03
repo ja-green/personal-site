@@ -34,3 +34,8 @@ def endpoint():
 
 def features():
     return dict(features=current_app.features)
+
+
+def theme():
+    theme = request.cookies.get("theme", "dark")
+    return dict(theme="light" if theme == "light" else "dark")

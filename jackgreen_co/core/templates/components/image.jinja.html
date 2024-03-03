@@ -13,7 +13,7 @@
    You should have received a copy of the GNU General Public License
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
-{% macro image(image, alt) -%}
+{% macro image(image, alt, theme) -%}
 {% set class_ = kwargs.pop('class_', '') %}
 {% set width  = kwargs.pop('width', '') %}
 {% set height = kwargs.pop('height', '') %}
@@ -22,21 +22,28 @@
 {% set widths = [1920, 1600, 1366, 1024, 768, 640] %}
 {% set srcset_jpeg = [] %}
 {% set srcset_webp = [] %}
+{% set srcset_jpeg_dark = [] %}
+{% set srcset_webp_dark = [] %}
 {% set img_name = image.rsplit('.', 1)[0] %}
 
 {%- for w in widths -%}
     {% do srcset_jpeg.append(url_for("static", filename=img_name ~ "-" ~ w ~ ".jpg") ~ " "  ~ w ~ "w") %}
     {% do srcset_webp.append(url_for("static", filename=img_name ~ "-" ~ w ~ ".webp") ~ " " ~ w ~ "w") %}
+
+    {% do srcset_jpeg_dark.append(url_for("static", filename=img_name ~ "-dark-" ~ w ~ ".jpg") ~ " "  ~ w ~ "w") %}
+    {% do srcset_webp_dark.append(url_for("static", filename=img_name ~ "-dark-" ~ w ~ ".webp") ~ " " ~ w ~ "w") %}
 {%- endfor -%}
 
 <picture>
-    <source type="image/webp" srcset="{{ srcset_webp | join(", ") }}">
-    <source type="image/jpeg" srcset="{{ srcset_jpeg | join(", ") }}">
+    <source data-theme="light" type="image/webp" srcset="{{ srcset_webp | join(", ") }}" media="{% if theme == "dark" %}not all{% endif %}" />
+    <source data-theme="light" type="image/jpeg" srcset="{{ srcset_jpeg | join(", ") }}" media="{% if theme == "dark" %}not all{% endif %}" />
+    <source data-theme="dark" type="image/webp" srcset="{{ srcset_webp_dark | join(", ") }}" media="{% if theme == "dark" %}(min-width: 0px){% endif %}" />
+    <source data-theme="dark" type="image/jpeg" srcset="{{ srcset_jpeg_dark | join(", ") }}" media="{% if theme == "dark" %}(min-width: 0px){% endif %}" />
     <img src="{{ url_for("static", filename=img_name ~ "-640.jpg") }}"
          alt="{{ alt }}"
          {% if width %}width="{{ width }}"{% endif %} {% if height %}height="{{ height }}"{% endif %}
          {% if lazy %}loading="lazy"{% endif %}
-         class="{{ class_ }}">
+         class="{{ class_ }}" />
 </picture>
 
 {% endmacro %}

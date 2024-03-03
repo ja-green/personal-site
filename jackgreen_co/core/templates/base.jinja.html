@@ -16,7 +16,7 @@
 {% from "macros/meta.jinja.html" import meta_opengraph, meta_jsonld with context %}
 
 <!doctype html>
-<html lang="en-GB" class="{% if request.cookies.get("theme", "dark") == "dark" %}dark{% endif %}">
+<html lang="en-GB" class="{% if theme == "dark" %}dark{% endif %}">
     <head>
         {% if title %}
             {% set title = '%s | Jack Green' | format(title | safe) %}
