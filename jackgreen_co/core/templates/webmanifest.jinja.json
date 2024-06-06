@@ -18,28 +18,22 @@
     "short_name": "{{ config['SITE_NAME'] }}",
     "id": "/",
     "description": "{{ messages['core_manifest_description'] }}",
-    "start_url": "{{ url_for('main.index', _external=True) }}",
+    "start_url": "{{ url_for('main.index', _external=true) }}",
     "display": "standalone",
     "orientation": "portrait",
-    "background_color": "#000000",
-    "theme_color": "#000000",
+    "background_color": "#09090B",
+    "theme_color": "#09090B",
     "icons": [{
-            "src": "{{ url_for('static', filename='media/favicons/icon-192.png') }}",
+            "src": "{{ url_for('static', filename='media/favicons/favicon-192.png') }}",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "{{ url_for('static', filename='media/favicons/icon-512.png') }}",
+            "src": "{{ url_for('static', filename='media/favicons/favicon-512.png') }}",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
-        },
-        {
-            "src": "{{ url_for('static', filename='media/favicons/maskable-512.png') }}",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
         }
     ]
 }

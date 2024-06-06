@@ -19,12 +19,14 @@ from datetime import timedelta
 
 
 class Config(object):
-    def load(self, env=os.environ.get("FLASK_ENV")):
+    def load(self, env=os.environ.get("BUILD_ENV")):
         if env == "production":
             return ConfigProd
+        elif env == "staging":
+            return ConfigStaging
         return ConfigDev
 
-    def parse(self, env=os.environ.get("FLASK_ENV"), obj=None):
+    def parse(self, env=os.environ.get("BUILD_ENV"), obj=None):
         config = {}
         if not obj:
             obj = self.load(env)
@@ -56,15 +58,57 @@ class ConfigDev(BaseConfig):
     SERVER_NAME = "jackgreen.co:8000"
     MONGO_HOST = "localhost"
     MONGO_PORT = 27017
+    MONGO_TLS = False
     MONGO_DBNAME = "jackgreen_co"
     REDIS_HOST = "localhost"
     REDIS_PORT = 6379
+    REDIS_SSL = False
+
+
+class ConfigStaging(BaseConfig):
+    ENV = "staging"
+    DEBUG = True
+    SERVER_NAME = "jackgreen.co"
+    MONGO_HOST = "mongo"
+    MONGO_PORT = 27017
+    MONGO_DBNAME = "jackgreen_co"
+    MONGO_TLS = True
+    MONGO_TLSCAFILE = "/etc/ssl/internal/ca.pem"
+    MONGO_TLSCERTIFICATEKEYFILE = "/etc/ssl/internal/app.pem"
+    MONGO_USERNAME = os.environ.get("MONGO_USERNAME")
+    MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD")
+    REDIS_HOST = "redis"
+    REDIS_PORT = 6379
+    REDIS_SSL = True
+    REDIS_SSL_CA_CERTS = "/etc/ssl/internal/ca.pem"
+    REDIS_SSL_CERT_REQS = "required"
+    REDIS_SSL_CERTFILE = "/etc/ssl/internal/app-cert.pem"
+    REDIS_SSL_KEYFILE = "/etc/ssl/internal/app-key.pem"
+    REDIS_USERNAME = os.environ.get("REDIS_USERNAME")
+    REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
 
 
 class ConfigProd(BaseConfig):
     ENV = "production"
     DEBUG = False
     SERVER_NAME = "jackgreen.co"
+    MONGO_HOST = "mongo"
+    MONGO_PORT = 27017
+    MONGO_DBNAME = "jackgreen_co"
+    MONGO_TLS = True
+    MONGO_TLSCAFILE = "/etc/ssl/internal/ca.pem"
+    MONGO_TLSCERTIFICATEKEYFILE = "/etc/ssl/internal/app.pem"
+    MONGO_USERNAME = os.environ.get("MONGO_USERNAME")
+    MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD")
+    REDIS_HOST = "redis"
+    REDIS_PORT = 6379
+    REDIS_SSL = True
+    REDIS_SSL_CA_CERTS = "/etc/ssl/internal/ca.pem"
+    REDIS_SSL_CERT_REQS = "required"
+    REDIS_SSL_CERTFILE = "/etc/ssl/internal/app-cert.pem"
+    REDIS_SSL_KEYFILE = "/etc/ssl/internal/app-key.pem"
+    REDIS_USERNAME = os.environ.get("REDIS_USERNAME")
+    REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
 
 
 config = Config()

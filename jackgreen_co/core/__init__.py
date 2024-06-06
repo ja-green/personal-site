@@ -27,18 +27,18 @@ class MongoWrapper(object):
         mongo_config = {
             key[len("MONGO_") :].lower(): value for key, value in app.config.items() if key.startswith("MONGO_")
         }
-
-        del mongo_config["dbname"]
+        mongo_dbname = mongo_config.pop("dbname", None)
 
         try:
             self.client = MongoClient(**mongo_config)
-            self.db = self.client[app.config["MONGO_DBNAME"]]
+            self.db = self.client[mongo_dbname]
             self.client.admin.command("ismaster")
-        except ConnectionFailure:
-            print("Failed to connect to MongoDB")
+
+        except ConnectionFailure as e:
+            print(f"Failed to connect to MongoDB: {e}", flush=True)
             self.db = None
         except Exception as e:
-            print(f"An error occurred while initializing MongoDB: {e}")
+            print(f"An error occurred while initializing MongoDB: {e}", flush=True)
             self.db = None
 
 
@@ -51,11 +51,20 @@ class RedisWrapper(object):
             key[len("REDIS_") :].lower(): value for key, value in app.config.items() if key.startswith("REDIS_")
         }
 
+        redis_ssl = redis_config.pop("ssl", False)
+
         try:
-            self.redis = redis_py.StrictRedis(**redis_config)
+            if redis_ssl:
+                redis_config["connection_class"] = redis_py.SSLConnection
+            else:
+                redis_config["connection_class"] = redis_py.Connection
+
+            pool = redis_py.ConnectionPool(**redis_config)
+            self.redis = redis_py.StrictRedis(connection_pool=pool, ssl=redis_ssl)
             self.redis.ping()
-        except ConnectionError:
-            print("Failed to connect to Redis")
+
+        except ConnectionError as e:
+            print(f"Failed to connect to Redis: {e}")
             self.redis = None
         except Exception as e:
             print(f"An error occurred while initializing Redis: {e}")

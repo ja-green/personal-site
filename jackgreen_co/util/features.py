@@ -23,7 +23,7 @@ class FeatureFlagsDev(FeatureFlags):
 
 
 class FeatureFlagsProd(FeatureFlags):
-    BLOG = False
+    BLOG = True
 
 
 class Features(object):

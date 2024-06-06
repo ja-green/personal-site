@@ -1,7 +1,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.env
 
 venv/
+build/
+certs/
 
 jackgreen_co/core/static/

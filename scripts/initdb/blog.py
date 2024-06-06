@@ -15,12 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# file: load-blog-posts.py
-# date: 2024-01-30
+# file: build-blog.py
+# date: 2024-04-20
 # lang: python3
 #
-# load blog posts from markdown files into mongodb
+# generate mongodb JSON import file from markdown blog posts
 
+import getopt
+import json
 import os
 import re
 import subprocess
@@ -28,14 +30,18 @@ import sys
 from datetime import datetime
 
 import markdown2
-import pymongo
 import yaml
 from bs4 import BeautifulSoup
+from bson import ObjectId
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
-PROJECT_ROOT = subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").strip()
+PROJECT_ROOT = (
+    subprocess.check_output(["git", "rev-parse", "--show-toplevel"])
+    .decode("utf-8")
+    .strip()
+)
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
 
@@ -123,39 +129,38 @@ STOP_WORDS = set(
     ]
 )
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["jackgreen_co"]
-posts_col = db["posts"]
-categories_col = db["categories"]
-tags_col = db["tags"]
+
+def report_fatal(msg, status=1):
+    print(f"fatal: {msg}")
+    sys.exit(status)
 
 
-def clean_database():
-    posts_col.delete_many({})
-    categories_col.delete_many({})
-    tags_col.delete_many({})
+def parse_args():
+    options = {}
+    usage = "usage: blog.py [-h|--help] [-i|--input <path>] [-o|--output <path>]"
 
+    short_options = "hi:o:"
+    long_options = ["help", "input=", "output="]
 
-def find_or_create_category(title):
-    category = categories_col.find_one({"title": title})
-    if not category:
-        result = categories_col.insert_one({"title": title, "slug": generate_slug(title), "post_count": 1})
-        category_id = result.inserted_id
-    else:
-        category_id = category["_id"]
-        categories_col.update_one({"_id": category_id}, {"$inc": {"post_count": 1}})
-    return category_id
+    try:
+        opts, _ = getopt.getopt(sys.argv[1:], short_options, long_options)
+    except getopt.GetoptError as e:
+        report_fatal(str(e))
 
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            print(usage)
+            sys.exit()
+        elif opt in ("-i", "--input"):
+            options["input"] = arg
+        elif opt in ("-o", "--output"):
+            options["output"] = arg
 
-def find_or_create_tag(title):
-    tag = tags_col.find_one({"title": title})
-    if not tag:
-        result = tags_col.insert_one({"title": title, "slug": generate_slug(title), "post_count": 1})
-        tag_id = result.inserted_id
-    else:
-        tag_id = tag["_id"]
-        tags_col.update_one({"_id": tag_id}, {"$inc": {"post_count": 1}})
-    return tag_id
+    if options.get("input") is None or options.get("output") is None:
+        print(usage)
+        sys.exit(2)
+
+    return options
 
 
 def generate_slug(title):
@@ -187,17 +192,6 @@ def calculate_read_time(content):
     word_count = len(re.findall(r"\w+", content))
     read_time = round(word_count / AVERAGE_READ_SPEED_WPM)
     return max(read_time, 1)
-
-
-def process_categories_and_tags(categories, tags):
-    category_ids = [find_or_create_category(title) for title in categories]
-    tag_ids = [find_or_create_tag(title) for title in tags]
-    return category_ids, tag_ids
-
-
-def insert_post(post_data):
-    result = posts_col.insert_one(post_data)
-    return result.inserted_id
 
 
 def convert_images(html_content):
@@ -242,7 +236,9 @@ def convert_images(html_content):
         )
         picture.append(source_jpeg)
 
-        new_img = soup.new_tag("img", src=f"/assets/media/images/{img_name}-640.jpg", alt=img_alt)
+        new_img = soup.new_tag(
+            "img", src=f"/assets/media/images/{img_name}-640.jpg", alt=img_alt
+        )
 
         picture.append(new_img)
         figure.append(picture)
@@ -300,7 +296,13 @@ def apply_pygments(html_content):
 
 
 def markdown_to_html(markdown_content):
-    extras = ["fenced-code-blocks", "highlightjs-lang", "toc", "target-blank-links", "smarty-pants"]
+    extras = [
+        "fenced-code-blocks",
+        "highlightjs-lang",
+        "toc",
+        "target-blank-links",
+        "smarty-pants",
+    ]
 
     html_content = markdown2.markdown(
         markdown_content,
@@ -320,27 +322,50 @@ def html_to_text(html_content):
     return soup.get_text()
 
 
-def read_and_process_markdown_files(dir):
-    for filename in os.listdir(dir):
+def generate_object_id():
+    return ObjectId()
+
+
+def read_and_process_markdown_files(blog_dir):
+    posts = []
+    categories = {}
+    tags = {}
+
+    if not os.path.exists(blog_dir):
+        report_fatal(f"blog directory '{blog_dir}' does not exist")
+
+    for filename in os.listdir(blog_dir):
         if filename.endswith(".md"):
-            filepath = os.path.join(dir, filename)
+            filepath = os.path.join(blog_dir, filename)
             with open(filepath, "r") as file:
                 content = file.read()
                 front_matter, markdown_content = content.split("---", 2)[1:]
                 post_metadata = yaml.safe_load(front_matter)
-                if "date" in post_metadata:
-                    post_metadata["date"] = datetime.combine(post_metadata["date"], datetime.min.time())
+
+                category_ids = []
+                for category in post_metadata.get("categories", []):
+                    if category not in categories:
+                        categories[category] = generate_object_id()
+                    category_ids.append(categories[category])
+
+                tag_ids = []
+                for tag in post_metadata.get("tags", []):
+                    if tag not in tags:
+                        tags[tag] = generate_object_id()
+                    tag_ids.append(tags[tag])
 
                 html_content, toc = markdown_to_html(markdown_content)
-                text_content = html_to_text(html_content)
+                text_content = BeautifulSoup(html_content, "html.parser").get_text()
                 preview = generate_preview(text_content)
                 read_time = calculate_read_time(text_content)
                 slug = generate_slug(post_metadata["title"])
-                category_ids, tag_ids = process_categories_and_tags(post_metadata["categories"], post_metadata["tags"])
 
                 post_document = {
+                    "_id": generate_object_id(),
                     "title": post_metadata["title"],
-                    "date": post_metadata["date"],
+                    "date": datetime.combine(
+                        post_metadata["date"], datetime.min.time()
+                    ),
                     "image": post_metadata["image"],
                     "preview": preview,
                     "read_time": read_time,
@@ -350,15 +375,62 @@ def read_and_process_markdown_files(dir):
                     "categories": category_ids,
                     "tags": tag_ids,
                 }
-                insert_post(post_document)
+                posts.append(post_document)
+
+    return posts, categories, tags
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return {"$oid": str(o)}
+        if isinstance(o, datetime):
+            return {"$date": o.isoformat()}
+        return json.JSONEncoder.default(self, o)
 
 
 def main():
-    clean_database()
-    read_and_process_markdown_files(os.path.join(PROJECT_ROOT, "blog-posts"))
-    print("inserted %d posts" % posts_col.count_documents({}))
-    print("inserted %d categories" % categories_col.count_documents({}))
-    print("inserted %d tags" % tags_col.count_documents({}))
+    options = parse_args()
+    posts, categories, tags = read_and_process_markdown_files(options["input"])
+
+    output_file = os.path.join(options["output"], "initdb.js")
+
+    if not os.path.exists(options["output"]):
+        report_fatal(f"output directory '{options['output']}' does not exist")
+
+    with open(output_file, "a") as f:
+        f.write("db.posts.drop();\n")
+        f.write("db.categories.drop();\n")
+        f.write("db.tags.drop();\n\n")
+
+        f.write("db.posts.insertMany(EJSON.deserialize([\n")
+        for post in posts:
+            f.write(f"\t{json.dumps(post, cls=JSONEncoder)},\n")
+        f.write("]));\n\n")
+
+        f.write("db.categories.insertMany(EJSON.deserialize([\n")
+        for title, object_id in categories.items():
+            category = {
+                "_id": ObjectId(object_id),
+                "title": title,
+                "slug": generate_slug(title),
+            }
+            f.write(f"\t{json.dumps(category, cls=JSONEncoder)},\n")
+        f.write("]));\n\n")
+
+        f.write("db.tags.insertMany(EJSON.deserialize([\n")
+        for title, object_id in tags.items():
+            tag = {
+                "_id": ObjectId(object_id),
+                "title": title,
+                "slug": generate_slug(title),
+            }
+            f.write(f"\t{json.dumps(tag, cls=JSONEncoder)},\n")
+        f.write("]));\n")
+
+    print(f"inserted posts into init-mongo.js ({len(posts)} posts)")
+    print(f"inserted categories into init-mongo.js ({len(categories)} categories)")
+    print(f"inserted tags into init-mongo.js ({len(tags)} tags)")
 
 
 if __name__ == "__main__":

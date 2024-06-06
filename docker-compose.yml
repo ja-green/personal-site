@@ -1,0 +1,91 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: services/nginx/Dockerfile
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      acme:
+        condition: service_completed_successfully
+      app:
+        condition: service_started
+    volumes:
+      - acme-certs:/etc/ssl/public:ro
+      - nginx-logs:/var/log/nginx:rw
+    environment:
+      - BUILD_ENV=${BUILD_ENV}
+    networks:
+      - proxy_net
+      - internal_net
+  app:
+    build:
+      context: .
+      dockerfile: services/app/Dockerfile
+    container_name: app
+    restart: unless-stopped
+    expose:
+      - "8000"
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - BUILD_ENV=${BUILD_ENV}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - REDIS_USERNAME=${REDIS_USERNAME}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - proxy_net
+      - internal_net
+  mongo:
+    build:
+      context: .
+      dockerfile: services/mongo/Dockerfile
+    container_name: mongo
+    restart: unless-stopped
+    expose:
+      - "27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=jackgreen_co
+    networks:
+      - internal_net
+  redis:
+    build:
+      context: .
+      dockerfile: services/redis/Dockerfile
+    container_name: redis
+    restart: unless-stopped
+    expose:
+      - "6379"
+    environment:
+      - REDIS_INITDB_USERNAME=${REDIS_USERNAME}
+      - REDIS_INITDB_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - internal_net
+  acme:
+    build:
+      context: .
+      dockerfile: services/acme/Dockerfile
+    container_name: acme
+    restart: no
+    ports:
+      - "443:443"
+    volumes:
+      - acme-certs:/etc/ssl/public:rw
+    environment:
+      - BUILD_ENV=${BUILD_ENV}
+networks:
+  proxy_net:
+    driver: bridge
+  internal_net:
+    driver: bridge
+    internal: true
+volumes:
+  acme-certs:
+  nginx-logs:
