@@ -18,7 +18,7 @@
     "short_name": "{{ config['SITE_NAME'] }}",
     "id": "/",
     "description": "{{ messages['core_manifest_description'] }}",
-    "start_url": "{{ url_for('main.index', _external=true) }}",
+    "start_url": "{{ start_url }}",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#09090B",

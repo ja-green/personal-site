@@ -14,11 +14,8 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from urllib.parse import urlparse
-
 from flask import current_app, make_response, render_template, request, url_for
-
-from jackgreen_co.blog.services import (category_service, post_service,
-                                        tag_service)
+from jackgreen_co.blog.services import category_service, post_service, tag_service
 
 
 def sitemap():
@@ -36,12 +33,23 @@ def sitemap():
                 and len(rule.arguments) == 0
             ):
                 subdomain = bp.subdomain + "." if bp.subdomain else ""
-                url = {"loc": "%s://%s%s%s" % (host_components.scheme, subdomain, host_components.netloc, str(rule))}
+                url = {
+                    "loc": "%s://%s%s%s"
+                    % (
+                        host_components.scheme,
+                        subdomain,
+                        host_components.netloc,
+                        str(rule),
+                    )
+                }
                 static_urls.append(url)
 
     posts, _ = post_service.get()
     for post in posts:
-        url = {"loc": "%s" % (url_for("blog.post", slug=post.slug)), "lastmod": post.date.strftime("%Y-%m-%d")}
+        url = {
+            "loc": "%s" % (url_for("blog.post", slug=post.slug)),
+            "lastmod": post.date.strftime("%Y-%m-%d"),
+        }
         dynamic_urls.append(url)
 
     categories, _ = category_service.get()
@@ -54,7 +62,9 @@ def sitemap():
         url = {"loc": "%s" % (url_for("blog.tag", slug=tag.slug))}
         dynamic_urls.append(url)
 
-    body = render_template("sitemap.jinja.xml", static_urls=static_urls, dynamic_urls=dynamic_urls)
+    body = render_template(
+        "sitemap.jinja.xml", static_urls=static_urls, dynamic_urls=dynamic_urls
+    )
     response = make_response(body)
     response.headers["Content-Type"] = "application/xml"
 
@@ -62,7 +72,14 @@ def sitemap():
 
 
 def webmanifest():
-    body = render_template("webmanifest.jinja.json")
+    origin = request.headers.get("Origin")
+    start_url = request.host_url
+    if origin:
+        start_url = f"{origin}/"
+    body = render_template(
+        "webmanifest.jinja.json",
+        start_url=start_url,
+    )
     response = make_response(body)
     response.headers["Content-Type"] = "application/manifest+json"
 
