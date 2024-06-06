@@ -25,6 +25,7 @@ CAT            := $(shell command -v cat)
 CP_R           := $(shell command -v cp) -R
 DOCKER         := $(shell command -v docker)
 DOCKER_COMPOSE := $(shell command -v docker) compose
+MONGOSH        := $(shell command -v mongosh)
 MKDIR_P        := $(shell command -v mkdir) -p
 OPENSSL        := $(shell command -v openssl)
 PYTHON         := $(shell command -v python)
@@ -40,7 +41,17 @@ DIR_CERTS      := $(DIR_BUILD)/ssl
 
 DOCKER_CONTEXT := $(shell echo "ctx-$$RANDOM$$RANDOM")
 
-BUILD_ENV      := staging
+ifeq ($(BUILD_ENV),)
+	ifeq ($(MAKECMDGOALS),run-app)
+		BUILD_ENV := development
+	endif
+	ifeq ($(MAKECMDGOALS),run-full)
+		BUILD_ENV := staging
+	endif
+	ifeq ($(MAKECMDGOALS),deploy)
+		BUILD_ENV := production
+	endif
+endif
 
 .DEFAULT_GOAL  := build-full
 
@@ -57,7 +68,7 @@ usage: make [target]\n\
 \n\
 environment variables:\n\
     SERVER           the server to deploy to (required by: deploy, teardown)\n\
-    BUILD_ENV        the build environment (optional, default: staging)\n\
+    BUILD_ENV        the build environment (optional)\n\
 \n\
 targets:\n\
     clean            delete all files in the build and dist directories and create an empty manifest file\n\
@@ -152,6 +163,10 @@ build-initdb:
 	@$(MKDIR_P) $(DIR_BUILD)
 	@BUILD_ENV=$(BUILD_ENV) $(PYTHON) $(DIR_SCRIPTS)/initdb/blog.py --input $(PROJECT_ROOT)/blog-posts --output $(DIR_BUILD)
 	@BUILD_ENV=$(BUILD_ENV) $(PYTHON) $(DIR_SCRIPTS)/initdb/captcha.py --input $(PROJECT_ROOT)/captcha-data --output $(DIR_BUILD)
+	@if [ $(BUILD_ENV) = "development" ]; then \
+		echo "info: importing database"; \
+		$(MONGOSH) --host 127.0.0.1 --port 27017 --quiet jackgreen_co $(DIR_BUILD)/initdb.js; \
+	fi
 
 # fn/build-container
 #
@@ -243,7 +258,7 @@ build: build-essential
 # run the flask app in app-only mode
 run-app: build-essential
 	@echo "info: running in app-only mode"
-	@BUILD_ENV=development $(PYTHON) $(PROJECT_ROOT)/wsgi.py
+	@BUILD_ENV=$(BUILD_ENV) $(PYTHON) $(PROJECT_ROOT)/wsgi.py
 
 # fn/run-full
 #
@@ -271,8 +286,8 @@ deploy: build-full
 	@echo "info: deploying to production"
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
-	@BUILD_ENV=production $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
-	@BUILD_ENV=production $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
 
@@ -289,6 +304,6 @@ teardown:
 	@echo "info: taking down production server"
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
-	@BUILD_ENV=production $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down --volumes
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down --volumes
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1

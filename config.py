@@ -55,7 +55,7 @@ class BaseConfig(object):
 class ConfigDev(BaseConfig):
     ENV = "development"
     DEBUG = True
-    SERVER_NAME = "jackgreen.co:8000"
+    SERVER_NAME = "localhost:8000"
     MONGO_HOST = "localhost"
     MONGO_PORT = 27017
     MONGO_TLS = False
