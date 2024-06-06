@@ -35,7 +35,10 @@ def contact():
     form.set_action(url_for("main.contact"))
 
     if form.validate_on_submit():
-        flash(messages.Messages.main_contact_submitted % (form.first_name.data.title()), "info")
+        flash(
+            messages.Messages.main_contact_submitted % (form.first_name.data.title()),
+            "info",
+        )
 
         data = {
             "first_name": form.first_name.data,
@@ -46,3 +49,8 @@ def contact():
 
         return redirect(url_for("main.contact"), 303)
     return render_template("main/contact.jinja.html", contact_form=form)
+
+
+@main.route("/email")
+def pgp():
+    return render_template("main/email.jinja.html")

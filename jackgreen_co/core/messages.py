@@ -16,6 +16,7 @@
 
 class Messages(object):
     core_copyright = "Copyright"
+    core_here = "here"
     core_manifest_description = "Jack Green's personal website"
     core_header_home = "Home"
     core_header_about = "About"

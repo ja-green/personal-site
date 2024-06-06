@@ -69,11 +69,18 @@ module.exports = {
                         },
                         pre: {
                             color: "hsl(var(--foreground))",
+                            display: "flex",
                             borderRadius: "var(--radius)",
                             backgroundColor: "hsl(var(--background))",
                             borderWidth: "1px",
                             position: "relative",
                             fontSize: "small",
+                            lineHeight: "1.7",
+                            marginTop: "1.5em",
+                            marginBottom: "1.5em",
+                            overflowX: "auto",
+                            padding: "1em 1.5em",
+                            position: "relative",
                         },
                         li: {
                             marginTop: "0.2rem",

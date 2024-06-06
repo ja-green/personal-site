@@ -18,6 +18,7 @@
 {% from "components/card.jinja.html" import card, card_content %}
 {% from "components/form.jinja.html" import form, form_field, form_fieldset, form_submit %}
 {% from "components/header.jinja.html" import header, header_title %}
+{% from "components/link.jinja.html" import link %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -30,7 +31,11 @@
 {% endblock header %}
 
 {% block content %}
-<p class="text-muted-foreground">{{ messages["main_contact_lead"] }}</p>
+<p class="text-muted-foreground">
+    {{ messages["main_contact_lead1"] }}
+    {{ link(messages["core_here"], href=url_for("main.pgp")) }}
+    {{ messages["main_contact_lead2"] }}
+</p>
 
 {% for message in get_flashed_messages() %}
     {% call card() %}

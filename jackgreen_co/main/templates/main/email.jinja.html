@@ -1,0 +1,76 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/default.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
+
+{% block header %}
+{% call header() %}
+    {{ header_title(messages["main_email_heading"], subtitle=messages["main_email_subheading"]) }}
+{% endcall %}
+{% endblock header %}
+
+{% block content %}
+<p class="text-muted-foreground">{{ messages["main_email_lead"] }}</p>
+<pre>
+    <code class="language-text">{{ messages["main_email_pgp_key"] }}</code>
+    <button title="Copy to clipboard">
+        <span aria-live="polite">Copy to clipboard</span>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+    </button>
+</pre>
+
+<p class="text-muted-foreground">{{ messages["main_email_pgp_fingerprint_lead"] }}</p>
+<pre>
+    <code class="language-text">{{ messages["main_email_pgp_fingerprint"] }}</code>
+    <button title="Copy to clipboard">
+        <span aria-live="polite">Copy to clipboard</span>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+    </button>
+</pre>
+
+<p class="text-muted-foreground">{{ messages["main_email_address_lead"] }}</p>
+<pre>
+    <code class="language-text">{{ messages["main_email_address"] }}</code>
+    <button title="Copy to clipboard">
+        <span aria-live="polite">Copy to clipboard</span>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+    </button>
+</pre>
+{% endblock content %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/cblock.js') }}"></script>
+{% endblock script %}
+
+{# vim: set ft=htmldjango: #}

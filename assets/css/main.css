@@ -167,11 +167,20 @@
     }
 }
 
-.jetbrains-mono-variable {
-    font-family: "JetBrains Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
+pre {
+    color: hsl(var(--foreground));
+    display: flex;
+    border-radius: var(--radius);
+    background-color: hsl(var(--background));
+    border-width: 1px;
+    position: relative;
+    font-size: small;
+    line-height: 1.7;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    overflow-x: auto;
+    padding: 1em 1.5em;
+    position: relative;
 }
 
 pre > button {
@@ -179,8 +188,8 @@ pre > button {
     display: none;
     align-items: center;
     justify-content: center;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2rem;
+    width: 2rem;
     top: 0.5rem;
     right: 0.5rem;
     cursor: pointer;
