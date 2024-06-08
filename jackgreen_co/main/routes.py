@@ -14,23 +14,24 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from flask import flash, redirect, render_template, request, url_for
+from flask.typing import ResponseReturnValue
 
 from jackgreen_co.main import main, messages
 from jackgreen_co.main.forms import contact_form
 
 
 @main.route("/")
-def index():
+def index() -> ResponseReturnValue:
     return render_template("main/index.jinja.html")
 
 
 @main.route("/about")
-def about():
+def about() -> str:
     return render_template("main/about.jinja.html")
 
 
 @main.route("/contact", methods=["POST", "GET"])
-def contact():
+def contact() -> ResponseReturnValue:
     form = contact_form.ContactForm(request.form)
     form.set_action(url_for("main.contact"))
 
@@ -52,5 +53,5 @@ def contact():
 
 
 @main.route("/email")
-def pgp():
+def email() -> ResponseReturnValue:
     return render_template("main/email.jinja.html")

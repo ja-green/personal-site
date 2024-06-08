@@ -15,12 +15,12 @@
 
 import secrets
 import time
+from typing import Self
 
 from flask import session
-from wtforms import HiddenField
+from wtforms import HiddenField, widgets
 from wtforms import StringField as WTFStringField
 from wtforms import TextAreaField as WTFTextAreaField
-from wtforms import widgets
 from wtforms.fields import EmailField as WTFEmailField
 
 from jackgreen_co.core.services import captcha_service
@@ -29,12 +29,12 @@ from jackgreen_co.core.services import captcha_service
 class HyphenatedNameMixin:
     _hyphenated_name = None
 
-    def __getattr__(self, name):
+    def __getattr__(self: Self, name: str) -> str:
         if name == "name" and self._hyphenated_name:
             return self._hyphenated_name
         return super().__getattr__(name)
 
-    def __setattr__(self, name, value):
+    def __setattr__(self: Self, name: str, value: str):
         if name == "name":
             self._hyphenated_name = value.replace("_", "-")
         else:
@@ -56,7 +56,7 @@ class EmailField(HyphenatedNameMixin, WTFEmailField):
 class AgeTokenField(HyphenatedNameMixin, HiddenField):
     widget = widgets.HiddenInput()
 
-    def __init__(self, label=None, validators=None, **kwargs):
+    def __init__(self: Self, label: str = None, validators: list = None, **kwargs: dict):
         super(AgeTokenField, self).__init__(label, validators=validators, **kwargs)
 
         if not kwargs["_form"].is_submitted():
@@ -72,14 +72,14 @@ class AgeTokenField(HyphenatedNameMixin, HiddenField):
             self._token = session.get("age-token", None)
             self._timestamp = session.get("age-token-timestamp", None)
 
-    def _value(self):
+    def _value(self: Self) -> str:
         return self._token
 
 
 class CaptchaField(StringField):
     widget = widgets.TextInput()
 
-    def __init__(self, validators=None, **kwargs):
+    def __init__(self: Self, validators: list = None, **kwargs: dict):
         super(CaptchaField, self).__init__(label=None, validators=validators, **kwargs)
 
         if not kwargs["_form"].is_submitted():

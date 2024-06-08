@@ -19,7 +19,7 @@ from jackgreen_co import core
 from jackgreen_co.blog.models import post
 
 
-def get(terms={}, page=None, limit=None):
+def get(terms: dict = {}, limit: int = None, page: int = None) -> tuple[list[post.Category], int]:
     categories_per_page = current_app.config.get("BLOG_CATEGORIES_PER_PAGE", 10)
     total_categories = core.db.categories.count_documents(terms)
 

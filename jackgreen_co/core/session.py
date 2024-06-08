@@ -15,15 +15,18 @@
 
 import secrets
 from datetime import timedelta
+from typing import Self
 
 import msgpack
+from flask import Flask, Request, Response
 from flask.sessions import SessionInterface, SessionMixin
+from redis.client import StrictRedis
 from werkzeug.datastructures import CallbackDict
 
 
 class RedisSession(CallbackDict, SessionMixin):
-    def __init__(self, initial=None, sid=None):
-        def on_update(self):
+    def __init__(self: Self, initial: dict = None, sid: str = None):
+        def on_update(self: Self):
             self.modified = True
 
         super(RedisSession, self).__init__(initial, on_update)
@@ -35,20 +38,20 @@ class RedisSessionInterface(SessionInterface):
     serializer = msgpack
     session_class = RedisSession
 
-    def __init__(self, redis, prefix="session:"):
+    def __init__(self: Self, redis: StrictRedis, prefix: str = "session:"):
         self.redis = redis
         self.prefix = prefix
         self.sid_length = 64
 
-    def generate_sid(self):
+    def generate_sid(self: Self) -> str:
         return secrets.token_hex(self.sid_length)
 
-    def get_redis_expiration_time(self, app, session):
+    def get_redis_expiration_time(self: Self, app: Flask, session: RedisSession) -> timedelta:
         if session.permanent:
             return app.permanent_session_lifetime
         return app.config.get("SESSION_LIFETIME", timedelta(minutes=10))
 
-    def open_session(self, app, request):
+    def open_session(self: Self, app: Flask, request: Request) -> RedisSession:
         sid = request.cookies.get(app.config["SESSION_COOKIE_NAME"])
         if not sid:
             sid = self.generate_sid()
@@ -61,7 +64,7 @@ class RedisSessionInterface(SessionInterface):
 
         return self.session_class(sid=sid)
 
-    def save_session(self, app, session, response):
+    def save_session(self: Self, app: Flask, session: RedisSession, response: Response):
         domain = self.get_cookie_domain(app)
         path = self.get_cookie_path(app)
         if not session:

@@ -13,9 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Self
+
 
 class CaptchaQuestion(object):
-    def __init__(self, object_id, locale, category, question_id, question_text, answers):
+    def __init__(
+        self: Self, object_id: str, locale: str, category: str, question_id: str, question_text: str, answers: list
+    ):
         self._object_id = object_id
         self._locale = locale
         self._category = category
@@ -24,28 +28,28 @@ class CaptchaQuestion(object):
         self._answers = answers
 
     @property
-    def object_id(self):
+    def object_id(self: Self) -> str:
         return self._object_id
 
     @property
-    def locale(self):
+    def locale(self: Self) -> str:
         return self._locale
 
     @property
-    def category(self):
+    def category(self: Self) -> str:
         return self._category
 
     @property
-    def question_id(self):
+    def question_id(self: Self) -> str:
         return self._question_id
 
     @property
-    def question_text(self):
+    def question_text(self: Self) -> str:
         return self._question_text
 
     @property
-    def answers(self):
+    def answers(self: Self) -> list:
         return self._answers
 
-    def __repr__(self):
+    def __repr__(self: Self) -> str:
         return "<CaptchaQuestion %s>" % self.question_id

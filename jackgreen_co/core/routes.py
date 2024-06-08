@@ -14,11 +14,14 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from urllib.parse import urlparse
+
 from flask import current_app, make_response, render_template, request, url_for
+from flask.typing import ResponseReturnValue
+
 from jackgreen_co.blog.services import category_service, post_service, tag_service
 
 
-def sitemap():
+def sitemap() -> ResponseReturnValue:
     host_components = urlparse(request.host_url)
 
     static_urls = list()
@@ -62,16 +65,14 @@ def sitemap():
         url = {"loc": "%s" % (url_for("blog.tag", slug=tag.slug))}
         dynamic_urls.append(url)
 
-    body = render_template(
-        "sitemap.jinja.xml", static_urls=static_urls, dynamic_urls=dynamic_urls
-    )
+    body = render_template("sitemap.jinja.xml", static_urls=static_urls, dynamic_urls=dynamic_urls)
     response = make_response(body)
     response.headers["Content-Type"] = "application/xml"
 
     return response
 
 
-def webmanifest():
+def webmanifest() -> ResponseReturnValue:
     origin = request.headers.get("Origin")
     start_url = request.host_url
     if origin:

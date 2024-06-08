@@ -16,30 +16,9 @@
 import os
 import secrets
 from datetime import timedelta
+from typing import Self
 
-
-class Config(object):
-    def load(self, env=os.environ.get("BUILD_ENV")):
-        if env == "production":
-            return ConfigProd
-        elif env == "staging":
-            return ConfigStaging
-        return ConfigDev
-
-    def parse(self, env=os.environ.get("BUILD_ENV"), obj=None):
-        config = {}
-        if not obj:
-            obj = self.load(env)
-
-        for key in dir(obj):
-            if key.isupper():
-                config[key] = getattr(obj, key)
-
-        return config
-
-    def init_app(self, app):
-        c = self.parse()
-        app.config.from_mapping(c)
+from flask import Flask
 
 
 class BaseConfig(object):
@@ -109,6 +88,30 @@ class ConfigProd(BaseConfig):
     REDIS_SSL_KEYFILE = "/etc/ssl/internal/app-key.pem"
     REDIS_USERNAME = os.environ.get("REDIS_USERNAME")
     REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
+
+
+class Config(object):
+    def load(self: Self, env: str = os.environ.get("BUILD_ENV")) -> BaseConfig:
+        if env == "production":
+            return ConfigProd
+        if env == "staging":
+            return ConfigStaging
+        return ConfigDev
+
+    def parse(self: Self, env: str = os.environ.get("BUILD_ENV"), obj: BaseConfig = None) -> dict:
+        config = {}
+        if not obj:
+            obj = self.load(env)
+
+        for key in dir(obj):
+            if key.isupper():
+                config[key] = getattr(obj, key)
+
+        return config
+
+    def init_app(self: Self, app: Flask):
+        c = self.parse()
+        app.config.from_mapping(c)
 
 
 config = Config()

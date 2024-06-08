@@ -20,22 +20,22 @@ from flask import current_app, request
 from jackgreen_co.core.messages import Messages
 
 
-def current_date():
+def current_date() -> dict:
     return dict(current_date=datetime.utcnow())
 
 
-def messages():
+def messages() -> dict:
     return dict(messages=Messages)
 
 
-def endpoint():
+def endpoint() -> dict:
     return dict(endpoint=request.endpoint)
 
 
-def features():
+def features() -> dict:
     return dict(features=current_app.features)
 
 
-def theme():
+def theme() -> dict:
     theme = request.cookies.get("theme", "dark")
     return dict(theme="light" if theme == "light" else "dark")

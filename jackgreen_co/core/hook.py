@@ -13,10 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from flask import current_app, request
+from flask import Response, current_app, request
 
 
-def after_request(response):
+def after_request(response: Response) -> Response:
     origin = request.environ.get("HTTP_ORIGIN")
     if origin and origin.endswith("." + current_app.config["SERVER_NAME"]):
         response.headers["Access-Control-Allow-Origin"] = origin

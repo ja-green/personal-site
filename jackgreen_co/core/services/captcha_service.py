@@ -17,7 +17,7 @@ from jackgreen_co import core
 from jackgreen_co.core.models import captcha_question
 
 
-def get(data=None):
+def get(data: dict = None) -> list:
     question_data = core.db.captcha.find(data)
 
     return [
@@ -33,7 +33,7 @@ def get(data=None):
     ]
 
 
-def get_random(data=None):
+def get_random(data: dict = None) -> captcha_question.CaptchaQuestion:
     match = [{"$match": data}] if data else []
 
     terms = match + [{"$sample": {"size": 1}}]

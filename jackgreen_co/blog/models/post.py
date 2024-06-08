@@ -13,9 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Self
+
 
 class Post:
-    def __init__(self, data):
+    def __init__(self: Self, data: dict):
         self.object_id = data.get("_id")
         self.title = data.get("title")
         self.date = data.get("date")
@@ -28,27 +30,27 @@ class Post:
         self.categories = [Category(c) for c in data.get("categories", [])]
         self.tags = [Tag(t) for t in data.get("tags", [])]
 
-    def __repr__(self):
+    def __repr__(self: Self) -> str:
         return f"<Post {self.title}>"
 
 
 class Category:
-    def __init__(self, data):
+    def __init__(self: Self, data: dict):
         self.object_id = data.get("_id")
         self.title = data.get("title")
         self.slug = data.get("slug")
         self.post_count = data.get("post_count")
 
-    def __repr__(self):
+    def __repr__(self: Self) -> str:
         return f"<Category {self.title}>"
 
 
 class Tag:
-    def __init__(self, data):
+    def __init__(self: Self, data: dict):
         self.object_id = data.get("_id")
         self.title = data.get("title")
         self.slug = data.get("slug")
         self.post_count = data.get("post_count")
 
-    def __repr__(self):
+    def __repr__(self: Self) -> str:
         return f"<Tag {self.title}>"

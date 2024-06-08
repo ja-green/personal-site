@@ -14,9 +14,10 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from flask import current_app, render_template, request
+from flask.typing import ResponseReturnValue
 
 
-def route_error(e):
+def route_error(e: int) -> ResponseReturnValue:
     subdomain = request.host[: -len(current_app.config["SERVER_NAME"])].rstrip(".") or None
     path = request.path or ""
 
@@ -31,17 +32,17 @@ def route_error(e):
     return render_template("errors/%s.jinja.html" % (e), title="Error %s" % (e), is_error=True), e
 
 
-def global_e400(e):
+def global_e400() -> ResponseReturnValue:
     return route_error(400)
 
 
-def global_e404(e):
+def global_e404() -> ResponseReturnValue:
     return route_error(404)
 
 
-def global_e405(e):
+def global_e405() -> ResponseReturnValue:
     return route_error(405)
 
 
-def global_e500(e):
+def global_e500() -> ResponseReturnValue:
     return route_error(500)

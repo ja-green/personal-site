@@ -13,17 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Self
+
 import redis as redis_py
+from flask import Flask
 from pymongo.errors import ConnectionFailure
 from pymongo.mongo_client import MongoClient
 from redis.exceptions import ConnectionError
 
 
 class MongoWrapper(object):
-    def __init__(self):
+    def __init__(self: Self):
         self.db = None
 
-    def init_app(self, app):
+    def init_app(self: Self, app: Flask):
         mongo_config = {
             key[len("MONGO_") :].lower(): value for key, value in app.config.items() if key.startswith("MONGO_")
         }
@@ -43,10 +46,10 @@ class MongoWrapper(object):
 
 
 class RedisWrapper(object):
-    def __init__(self):
+    def __init__(self: Self):
         self.redis = None
 
-    def init_app(self, app):
+    def init_app(self: Self, app: Flask):
         redis_config = {
             key[len("REDIS_") :].lower(): value for key, value in app.config.items() if key.startswith("REDIS_")
         }

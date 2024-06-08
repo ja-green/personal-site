@@ -13,21 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from flask import (abort, make_response, redirect, render_template, request,
-                   url_for)
+from flask import abort, make_response, redirect, render_template, request, url_for
+from flask.typing import ResponseReturnValue
 
 from jackgreen_co.blog import blog
-from jackgreen_co.blog.services import (category_service, post_service,
-                                        tag_service)
+from jackgreen_co.blog.services import category_service, post_service, tag_service
 
 
 @blog.route("/")
-def index():
+def index() -> ResponseReturnValue:
     return redirect(url_for("blog.posts", page=1), code=301)
 
 
 @blog.route("/posts")
-def posts():
+def posts() -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.posts", page=1), code=301)
@@ -42,7 +41,7 @@ def posts():
 
 
 @blog.route("/posts/<slug>")
-def post(slug):
+def post(slug: str) -> ResponseReturnValue:
     posts, _ = post_service.get({"slug": slug})
     if not posts:
         abort(404)
@@ -53,7 +52,7 @@ def post(slug):
 
 
 @blog.route("/categories")
-def categories():
+def categories() -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.categories", page=1), code=301)
@@ -75,7 +74,7 @@ def categories():
 
 
 @blog.route("/categories/<slug>")
-def category(slug):
+def category(slug: str) -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.category", slug=slug, page=1), code=301)
@@ -102,7 +101,7 @@ def category(slug):
 
 
 @blog.route("/tags")
-def tags():
+def tags() -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.tags", page=1), code=301)
@@ -117,7 +116,7 @@ def tags():
 
 
 @blog.route("/tags/<slug>")
-def tag(slug):
+def tag(slug: str) -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.tag", slug=slug, page=1), code=301)
@@ -144,7 +143,7 @@ def tag(slug):
 
 
 @blog.route("/rss")
-def rss():
+def rss() -> ResponseReturnValue:
     posts, _ = post_service.get()
 
     body = render_template("blog/rss.jinja.xml", posts=posts)

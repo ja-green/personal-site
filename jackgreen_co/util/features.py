@@ -13,6 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Self
+
+from flask import Flask
+
 
 class FeatureFlags(object):
     pass
@@ -27,17 +31,17 @@ class FeatureFlagsProd(FeatureFlags):
 
 
 class Features(object):
-    def __init__(self):
+    def __init__(self: Self):
         pass
 
-    def parse_feature_flags(self, obj):
+    def parse_feature_flags(self: Self, obj: FeatureFlags) -> dict:
         flags = {}
         for key in dir(obj):
             if key.isupper():
                 flags[key] = getattr(obj, key)
         return flags
 
-    def init_app(self, app):
+    def init_app(self: Self, app: Flask):
         if app.config["ENV"] == "development":
             flags = self.parse_feature_flags(FeatureFlagsDev)
         else:

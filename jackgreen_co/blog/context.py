@@ -18,5 +18,5 @@ from jackgreen_co.blog.messages import Messages
 
 
 @blog.context_processor
-def messages():
+def messages() -> dict:
     return dict(messages=Messages)

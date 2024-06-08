@@ -15,23 +15,22 @@
 
 import os
 
-from flask import current_app
+from flask import Flask, current_app
 from flask import url_for as flask_url_for
 
 
-def init_app(app):
+def init_app(app: Flask) -> None:
     manifest_path = os.path.join(app.static_folder, app.config["ASSETS_MANIFEST"])
 
-    with app.app_context():
-        with open(manifest_path, "r") as f:
-            manifest = {}
-            for line in f:
-                original, hashed = line.strip().split(":")
-                manifest[original] = hashed
-            app.manifest = manifest
+    with app.app_context(), open(manifest_path, "r") as f:
+        manifest = {}
+        for line in f:
+            original, hashed = line.strip().split(":")
+            manifest[original] = hashed
+        app.manifest = manifest
 
 
-def url_for(endpoint, filename=None, **values):
+def url_for(endpoint: str, filename: str = None, **values: dict) -> str:
     if endpoint == "static":
         manifest = current_app.manifest
         if filename in manifest:

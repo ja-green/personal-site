@@ -14,26 +14,27 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from flask import render_template
+from flask.typing import ResponseReturnValue
 
 from jackgreen_co.main import main
 from jackgreen_co.main.messages import Messages
 
 
 @main.errorhandler(400)
-def e400(e):
+def e400() -> ResponseReturnValue:
     return render_template("main/errors/400.jinja.html", title="Error 400", is_error=True, messages=Messages), 400
 
 
 @main.errorhandler(404)
-def e404(e):
+def e404() -> ResponseReturnValue:
     return render_template("main/errors/404.jinja.html", title="Error 404", is_error=True, messages=Messages), 404
 
 
 @main.errorhandler(405)
-def e405(e):
+def e405() -> ResponseReturnValue:
     return render_template("main/errors/405.jinja.html", title="Error 405", is_error=True, messages=Messages), 405
 
 
 @main.errorhandler(500)
-def e500(e):
+def e500() -> ResponseReturnValue:
     return render_template("main/errors/500.jinja.html", title="Error 500", is_error=True, messages=Messages), 500

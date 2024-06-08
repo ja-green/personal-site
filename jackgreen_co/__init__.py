@@ -23,7 +23,7 @@ from jackgreen_co.main import main as bp_main
 from jackgreen_co.util import assets, features
 
 
-def init():
+def init() -> Flask:
     app = Flask(
         __name__,
         static_url_path="/assets",
