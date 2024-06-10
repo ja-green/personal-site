@@ -88,8 +88,6 @@ class CaptchaField(StringField):
             if not question:
                 raise RuntimeError("No questions found in the database.")
 
-            print("question chosen: %s" % question.question_id)
-
             session["captcha-answers"] = question.answers
 
             self._answers = question.answers
