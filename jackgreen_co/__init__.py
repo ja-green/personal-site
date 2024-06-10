@@ -33,12 +33,12 @@ def init() -> Flask:
     )
 
     config.init_app(app)
-    assets.init_app(app)
-    features.features.init_app(app)
     core.db_client.init_app(app)
     core.db = core.db_client.db
     core.redis_client.init_app(app)
     core.redis = core.redis_client.redis
+    features.features.init_app(app)
+    assets.assets.init_app(app)
     minify.minify.init_app(app, core.redis)
 
     app.session_interface = session.RedisSessionInterface(core.redis)
