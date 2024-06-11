@@ -15,8 +15,15 @@
 
 {%- macro link(text, href) -%}
 {% set class_ = kwargs.pop('class_', '') %}
+{% set rel = kwargs.pop('rel', '') %}
 
-<a href="{{ href }}" class="underline underline-offset-4 transition-colors hover:text-foreground/80 {{ class_ }}">
+{%- set is_external = (href.startswith("http://") or href.startswith("https://")) and config["SERVER_NAME"] not in href -%}
+
+{% if not rel and is_external %}
+    {% set rel = 'noreferrer' %}
+{% endif %}
+
+<a href="{{ href }}" class="underline underline-offset-4 transition-colors hover:text-foreground/80 {{ class_ }}" {% if rel %}rel="{{ rel }}"{% endif %}>
     {% if text %}{{ text }}{% endif %}
     {% if caller %}{{ caller() }}{% endif %}
 </a>
