@@ -18,9 +18,14 @@
 
 {% call footer() %}
     {% call footer_left() %}
-        <p class="mb-3">Copyright &copy; {{ current_date.strftime('%Y') }} {{ config['SITE_AUTHOR'] }}</p>
-        <p>The source code of this website is available under the {{ link("AGPLv3 License", "https://www.gnu.org/licenses/agpl-3.0.en.html") }}. Access it {{ link("here", "#") }}.</p>
-        <p>The content of this site is licensed under the {{ link("Creative Commons Attribution-NoDerivs 4.0 International License", "https://creativecommons.org/licenses/by-nd/4.0/") }}.</p>
+        <p class="mb-3">{{ messages["core_copyright"] }} &copy; {{ current_date.strftime("%Y") }} {{ config["SITE_AUTHOR"] }}</p>
+        <p>
+            {{ messages["core_footer_license_source1"] }} {{ link(messages["core_footer_license_source2"], "https://www.gnu.org/licenses/agpl-3.0.en.html") }}
+            {{ messages["core_footer_license_source3"] }} {{ link(messages["core_here"], "https://github.com/ja-green/personal-site") }}{{ messages["core_period"] }}
+        </p>
+        <p>
+            {{ messages["core_footer_license_content1"] }} {{ link(messages["core_footer_license_content2"], "https://creativecommons.org/licenses/by-nd/4.0/") }}{{ messages["core_period"] }}
+        </p>
     {% endcall %}
 {% endcall %}
 
