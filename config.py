@@ -35,6 +35,7 @@ class ConfigDev(BaseConfig):
     ENV = "development"
     DEBUG = True
     SERVER_NAME = "localhost:8000"
+    MINIFY_USE_CACHE = False
     MONGO_HOST = "localhost"
     MONGO_PORT = 27017
     MONGO_TLS = False
@@ -48,6 +49,7 @@ class ConfigStaging(BaseConfig):
     ENV = "staging"
     DEBUG = True
     SERVER_NAME = "jackgreen.co"
+    MINIFY_USE_CACHE = True
     MONGO_HOST = "mongo"
     MONGO_PORT = 27017
     MONGO_DBNAME = "jackgreen_co"
@@ -71,6 +73,7 @@ class ConfigProd(BaseConfig):
     ENV = "production"
     DEBUG = False
     SERVER_NAME = "jackgreen.co"
+    MINIFY_USE_CACHE = True
     MONGO_HOST = "mongo"
     MONGO_PORT = 27017
     MONGO_DBNAME = "jackgreen_co"

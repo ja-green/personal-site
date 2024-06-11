@@ -34,7 +34,7 @@ class Minify(object):
     def apply_minify_html(self: Self, html: str, path: str) -> str:
         key = f"cache:{hash(path)}"
 
-        if self.redis.exists(key):
+        if self.use_cache and self.redis.exists(key):
             return self.redis.get(key)
 
         data = minify_html.minify(html)
@@ -122,6 +122,7 @@ class Minify(object):
 
     def init_app(self: Self, app: Flask, redis: StrictRedis):
         self.redis = redis
+        self.use_cache = app.config.get("MINIFY_USE_CACHE", False)
 
         with app.app_context():
             app.after_request(self.after_request_compress)
