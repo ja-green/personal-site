@@ -89,5 +89,5 @@ class RedisSessionInterface(SessionInterface):
             httponly=True,
             domain=domain,
             path=path,
-            secure=(app.config["ENV"] == "production"),
+            secure=(app.config["ENV"] != "development"),
         )
