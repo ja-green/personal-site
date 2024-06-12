@@ -42,18 +42,18 @@ DIR_CERTS      := $(DIR_BUILD)/ssl
 DOCKER_CONTEXT := $(shell echo "ctx-$$RANDOM$$RANDOM")
 
 ifeq ($(BUILD_ENV),)
-	ifeq ($(MAKECMDGOALS),run-app)
-		BUILD_ENV := development
-	endif
-	ifeq ($(MAKECMDGOALS),run-full)
-		BUILD_ENV := staging
-	endif
-	ifeq ($(MAKECMDGOALS),deploy)
-		BUILD_ENV := production
-	endif
+    ifneq ($(filter run-app,$(MAKECMDGOALS)),)
+        BUILD_ENV := development
+    endif
+    ifneq ($(filter run run-full build build-initdb build-containers,$(MAKECMDGOALS)),)
+        BUILD_ENV := staging
+    endif
+    ifneq ($(filter deploy teardown,$(MAKECMDGOALS)),)
+        BUILD_ENV := production
+    endif
 endif
 
-.DEFAULT_GOAL  := build-full
+.DEFAULT_GOAL := build-full
 
 .PHONY: help clean build-css build-js build-images build-favicons build-fonts build-initdb build-containers \
 	create-ca build-cert-app build-cert-mongo build-cert-redis build-certs build-essential build-full build \
