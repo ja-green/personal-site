@@ -55,3 +55,8 @@ def contact() -> ResponseReturnValue:
 @main.route("/email")
 def email() -> ResponseReturnValue:
     return render_template("main/email.jinja.html")
+
+
+@main.route("/privacy-policy")
+def privacy_policy() -> ResponseReturnValue:
+    return render_template("main/privacy-policy.jinja.html")

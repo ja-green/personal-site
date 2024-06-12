@@ -1,0 +1,66 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/default.jinja.html" %}
+
+{% from "components/header.jinja.html" import header, header_title %}
+{% from "components/link.jinja.html" import link %}
+
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
+
+{% block header %}
+{% call header() %}
+    {{ header_title(messages["main_privacy_heading"], subtitle=messages["main_privacy_subheading"]) }}
+{% endcall %}
+{% endblock header %}
+
+{% block content %}
+<p class="text-muted-foreground mb-4">{{ messages["main_privacy_date"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d, %Y") }}</p>
+<p>{{ messages["main_privacy_lead"] }}</p>
+<div class="py-12">
+<div><b>{{ messages["main_privacy_q1"] }}</b><p class="mt-2">{{ messages["main_privacy_a1"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q2"] }}</b><p class="mt-2">{{ messages["main_privacy_a2"] }}</p>
+    <ol class="list-decimal pl-12 mt-2">
+        <li><b>{{ messages["main_privacy_a2_list1_title"] }}</b> {{ messages["main_privacy_a2_list1_info"] }}</li>
+        <li><b>{{ messages["main_privacy_a2_list2_title"] }}</b> {{ messages["main_privacy_a2_list2_info"] }}</li>
+    </ol>
+</div>
+<div class="mt-4"><b>{{ messages["main_privacy_q3"] }}</b><p class="mt-2">{{ messages["main_privacy_a3"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q4"] }}</b><p class="mt-2">{{ messages["main_privacy_a4"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q5"] }}</b><p class="mt-2">{{ messages["main_privacy_a5"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q6"] }}</b><p class="mt-2">{{ messages["main_privacy_a6"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q7"] }}</b><p class="mt-2">{{ messages["main_privacy_a7"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q8"] }}</b><p class="mt-2">{{ messages["main_privacy_a8"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q9"] }}</b><p class="mt-2">{{ messages["main_privacy_a9"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q10"] }}</b><p class="mt-2">{{ messages["main_privacy_a10"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q11"] }}</b><p class="mt-2">{{ messages["main_privacy_a11"] }}</p></div>
+
+<div class="mt-4">
+    <p>{{ messages["main_privacy_close1"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d. %Y") }}{{ messages["core_period"] }}</p>
+    <p class="mt-4">
+        {{ messages["main_privacy_close2p1"] }} {{ link(messages["core_here"], url_for("main.contact")) }} 
+        {{ messages["main_privacy_close2p2"] }} {{ link(messages["core_here"], url_for("main.email")) }}{{ messages["core_period"] }}
+    </p>
+</div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}

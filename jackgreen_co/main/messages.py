@@ -75,3 +75,44 @@ RhT3NUn60/4WXHUD
     main_email_pgp_fingerprint = "487eb77fc4dd47b77b54506b427fee9ee14350ed"
     main_email_address_lead = "All emails can be directed to:"
     main_email_address = "jack at jackgreen dot co"
+
+    main_privacy_heading = "Privacy Policy"
+    main_privacy_subheading = "Your privacy is important."
+    main_privacy_description = "TODO: Add a description here."
+    main_privacy_date = "Effective date:"
+    main_privacy_lead = "I am committed to protecting your privacy and handling your data in an open and transparent manner. This privacy policy sets out how I collect, use, store, and protect your personal information when you use my website."
+    main_privacy_q1 = "What information do I collect?"
+    main_privacy_a1 = "I collect information from you only when you voluntarily fill out the contact form on my website. The information collected includes your first name, last name, and email address. You may visit my website without providing any personal information, and no personal information will be gathered from you unless you provide it. No sensitive information is collected from you during any use of my website. I retain server logs which include the IP address of every request to my server(s), but I anonymise these IP addresses to protect your privacy."
+    main_privacy_q2 = "How do I use your information?"
+    main_privacy_a2 = "Any of the information I collect from you may be used in one of the following ways:"
+    main_privacy_a2_list1_title = "To improve my site:"
+    main_privacy_a2_list1_info = (
+        "I continually strive to improve my site offerings based on the information and feedback I receive from you."
+    )
+    main_privacy_a2_list2_title = "To communicate with you:"
+    main_privacy_a2_list2_info = (
+        "The email address you provide may be used respond to your inquiries, requests or questions."
+    )
+    main_privacy_q3 = "How do I protect your information?"
+    main_privacy_a3 = "I implement a variety of security measures to maintain the safety of your personal information when you enter, submit, or access your personal information. I collect only the minimum amount of information necessary for the website to function and for me to address any issues. Access to your personal data is limited to just myself. I employ security measures to protect your information and keep my systems up-to-date."
+    main_privacy_q4 = "What is my data retention policy?"
+    main_privacy_a4 = "I retain the personal information you provide in the contact form only for as long as necessary to respond to your inquiry or resolve your issue. Once the enquiry/conversation has completed, the communication will be deleted and no personal data will be stored for future use."
+    main_privacy_q5 = "Do I use cookies?"
+    main_privacy_a5 = 'Yes, but only a single session cookie (named "session" if you\'d like to inspect it yourself). Session cookies are temporary and are automatically deleted after the browser session ends. These cookies help me understand and save your preferences for your current session, for example, your preference of light-mode or dark-mode.'
+    main_privacy_q6 = "Do I disclose any information to outside parties?"
+    main_privacy_a6 = "No, I do not sell, trade, or transfer any of your information to outside parties. I may release information when necessary to comply with the law, enforce my policies, or protect my or others’ rights, property, or safety."
+    main_privacy_q7 = "Third-party links"
+    main_privacy_a7 = "My website may include or link to third-party products or services. These third parties have separate and independent privacy policies, and I have no responsibility or liability for their content or activities."
+    main_privacy_q8 = "Children's Online Privacy Protection Act compliance"
+    main_privacy_a8 = "My website is intended for use by individuals who are at least 13 years old. If you are under 13, please do not use this website. If I discover that personal information from a child under 13 has been collected, I will delete it promptly."
+    main_privacy_q9 = "Online Privacy Policy only"
+    main_privacy_a9 = "This online privacy policy applies only to information collected through my website and not to information collected offline."
+    main_privacy_q10 = "Your consent"
+    main_privacy_a10 = "By using my site, you consent to this privacy policy."
+    main_privacy_q11 = "Changes to my privacy policy"
+    main_privacy_a11 = "I may update this privacy policy from time to time. Any changes will be posted on this page with an updated effective date. Significant changes will be communicated through an announcement on the homepage."
+    main_privacy_close1 = "This document is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. It was last updated on"
+    main_privacy_close2p1 = (
+        "For any questions or concerns regarding this privacy policy, please contact me using the contact form"
+    )
+    main_privacy_close2p2 = "or via email, of which the details can be found"

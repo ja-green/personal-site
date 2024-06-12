@@ -15,7 +15,7 @@
 
 import os
 import secrets
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Self
 
 from flask import Flask
@@ -29,6 +29,7 @@ class BaseConfig(object):
     ASSETS_MANIFEST = "manifest.txt"
     SESSION_LIFETIME = timedelta(minutes=10)
     BLOG_POSTS_PER_PAGE = 2
+    PRIVACY_LAST_UPDATED = datetime(2024, 6, 12)
 
 
 class ConfigDev(BaseConfig):

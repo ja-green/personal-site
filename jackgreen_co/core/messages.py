@@ -22,6 +22,7 @@ class Messages(object):
     core_header_home = "Home"
     core_header_about = "About"
     core_header_contact = "Contact"
+    core_footer_privacy = "Privacy Policy"
     core_footer_license_source1 = "The source code for this website is licensed under the"
     core_footer_license_source2 = "GNU AGPLv3.0 License"
     core_footer_license_source3 = "and can be found"
