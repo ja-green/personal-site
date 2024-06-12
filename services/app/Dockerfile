@@ -19,7 +19,7 @@
 #
 # Dockerfile for jackgreen.co
 
-FROM python:3.8-slim
+FROM python:latest
 
 RUN mkdir -p /app /data /etc/gunicorn /etc/ssl
 
