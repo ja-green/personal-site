@@ -1,6 +1,8 @@
+
 categories:
   - id: common_knowledge
     questions:
+
       - id: sport_equipment
         templates: ["Which of the following objects is commonly used in a game of {sport}: {object1}, {object2} or {object3}?"]
         substitution_sets:
@@ -44,6 +46,7 @@ categories:
               - param: object3
                 value: "a sofa"
             answers: ["a pawn", "pawn", "pawns"]
+
       - id: object_color
         templates: ["What colour is {object}?"]
         substitution_sets:
@@ -71,6 +74,59 @@ categories:
               - param: object
                 value: "the white of an egg when cooked"
             answers: ["white"]
+          - substitutions:
+              - param: object
+                value: "a ripe tomato"
+            answers: ["red"]
+          - substitutions:
+              - param: object
+                value: "grass"
+            answers: ["green"]
+          - substitutions:
+              - param: object
+                value: "an orange"
+            answers: ["orange"]
+          - substitutions:
+              - param: object
+                value: "a polar bear's fur"
+            answers: ["white"]
+          - substitutions:
+              - param: object
+                value: "coal"
+            answers: ["black"]
+          - substitutions:
+              - param: object
+                value: "a lemon"
+            answers: ["yellow"]
+          - substitutions:
+              - param: object
+                value: "chocolate"
+            answers: ["brown"]
+          - substitutions:
+              - param: object
+                value: "an emerald"
+            answers: ["green"]
+          - substitutions:
+              - param: object
+                value: "a flamingo"
+            answers: ["pink"]
+          - substitutions:
+              - param: object
+                value: "a pumpkin"
+            answers: ["orange"]
+          - substitutions:
+              - param: object
+                value: "a ripe blueberry"
+            answers: ["blue"]
+          - substitutions:
+              - param: object
+                value: "a daffodil"
+            answers: ["yellow"]
+          - substitutions:
+              - param: object
+                value: "an avocado's skin"
+            answers: ["green"]
+
       - id: action_object
         templates: ["What do you use to {action}: {object1} or {object2}?", "Which one is more suitable to {action} with: {object1} or {object2}?"]
         substitution_sets:
@@ -105,15 +161,64 @@ categories:
                 value: "a spoon"
               - param: object2
                 value: "a paintbrush"
-            answers: ["paintbrush", "a paintbrush", "paintbrushes"]
+            answers: ["paintbrush", "a paintbrush"]
           - substitutions:
               - param: action
-                value: "play guitar"
+                value: "cut paper"
               - param: object1
-                value: "a pick"
+                value: "scissors"
               - param: object2
-                value: "a lightbulb"
-            answers: ["pick", "a pick", "picks", "guitar pick", "a guitar pick", "guitar picks"]
+                value: "a fork"
+            answers: ["scissors"]
+          - substitutions:
+              - param: action
+                value: "brush your teeth"
+              - param: object1
+                value: "a toothbrush"
+              - param: object2
+                value: "a hairbrush"
+            answers: ["toothbrush", "a toothbrush"]
+          - substitutions:
+              - param: action
+                value: "listen to music"
+              - param: object1
+                value: "a radio"
+              - param: object2
+                value: "a washing machine"
+            answers: ["radio", "a radio"]
+          - substitutions:
+              - param: action
+                value: "bake a cake"
+              - param: object1
+                value: "an oven"
+              - param: object2
+                value: "a dishwasher"
+            answers: ["oven", "a over", "an oven"]
+          - substitutions:
+              - param: action
+                value: "measure temperature"
+              - param: object1
+                value: "a thermometer"
+              - param: object2
+                value: "a ruler"
+            answers: ["thermometer", "a thermometer"]
+          - substitutions:
+              - param: action
+                value: "take a picture"
+              - param: object1
+                value: "a camera"
+              - param: object2
+                value: "a blender"
+            answers: ["camera", "a camera"]
+          - substitutions:
+              - param: action
+                value: "boil water"
+              - param: object1
+                value: "kettle"
+              - param: object2
+                value: "fan"
+            answers: ["kettle", "a kettle"]
+
       - id: vehicle_wheels
         templates: ["How many wheels does a {vehicle} have?"]
         substitution_sets:
@@ -129,65 +234,23 @@ categories:
               - param: vehicle
                 value: "car"
             answers: ["4", "four"]
-      - id: animal_noises
-        templates: ["A {animal} makes what noise: {noise1} or {noise2}?", "What noise does a {animal} make: {noise1} or {noise2}?"]
-        substitution_sets:
           - substitutions:
-              - param: animal
-                value: "pig"
-              - param: noise1
-                value: "woof"
-              - param: noise2
-                value: "oink"
-            answers: ["oink"]
+              - param: vehicle
+                value: "motorcycle"
+            answers: ["2", "two"]
           - substitutions:
-              - param: animal
-                value: "horse"
-              - param: noise1
-                value: "neigh"
-              - param: noise2
-                value: "woof"
-            answers: ["neigh"]
+              - param: vehicle
+                value: "tricycle"
+            answers: ["3", "three"]
           - substitutions:
-              - param: animal
-                value: "lion"
-              - param: noise1
-                value: "roar"
-              - param: noise2
-                value: "meow"
-            answers: ["roar"]
+              - param: vehicle
+                value: "skateboard"
+            answers: ["4", "four"]
           - substitutions:
-              - param: animal
-                value: "cat"
-              - param: noise1
-                value: "woof"
-              - param: noise2
-                value: "meow"
-            answers: ["meow"]
-          - substitutions:
-              - param: animal
-                value: "dog"
-              - param: noise1
-                value: "woof"
-              - param: noise2
-                value: "meow"
-            answers: ["woof"]
-          - substitutions:
-              - param: animal
-                value: "cow"
-              - param: noise1
-                value: "hiss"
-              - param: noise2
-                value: "moo"
-            answers: ["moo"]
-          - substitutions:
-              - param: animal
-                value: "sheep"
-              - param: noise1
-                value: "baa"
-              - param: noise2
-                value: "moo"
-            answers: ["baa"]
+              - param: vehicle
+                value: "quad bike"
+            answers: ["4", "four"]
+
       - id: animal_legs
         templates: ["How many legs does a {animal} have?", "A {animal} has how many legs?"]
         substitution_sets:
@@ -207,98 +270,448 @@ categories:
               - param: animal
                 value: "snake"
             answers: ["0", "none", "zero"]
-      - id: action_uses
-        templates: ["What do you use to {action}?"]
-        substitution_sets:
           - substitutions:
-              - param: action
-                value: "cut paper"
-            answers: ["scissors", "a pair of scissors", "some scissors"]
+              - param: animal
+                value: "dog"
+            answers: ["4", "four"]
           - substitutions:
-              - param: action
-                value: "chop vegetables"
-            answers: ["knife", "a knife", "knives"]
+              - param: animal
+                value: "cat"
+            answers: ["4", "four"]
           - substitutions:
-              - param: action
-                value: "paint a wall"
-            answers: ["paintbrush", "a paintbrush", "roller", "a roller"]
+              - param: animal
+                value: "human"
+            answers: ["2", "two"]
           - substitutions:
-              - param: action
-                value: "eat soup with"
-            answers: ["spoon", "a spoon", "spoons"]
+              - param: animal
+                value: "ant"
+            answers: ["6", "six"]
           - substitutions:
-              - param: action
-                value: "open a door"
-            answers: ["key", "a key", "keys"]
-      - id: object_room
-        templates: ["What room would you usually find {object} in?", "In what room would you usually find {object}?", "{object} can usually be found in which room?"]
-        substitution_sets:
+              - param: animal
+                value: "kangaroo"
+            answers: ["2", "two"]
           - substitutions:
-              - param: object
-                value: "a refridgerator"
-            answers: ["kitchen", "the kitchen", "a kitchen"]
+              - param: animal
+                value: "elephant"
+            answers: ["4", "four"]
           - substitutions:
-              - param: object
-                value: "a sofa"
-            answers: ["living room", "the living room", "a living room", "sitting room", "the sitting room", "a sitting room"]
+              - param: animal
+                value: "horse"
+            answers: ["4", "four"]
           - substitutions:
-              - param: object
-                value: "a toothbrush"
-            answers: ["bathroom", "the bathroom", "a bathroom", "bath room", "the bath room", "a bath room", "restroom", "the restroom", "a restroom", "rest room", "the rest room", "a rest room"]
+              - param: animal
+                value: "chicken"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: animal
+                value: "frog"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: animal
+                value: "beetle"
+            answers: ["6", "six"]
+          - substitutions:
+              - param: animal
+                value: "cow"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: animal
+                value: "penguin"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: animal
+                value: "sheep"
+            answers: ["4", "four"]
+
       - id: object_identify
-        templates: ["How many {subjects} are there in this list: {item1}, {item2}, {item3} and {item4}?"]
+        templates: ["How many {category} are there in the list: {items}?", "How many {category} are there in the following list: {items}?", "The list: {items}, contains how many {category}?"]
         substitution_sets:
           - substitutions:
-              - param: subjects
+              - param: category
                 value: "colours"
-              - param: item1
-                value: "red"
-              - param: item2
-                value: "yellow"
-              - param: item3
-                value: "biscuits"
-              - param: item4
-                value: "doors"
+              - param: items
+                value: "red, yellow, biscuits, door, Tuesday, reed"
             answers: ["two", "2"]
           - substitutions:
-              - param: subjects
+              - param: category
                 value: "items of food"
-              - param: item1
-                value: "purple"
-              - param: item2
-                value: "strawberry"
-              - param: item3
-                value: "pancakes"
-              - param: item4
-                value: "toast"
+              - param: items
+                value: "purple, strawberry, pancakes, toast"
             answers: ["three", "3"]
           - substitutions:
-              - param: subjects
+              - param: category
                 value: "animals"
-              - param: item1
-                value: "dolphin"
-              - param: item2
-                value: "book"
-              - param: item3
-                value: "blanket"
-              - param: item4
-                value: "socks"
+              - param: items
+                value: "dolphin, book, blanket, avocado"
             answers: ["one", "1"]
+          - substitutions:
+              - param: category
+                value: "months"
+              - param: items
+                value: "January, September, book, June, key" 
+            answers: ["three", "3"]
+          - substitutions:
+              - param: category
+                value: "plants"
+              - param: items
+                value: "watch, flower, cactus"
+            answers: ["two", "2"]
+          - substitutions:
+              - param: category
+                value: "countries"
+              - param: items
+                value: "Friday, shoe, Norway, orange, November"
+            answers: ["one", "1"]
+          - substitutions:
+              - param: category
+                value: "vehicles"
+              - param: items
+                value: "boat, train, bus"
+            answers: ["three", "3"]
+          - substitutions:
+              - param: category
+                value: "furniture"
+              - param: items
+                value: "sofa, thunder, apple, desk"
+            answers: ["two", "2"]
+          - substitutions:
+              - param: category
+                value: "musical instruments"
+              - param: items
+                value: "guitar, piano, rose, drums, xylophone"
+            answers: ["four", "4"]
+          - substitutions:
+              - param: category
+                value: "jobs"
+              - param: items
+                value: "teacher, hotel, pizza, engineer, bronze, Greece"
+            answers: ["two", "2"]
+          - substitutions:
+              - param: category
+                value: "metals"
+              - param: items
+                value: "silver, antelope, 82, mushroom, Tuesday, fly"
+            answers: ["one", "1"]
+
+      - id: common_sense_reasoning
+        templates: ["Which {item} does not belong? {items}"]
+        substitution_sets:
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "pig, horse, bucket, chicken"
+            answers: ["bucket", "the bucket", "a bucket"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "apple, orange, chair"
+            answers: ["chair", "the chair", "a chair"]
+          - substitutions:
+              - param: item
+                value: "number"
+              - param: items
+                value: "2, 4, 6, 8, 11"
+            answers: ["11", "eleven"]
+          - substitutions:
+              - param: item
+                value: "number"
+              - param: items
+                value: "one, three, five, six, seven"
+            answers: ["6", "six"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "cat, dog, computer, rabbit"
+            answers: ["computer", "the computer", "a computer"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "pen, pencil, notebook, watermelon"
+            answers: ["watermelon", "the watermelon", "a watermelon"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "banana, grape, car, apple, blueberry"
+            answers: ["car", "the car", "a car"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "dog, square, triangle, square"
+            answers: ["dog", "the dog", "a dog"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "red, green, blue, hammer"
+            answers: ["hammer", "the hammer", "a hammer"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "bicycle, car, airplane, broccoli"
+            answers: ["broccoli", "the broccoli", "a broccoli"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "hammer, banana, screwdriver, drill"
+            answers: ["banana", "the banana", "a banana"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "elephant, table, chair, desk, cabinet"
+            answers: ["elephant", "the elephant", "an elephant"]
+          - substitutions:
+              - param: item
+                value: "word"
+              - param: items
+                value: "hydrogen, oxygen, helium, pizza"
+            answers: ["pizza", "the pizza", "a pizza"]
+
   - id: pattern_recognition
     questions:
+
+      - id: alphabetical_order
+        templates: ["If you were to arrange the following words in alphabetical order, which word would be {index}? {words}"]
+        substitution_sets:
+          - substitutions:
+              - param: index
+                value: "first"
+              - param: words
+                value: "yoga, hockey, basketball"
+            answers: ["basketball"]
+          - substitutions:
+              - param: index
+                value: "last"
+              - param: words
+                value: "mud, address, hole, arrogant"
+            answers: ["mud"]
+          - substitutions:
+              - param: index
+                value: "second"
+              - param: words
+                value: "soup, half, achievement, glow"
+            answers: ["glow"]
+          - substitutions:
+              - param: index
+                value: "1st"
+              - param: words
+                value: "order, sales, quarrel"
+            answers: ["order"]
+          - substitutions:
+              - param: index
+                value: "3rd"
+              - param: words
+                value: "decision, energy, glass"
+            answers: ["glass"]
+
+      - id: num_index
+        templates: ["What is the {index} digit in {number}?"]
+        substitution_sets:
+          - substitutions:
+              - param: index
+                value: "first"
+              - param: number
+                value: "93543"
+            answers: ["9", "nine"]
+          - substitutions:
+              - param: index
+                value: "2nd"
+              - param: number
+                value: "54264310"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: index
+                value: "fifth"
+              - param: number
+                value: "81358413"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: index
+                value: "last"
+              - param: number
+                value: "893762542"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: index
+                value: "third"
+              - param: number
+                value: "7678"
+            answers: ["7", "seven"]
+          - substitutions:
+              - param: index
+                value: "4th"
+              - param: number
+                value: "134624"
+            answers: ["6", "six"]
+
+      - id: num_preposition
+        templates: ["What number comes {preposition} {number}?"]
+        substitution_sets:
+          - substitutions:
+              - param: preposition
+                value: "immediately before"
+              - param: number
+                value: "six"
+            answers: ["5", "five"]
+          - substitutions:
+              - param: preposition
+                value: "straight after"
+              - param: number
+                value: "17"
+            answers: ["18", "eighteen"]
+          - substitutions:
+              - param: preposition
+                value: "right before"
+              - param: number
+                value: "twenty"
+            answers: ["19", "nineteen"]
+          - substitutions:
+              - param: preposition
+                value: "immediately after"
+              - param: number
+                value: "10"
+            answers: ["11", "eleven"]
+          - substitutions:
+              - param: preposition
+                value: "right after"
+              - param: number
+                value: "three"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: preposition
+                value: "immediately before"
+              - param: number
+                value: "nine"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: preposition
+                value: "straight after"
+              - param: number
+                value: "25"
+            answers: ["26", "twenty-six"]
+          - substitutions:
+              - param: preposition
+                value: "right before"
+              - param: number
+                value: "forty"
+            answers: ["39", "thirty-nine"]
+          - substitutions:
+              - param: preposition
+                value: "immediately after"
+              - param: number
+                value: "50"
+            answers: ["51", "fifty-one"]
+          - substitutions:
+              - param: preposition
+                value: "right after"
+              - param: number
+                value: "seven"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: preposition
+                value: "immediately before"
+              - param: number
+                value: "thirteen"
+            answers: ["12", "twelve"]
+          - substitutions:
+              - param: preposition
+                value: "straight after"
+              - param: number
+                value: "99"
+            answers: ["100", "one hundred"]
+          - substitutions:
+              - param: preposition
+                value: "right before"
+              - param: number
+                value: "fifteen"
+            answers: ["14", "fourteen"]
+          - substitutions:
+              - param: preposition
+                value: "immediately after"
+              - param: number
+                value: "thirty"
+            answers: ["31", "thirty-one"]
+          - substitutions:
+              - param: preposition
+                value: "right after"
+              - param: number
+                value: "14"
+            answers: ["15", "fifteen"]
+
       - id: num_next_sequence
         templates: ["What comes next in the sequence: {sequence}?"]
         substitution_sets:
           - substitutions:
               - param: sequence
-                value: "1, 2, 3"
+                value: "1, 2, 3, 4"
+            answers: ["5", "five"]
+          - substitutions:
+              - param: sequence
+                value: "two, four, six"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: sequence
+                value: "10, 9, 8, 7, 6"
+            answers: ["5", "five"]
+          - substitutions:
+              - param: sequence
+                value: "13, 10, 7"
             answers: ["4", "four"]
           - substitutions:
               - param: sequence
-                value: "2, 4, 6"
-            answers: ["8", "eight"]
+                value: "four, 8, twelve"
+            answers: ["16", "sixteen"]
+          - substitutions:
+              - param: sequence
+                value: "5, 10, 15"
+            answers: ["20", "twenty"]
+          - substitutions:
+              - param: sequence
+                value: "3, six, 9, 12"
+            answers: ["15", "fifteen"]
+          - substitutions:
+              - param: sequence
+                value: "twenty, 18, 16, 14"
+            answers: ["12", "twelve"]
+          - substitutions:
+              - param: sequence
+                value: "8, 16, 24"
+            answers: ["32", "thirty-two"]
+          - substitutions:
+              - param: sequence
+                value: "21, 14, 7"
+            answers: ["0", "zero"]
+          - substitutions:
+              - param: sequence
+                value: "1, 4, 9, 16"
+            answers: ["25", "twenty-five"]
+          - substitutions:
+              - param: sequence
+                value: "100, 90, 80, 70"
+            answers: ["60", "sixty"]
+          - substitutions:
+              - param: sequence
+                value: "2, 3, five, 8"
+            answers: ["13", "thirteen"]
+          - substitutions:
+              - param: sequence
+                value: "11, 22, 33"
+            answers: ["44", "forty-four"]
+          - substitutions:
+              - param: sequence
+                value: "6, 12, eighteen, 24"
+            answers: ["30", "thirty"]
+
       - id: num_missing_sequence
-        templates: ["Which number is missing in the sequence: {sequence}?"]
+        templates: ["Which number is missing in the sequence: {sequence}?", "The sequence: {sequence}, is missing which number?"]
         substitution_sets:
           - substitutions:
               - param: sequence
@@ -308,7 +721,160 @@ categories:
               - param: sequence
                 value: "2, _, 6, 8"
             answers: ["4", "four"]
-      - id: letter_next_sequence
+          - substitutions:
+              - param: sequence
+                value: "0, 10, 20, _, 40"
+            answers: ["30", "thirty"]
+          - substitutions:
+              - param: sequence
+                value: "5, _, 15, 20"
+            answers: ["10", "ten"]
+          - substitutions:
+              - param: sequence
+                value: "3, 6, _, 12"
+            answers: ["9", "nine"]
+          - substitutions:
+              - param: sequence
+                value: "seven, 14, _, 28"
+            answers: ["21", "twenty-one"]
+          - substitutions:
+              - param: sequence
+                value: "15, _, 45, sixty"
+            answers: ["30", "thirty"]
+          - substitutions:
+              - param: sequence
+                value: "4, _, twelve, 16"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: sequence
+                value: "9, 18, _, 36"
+            answers: ["27", "twenty-seven"]
+          - substitutions:
+              - param: sequence
+                value: "8, 16, _, 32"
+            answers: ["24", "twenty-four"]
+          - substitutions:
+              - param: sequence
+                value: "6, 12, 18, _"
+            answers: ["24", "twenty-four"]
+          - substitutions:
+              - param: sequence
+                value: "11, 22, _, 44"
+            answers: ["33", "thirty-three"]
+          - substitutions:
+              - param: sequence
+                value: "20, 40, _, 80, 100"
+            answers: ["60", "sixty"]
+          - substitutions:
+              - param: sequence
+                value: "1, _, 9, 16"
+            answers: ["4", "four"]
+          - substitutions:
+              - param: sequence
+                value: "5, 10, _, 20, twenty-five"
+            answers: ["15", "fifteen"]
+          - substitutions:
+              - param: sequence
+                value: "20, fifteen, _, 5"
+            answers: ["10", "ten"]
+          - substitutions:
+              - param: sequence
+                value: "30, 25, _, 15, 10, 5"
+            answers: ["20", "twenty"]
+          - substitutions:
+              - param: sequence
+                value: "50, 40, _, 20"
+            answers: ["30", "thirty"]
+          - substitutions:
+              - param: sequence
+                value: "100, 90, _, seventy"
+            answers: ["80", "eighty"]
+          - substitutions:
+              - param: sequence
+                value: "9, 7, _, 3"
+            answers: ["5", "five"]
+          - substitutions:
+              - param: sequence
+                value: "15, 12, _, 6"
+            answers: ["9", "nine"]
+          - substitutions:
+              - param: sequence
+                value: "25, 20, _, 10"
+            answers: ["15", "fifteen"]
+          - substitutions:
+              - param: sequence
+                value: "eight, 6, _, 2"
+            answers: ["4", "four"]
+
+      - id: letter_missing
+        templates: ["What letter completes the word: {word}?", "What is the missing letter from the word: {word}?", "The word, {word} is missing which letter?"]
+        substitution_sets:
+          - substitutions:
+              - param: word
+                value: "co_fee"
+            answers: ["f"]
+          - substitutions:
+              - param: word
+                value: "magaz_ne"
+            answers: ["i"]
+          - substitutions:
+              - param: word
+                value: "hairbr_sh"
+            answers: ["u"]
+          - substitutions:
+              - param: word
+                value: "b_nana"
+            answers: ["a"]
+          - substitutions:
+              - param: word
+                value: "st_dent"
+            answers: ["u"]
+          - substitutions:
+              - param: word
+                value: "m_rror"
+            answers: ["i"]
+          - substitutions:
+              - param: word
+                value: "k_ttens"
+            answers: ["i"]
+          - substitutions:
+              - param: word
+                value: "scho_l"
+            answers: ["o"]
+          - substitutions:
+              - param: word
+                value: "fr_end"
+            answers: ["i"]
+          - substitutions:
+              - param: word
+                value: "t_ble"
+            answers: ["a"]
+          - substitutions:
+              - param: word
+                value: "aut_mn"
+            answers: ["u"]
+          - substitutions:
+              - param: word
+                value: "h_use"
+            answers: ["o"]
+          - substitutions:
+              - param: word
+                value: "be_ver"
+            answers: ["a"]
+          - substitutions:
+              - param: word
+                value: "cl_ss"
+            answers: ["a"]
+          - substitutions:
+              - param: word
+                value: "broc_oli"
+            answers: ["c"]
+          - substitutions:
+              - param: word
+                value: "oce_n"
+            answers: ["a"]
+
+      - id: index_sequence
         templates: ["What {item} comes {index} in the sequence: {sequence}?"]
         substitution_sets:
           - substitutions:
@@ -359,8 +925,74 @@ categories:
               - param: sequence
                 value: "laptop, mobile phone, tablet, computer, camera"
             answers: ["camera"]
+          - substitutions:
+              - param: item
+                value: "letter"
+              - param: index
+                value: "fourth"
+              - param: sequence
+                value: "Q, R, S, T, U"
+            answers: ["t"]
+          - substitutions:
+              - param: item
+                value: "day of the week"
+              - param: index
+                value: "2nd"
+              - param: sequence
+                value: "Monday, Tuesday, Wednesday, Thursday, Friday"
+            answers: ["tuesday"]
+          - substitutions:
+              - param: item
+                value: "planet"
+              - param: index
+                value: "third"
+              - param: sequence
+                value: "Mercury, Venus, Earth, Mars"
+            answers: ["earth"]
+          - substitutions:
+              - param: item
+                value: "color"
+              - param: index
+                value: "next"
+              - param: sequence
+                value: "red, orange, yellow, green, blue, indigo"
+            answers: ["violet"]
+          - substitutions:
+              - param: item
+                value: "fruit"
+              - param: index
+                value: "second"
+              - param: sequence
+                value: "apple, banana, cherry, date"
+            answers: ["banana"]
+          - substitutions:
+              - param: item
+                value: "season"
+              - param: index
+                value: "first"
+              - param: sequence
+                value: "spring, summer"
+            answers: ["winter"]
+          - substitutions:
+              - param: item
+                value: "shape"
+              - param: index
+                value: "3rd"
+              - param: sequence
+                value: "circle, triangle, square"
+            answers: ["square"]
+          - substitutions:
+              - param: item
+                value: "number"
+              - param: index
+                value: "fifth"
+              - param: sequence
+                value: "5, 10, 15, 20, 25, 30"
+            answers: ["25", "twenty-five"]
+
   - id: categorization
     questions:
+
       - id: category_type
         templates: ["Which is a type of {category}: {item1} or {item2}?"]
         substitution_sets:
@@ -404,14 +1036,119 @@ categories:
               - param: item2
                 value: "oak"
             answers: ["oak"]
+          - substitutions:
+              - param: category
+                value: "animal"
+              - param: item1
+                value: "dog"
+              - param: item2
+                value: "table"
+            answers: ["dog"]
+          - substitutions:
+              - param: category
+                value: "musical instrument"
+              - param: item1
+                value: "guitar"
+              - param: item2
+                value: "notebook"
+            answers: ["guitar"]
+          - substitutions:
+              - param: category
+                value: "building"
+              - param: item1
+                value: "house"
+              - param: item2
+                value: "banana"
+            answers: ["house"]
+          - substitutions:
+              - param: category
+                value: "metal"
+              - param: item1
+                value: "carrot"
+              - param: item2
+                value: "gold"
+            answers: ["gold"]
+          - substitutions:
+              - param: category
+                value: "plant"
+              - param: item1
+                value: "rose"
+              - param: item2
+                value: "book"
+            answers: ["rose"]
+          - substitutions:
+              - param: category
+                value: "profession"
+              - param: item1
+                value: "surgeon"
+              - param: item2
+                value: "sandwich"
+            answers: ["doctor"]
+          - substitutions:
+              - param: category
+                value: "country"
+              - param: item1
+                value: "France"
+              - param: item2
+                value: "Wednesday"
+            answers: ["France"]
+          - substitutions:
+              - param: category
+                value: "emotion"
+              - param: item1
+                value: "ruby"
+              - param: item2
+                value: "happiness"
+            answers: ["happiness"]
+          - substitutions:
+              - param: category
+                value: "planet"
+              - param: item1
+                value: "Mars"
+              - param: item2
+                value: "December"
+            answers: ["Mars"]
+          - substitutions:
+              - param: category
+                value: "continent"
+              - param: item1
+                value: "Africa"
+              - param: item2
+                value: "pencil"
+            answers: ["Africa"]
+          - substitutions:
+              - param: category
+                value: "sport"
+              - param: item1
+                value: "rugby"
+              - param: item2
+                value: "salad"
+            answers: ["soccer"]
+          - substitutions:
+              - param: category
+                value: "flower"
+              - param: item1
+                value: "tulip"
+              - param: item2
+                value: "Spain"
+            answers: ["tulip"]
+          - substitutions:
+              - param: category
+                value: "bird"
+              - param: item1
+                value: "chair"
+              - param: item2
+                value: "sparrow"
+            answers: ["sparrow"]
+
       - id: category_count
-        templates: ["The following list contains how many {category}: {items}?"]
+        templates: ["The following list contains how many {category}: {items}?", "The list {items} contains how many {category}?"]
         substitution_sets:
           - substitutions:
               - param: category
                 value: "colours"
               - param: items
-                value: "pink, red, chair, blue, compass, hand"
+                value: "pink, red, March, blue, compass, hand"
             answers: ["3", "three"]
           - substitutions:
               - param: category
@@ -423,16 +1160,84 @@ categories:
               - param: category
                 value: "animals"
               - param: items
-                value: "pink, cow, ice-cream, dog, compass, bottle"
+                value: "pink, cow, ice-cream, dog, July, bottle"
             answers: ["2", "two"]
           - substitutions:
               - param: category
                 value: "fabrics"
               - param: items
-                value: "cotton, yellow, denim, nylon, toilet, plastic"
+                value: "cotton, yellow, 3, nylon, toilet, plastic"
             answers: ["4", "four"]
+          - substitutions:
+              - param: category
+                value: "cheese"
+              - param: items
+                value: "Monday, orange, fruit, Sweden"
+            answers: ["0", "zero", "none"]
+          - substitutions:
+              - param: category
+                value: "fruits"
+              - param: items
+                value: "egg, July, grape, dog, Iceland"
+            answers: ["1", "one"]
+          - substitutions:
+              - param: category
+                value: "planets"
+              - param: items
+                value: "Mars, pencil, Jupiter, Monday, Venus"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: category
+                value: "days of the week"
+              - param: items
+                value: "Friday, crayon, Tuesday, book"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: category
+                value: "months"
+              - param: items
+                value: "February, car, Mercury, October, fire"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: category
+                value: "vegetables"
+              - param: items
+                value: "carrot, broccoli, cabbage"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: category
+                value: "countries"
+              - param: items
+                value: "France, April, Italy, Germany, Saturn"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: category
+                value: "currencies"
+              - param: items
+                value: "dollar, kangaroo, euro"
+            answers: ["2", "two"]
+          - substitutions:
+              - param: category
+                value: "flowers"
+              - param: items
+                value: "Finland, lake, sunflower"
+            answers: ["1", "one"]
+          - substitutions:
+              - param: category
+                value: "sports"
+              - param: items
+                value: "football, basketball, apple, tennis"
+            answers: ["3", "three"]
+          - substitutions:
+              - param: category
+                value: "shapes"
+              - param: items
+                value: "circle, square, dog, pink"
+            answers: ["2", "two"]
+
   - id: time
     questions:
+
       - id: hour_ago
         templates: ["If the time now is {time}, what time was it {amount} {duration_plural} ago?"]
         substitution_sets:
@@ -628,15 +1433,16 @@ categories:
               - param: duration_plural
                 value: "hours"
             answers: ["5pm", "5", "5:00", "17", "17:00"]
+
       - id: season_norms
-        templates: ["In which season {verb} {item} usually {something}?"]
+        templates: ["In which season {verb} {item} usually {descriptor}?"]
         substitution_sets:
           - substitutions:
               - param: verb
                 value: "are"
               - param: item
                 value: "the leaves"
-              - param: something
+              - param: descriptor
                 value: "orange"
             answers: ["autumn"]
           - substitutions:
@@ -644,7 +1450,7 @@ categories:
                 value: "does"
               - param: item
                 value: "snow"
-              - param: something
+              - param: descriptor
                 value: "fall"
             answers: ["winter"]
           - substitutions:
@@ -652,7 +1458,7 @@ categories:
                 value: "do"
               - param: item
                 value: "people"
-              - param: something
+              - param: descriptor
                 value: "sunbathe"
             answers: ["summer"]
           - substitutions:
@@ -660,19 +1466,68 @@ categories:
                 value: "do"
               - param: item
                 value: "flowers"
-              - param: something
+              - param: descriptor
                 value: "blossom"
             answers: ["spring"]
           - substitutions:
               - param: verb
-                value: "does"
+                value: "is"
               - param: item
-                value: "santa"
-              - param: something
-                value: "visit"
+                value: "the weather"
+              - param: descriptor
+                value: "coldest"
             answers: ["winter"]
+          - substitutions:
+              - param: verb
+                value: "are"
+              - param: item
+                value: "the days"
+              - param: descriptor
+                value: "longest"
+            answers: ["summer"]
+          - substitutions:
+              - param: verb
+                value: "do"
+              - param: item
+                value: "leaves"
+              - param: descriptor
+                value: "fall"
+            answers: ["autumn"]
+          - substitutions:
+              - param: verb
+                value: "are"
+              - param: item
+                value: "days"
+              - param: descriptor
+                value: "shortest"
+            answers: ["winter"]
+          - substitutions:
+              - param: verb
+                value: "is"
+              - param: item
+                value: "the sun"
+              - param: descriptor
+                value: "strongest"
+            answers: ["summer"]
+          - substitutions:
+              - param: verb
+                value: "do"
+              - param: item
+                value: "birds"
+              - param: descriptor
+                value: "migrate"
+            answers: ["autumn"]
+          - substitutions:
+              - param: verb
+                value: "do"
+              - param: item
+                value: "people"
+              - param: descriptor
+                value: "wear coats"
+            answers: ["winter"]
+
       - id: season_when
-        templates: ["If the season is currently {season}, what season {verb} it {time}?"]
+        templates: ["If the season is currently {season}, what season {verb} it {time}?", "What season {verb} it {time} if it is currently {season}?"]
         substitution_sets:
           - substitutions:
               - param: season
@@ -738,8 +1593,9 @@ categories:
               - param: time
                 value: "last"
             answers: ["autumn"]
+
       - id: day_when
-        templates: ["If today is {day}, what day {verb} it {time}?", "What day {verb} it {time} if it's {day} today?"]
+        templates: ["If today is {day}, what day {verb} it {time}?", "What day {verb} it {time} if it's {day} today?", "What day {verb} it {time} if it's currently {day}?"]
         substitution_sets:
           - substitutions:
               - param: day
@@ -845,8 +1701,9 @@ categories:
               - param: time
                 value: "tomorrow"
             answers: ["monday"]
+
       - id: month_when
-        templates: ["If this month is {month}, what month {verb} it {time} month?"]
+        templates: ["If this month is {month}, what month {verb} it {time} month?", "What month {verb} it {time}, if it's currently {month}?"]
         substitution_sets:
           - substitutions:
               - param: month
@@ -1024,13 +1881,15 @@ categories:
               - param: time
                 value: "next"
             answers: ["january"]
+
   - id: comparisons
     questions:
-      - id: heavier_object
-        templates: ["Which is {comparative}: {object1} or {object2}?"]
+
+      - id: object_comparison
+        templates: ["Which is {comparator}: {object1} or {object2}?", "Of {object1} and {object2}, which is {comparator}?"]
         substitution_sets:
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "heavier"
               - param: object1
                 value: "a feather"
@@ -1038,7 +1897,7 @@ categories:
                 value: "a rock"
             answers: ["rock", "a rock", "the rock"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "heavier"
               - param: object1
                 value: "a paperweight"
@@ -1046,7 +1905,7 @@ categories:
                 value: "paper"
             answers: ["paperweight", "a paperweight", "the paperweight"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "heavier"
               - param: object1
                 value: "a book"
@@ -1054,7 +1913,7 @@ categories:
                 value: "a car"
             answers: ["car", "a car", "the car"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "taller"
               - param: object1
                 value: "a child"
@@ -1062,15 +1921,15 @@ categories:
                 value: "a house"
             answers: ["a house", "house", "the house"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "softer"
               - param: object1
-                value: "a teddy"
+                value: "a blanket"
               - param: object2
                 value: "a rock"
-            answers: ["a teddy", "teddy", "the teddy"]
+            answers: ["a blanket", "blanket", "the blanket"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "bigger"
               - param: object1
                 value: "an elephant"
@@ -1078,76 +1937,164 @@ categories:
                 value: "a mouse"
             answers: ["an elephant", "elephant", "the elephant"]
           - substitutions:
-              - param: comparative
+              - param: comparator
                 value: "faster"
               - param: object1
                 value: "a tortoise"
               - param: object2
                 value: "a cheetah"
             answers: ["a cheetah", "cheetah", "the cheetah"]
-      - id: largest_number
-        templates: ["Which of {num1}, {num2}, {num3} and {num4} is the {comparative}?"]
+          - substitutions:
+              - param: comparator
+                value: "brighter"
+              - param: object1
+                value: "the sun"
+              - param: object2
+                value: "a candle"
+            answers: ["the sun", "sun"]
+          - substitutions:
+              - param: comparator
+                value: "colder"
+              - param: object1
+                value: "fire"
+              - param: object2
+                value: "ice"
+            answers: ["ice", "the ice"]
+          - substitutions:
+              - param: comparator
+                value: "larger"
+              - param: object1
+                value: "a tree"
+              - param: object2
+                value: "a leaf"
+            answers: ["a tree", "tree", "the tree"]
+          - substitutions:
+              - param: comparator
+                value: "smaller"
+              - param: object1
+                value: "an ant"
+              - param: object2
+                value: "a cat"
+            answers: ["an ant", "ant", "the ant"]
+          - substitutions:
+              - param: comparator
+                value: "quieter"
+              - param: object1
+                value: "a concert"
+              - param: object2
+                value: "a library"
+            answers: ["a library", "library", "the library"]
+          - substitutions:
+              - param: comparator
+                value: "sweeter"
+              - param: object1
+                value: "sugar"
+              - param: object2
+                value: "a potato"
+            answers: ["sugar", "the sugar"]
+          - substitutions:
+              - param: comparator
+                value: "more expensive"
+              - param: object1
+                value: "a diamond"
+              - param: object2
+                value: "a piece of paper"
+            answers: ["a diamond", "diamond", "the diamond"]
+
+      - id: number_comparison
+        templates: ["Which of {numbers} is the {comparator}?", "Of {numbers}, which is the {comparator}?"]
         substitution_sets:
           - substitutions:
-              - param: num1
-                value: "34"
-              - param: num2
-                value: "76"
-              - param: num3
-                value: "68"
-              - param: num4
-                value: "22"
-              - param: comparative
+              - param: numbers
+                value: "34, 76, 68, twenty-two"
+              - param: comparator
                 value: "largest"
-            answers: ["76", "seventy six", "seventy-six"]
+            answers: ["76", "seventy-six"]
           - substitutions:
-              - param: num1
-                value: "37"
-              - param: num2
-                value: "20"
-              - param: num3
-                value: "31"
-              - param: num4
-                value: "16"
-              - param: comparative
+              - param: numbers
+                value: "37, twenty, 31, sixteen"
+              - param: comparator
                 value: "largest"
-            answers: ["37", "thirty seven", "thirty-seven"]
+            answers: ["37", "thirty-seven"]
           - substitutions:
-              - param: num1
-                value: "16"
-              - param: num2
-                value: "50"
-              - param: num3
-                value: "28"
-              - param: num4
-                value: "4"
-              - param: comparative
+              - param: numbers
+                value: "17, 50, twenty-eight, 4"
+              - param: comparator
                 value: "smallest"
             answers: ["4", "four"]
           - substitutions:
-              - param: num1
-                value: "17"
-              - param: num2
-                value: "93"
-              - param: num3
-                value: "5"
-              - param: num4
-                value: "22"
-              - param: comparative
+              - param: numbers
+                value: "33, ninety-three, twenty-two, 47, 5"
+              - param: comparator
                 value: "even number"
-            answers: ["22", "twenty two", "twenty-two"]
+            answers: ["22", "twenty-two"]
           - substitutions:
-              - param: num1
-                value: "9"
-              - param: num2
-                value: "66"
-              - param: num3
-                value: "26"
-              - param: num4
-                value: "16"
-              - param: comparative
+              - param: numbers
+                value: "twelve, 66, 9, 126, 90"
+              - param: comparator
                 value: "odd number"
             answers: ["9", "nine"]
+          - substitutions:
+              - param: numbers
+                value: "88, 45, 62, thirty, 54, 31"
+              - param: comparator
+                value: "smallest"
+            answers: ["30", "thirty"]
+          - substitutions:
+              - param: numbers
+                value: "13, 78, forty-one, 22"
+              - param: comparator
+                value: "largest"
+            answers: ["78", "seventy-eight"]
+          - substitutions:
+              - param: numbers
+                value: "five, 3, 9, eight"
+              - param: comparator
+                value: "even number"
+            answers: ["8", "eight"]
+          - substitutions:
+              - param: numbers
+                value: "19, 30, 12, fifty-eight"
+              - param: comparator
+                value: "odd number"
+            answers: ["19", "nineteen"]
+          - substitutions:
+              - param: numbers
+                value: "four, 6, eleven, 8"
+              - param: comparator
+                value: "largest"
+            answers: ["11", "eleven"]
+          - substitutions:
+              - param: numbers
+                value: "7, 21, 14, twenty-eight"
+              - param: comparator
+                value: "smallest"
+            answers: ["7", "seven"]
+          - substitutions:
+              - param: numbers
+                value: "52, sixty-six, 88, 71"
+              - param: comparator
+                value: "largest"
+            answers: ["88", "eighty-eight"]
+          - substitutions:
+              - param: numbers
+                value: "forty-four, 11, 39, twenty-seven"
+              - param: comparator
+                value: "even number"
+            answers: ["44", "forty-four"]
+          - substitutions:
+              - param: numbers
+                value: "15, fifty, 26, 31, forty-five"
+              - param: comparator
+                value: "smallest"
+            answers: ["15", "fifteen"]
+          - substitutions:
+              - param: numbers
+                value: "8, twenty-five, 44, thirty, 162"
+              - param: comparator
+                value: "odd number"
+            answers: ["25", "twenty-five"]
+
       - id: opposite_of
         templates: ["{term} is the opposite of what?", "What is the opposite of {term}?"]
         substitution_sets:
@@ -1183,9 +2130,167 @@ categories:
               - param: term
                 value: "cold"
             answers: ["hot"]
+          - substitutions:
+              - param: term
+                value: "big"
+            answers: ["small"]
+          - substitutions:
+              - param: term
+                value: "small"
+            answers: ["big"]
+          - substitutions:
+              - param: term
+                value: "happy"
+            answers: ["sad"]
+          - substitutions:
+              - param: term
+                value: "sad"
+            answers: ["happy"]
+          - substitutions:
+              - param: term
+                value: "fast"
+            answers: ["slow"]
+          - substitutions:
+              - param: term
+                value: "slow"
+            answers: ["fast"]
+          - substitutions:
+              - param: term
+                value: "high"
+            answers: ["low"]
+          - substitutions:
+              - param: term
+                value: "low"
+            answers: ["high"]
+          - substitutions:
+              - param: term
+                value: "dark"
+            answers: ["light"]
+          - substitutions:
+              - param: term
+                value: "light"
+            answers: ["dark"]
+          - substitutions:
+              - param: term
+                value: "early"
+            answers: ["late"]
+          - substitutions:
+              - param: term
+                value: "late"
+            answers: ["early"]
+          - substitutions:
+              - param: term
+                value: "empty"
+            answers: ["full"]
+          - substitutions:
+              - param: term
+                value: "full"
+            answers: ["empty"]
+
   - id: observation
     questions:
-      - id: basic_logic
+
+      - id: pattern_logic
+        templates: ["The {index} {identifier} from {list} is?", "What is the {index} {indentifier} in the following list: {list}?"]
+        substitution_sets:
+          - substitutions:
+              - param: index
+                value: "third"
+              - param: identifier
+                value: "number"
+              - param: list
+                value: "purple, three, 19, buckets, twenty-six"
+            answers: ["twenty-six", "26", "twenty six"]
+          - substitutions:
+              - param: index
+                value: "second"
+              - param: identifier
+                value: "object"
+              - param: list
+                value: "laptop, yellow, table, book, 18"
+            answers: ["table"]
+          - substitutions:
+              - param: index
+                value: "last"
+              - param: identifier
+                value: "colour"
+              - param: list
+                value: "red, happiness, blue, ninety-three, weather, green"
+            answers: ["green"]
+          - substitutions:
+              - param: index
+                value: "first"
+              - param: identifier
+                value: "emotion"
+              - param: list
+                value: "cat, justice, lamp, anger, 5"
+            answers: ["anger"]
+          - substitutions:
+              - param: index
+                value: "1st"
+              - param: identifier
+                value: "greek god"
+              - param: list
+                value: "dog, computer, truth, Zeus, 143, Perseus"
+            answers: ["zeus"]
+          - substitutions:
+              - param: index
+                value: "second"
+              - param: identifier
+                value: "language"
+              - param: list
+                value: "England, brown, mouse, French, German, pen"
+            answers: ["german"]
+          - substitutions:
+              - param: index
+                value: "1st"
+              - param: identifier
+                value: "country"
+              - param: list
+                value: "London, peace, Scotland, lego"
+            answers: ["scotland"]
+          - substitutions:
+              - param: index
+                value: "third"
+              - param: identifier
+                value: "time"
+              - param: list
+                value: "10am, red, 13:15, twenty past five in the morning, 11:15pm, horse"
+            answers: ["twenty past five in the morning", "5:20", "05:20", "twenty-past-five", "five twenty", "five-twenty","5:20am"]
+          - substitutions:
+              - param: index
+                value: "last"
+              - param: identifier
+                value: "day"
+              - param: list
+                value: "Tuesday, green, Finland, Saturday, Jupiter"
+            answers: ["saturday"]
+
+      - id: basic_logic_names
+        templates: ["Is a person is called {name}, what is their name?", "What is {name}'s name?"]
+        substitution_sets:
+          - substitutions:
+              - param: name
+                value: "Mark"
+            answers: ["mark"]
+          - substitutions:
+              - param: name
+                value: "Julie"
+            answers: ["julie"]
+          - substitutions:
+              - param: name
+                value: "Sam"
+            answers: ["sam"]
+          - substitutions:
+              - param: name
+                value: "Jordan"
+            answers: ["jordan"]
+          - substitutions:
+              - param: name
+                value: "Amy"
+            answers: ["amy"]
+
+      - id: basic_logic_objects
         templates: ["The {object} {verb} what {descriptor}?", "What {descriptor} {verb} the {object}?"]
         substitution_sets:
           - substitutions:
@@ -1212,6 +2317,87 @@ categories:
               - param: descriptor
                 value: "material"
             answers: ["leather"]
+          - substitutions:
+              - param: object
+                value: "blue sky"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "colour"
+            answers: ["blue"]
+          - substitutions:
+              - param: object
+                value: "gold ring"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "material"
+            answers: ["gold"]
+          - substitutions:
+              - param: object
+                value: "round ball"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "shape"
+            answers: ["round"]
+          - substitutions:
+              - param: object
+                value: "silk scarf"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "material"
+            answers: ["silk"]
+          - substitutions:
+              - param: object
+                value: "green grass"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "colour"
+            answers: ["green"]
+          - substitutions:
+              - param: object
+                value: "wooden table"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "material"
+            answers: ["wood", "wooden"]
+          - substitutions:
+              - param: object
+                value: "rectangular mirror"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "shape"
+            answers: ["rectangular"]
+          - substitutions:
+              - param: object
+                value: "white paper"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "colour"
+            answers: ["white"]
+          - substitutions:
+              - param: object
+                value: "ceramic vase"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "material"
+            answers: ["ceramic"]
+          - substitutions:
+              - param: object
+                value: "triangular sign"
+              - param: verb
+                value: "is"
+              - param: descriptor
+                value: "shape"
+            answers: ["triangular"]
+
       - id: wall_color
         templates: ["In a room with {color1} walls and a {color2} carpet, what colour are the walls?"]
         substitution_sets:
@@ -1233,7 +2419,50 @@ categories:
               - param: color2
                 value: "red"
             answers: ["blue"]
-      - id: animal_uses
+          - substitutions:
+              - param: color1
+                value: "red"
+              - param: color2
+                value: "black"
+            answers: ["red"]
+          - substitutions:
+              - param: color1
+                value: "yellow"
+              - param: color2
+                value: "red"
+            answers: ["yellow"]
+          - substitutions:
+              - param: color1
+                value: "orange"
+              - param: color2
+                value: "black"
+            answers: ["orange"]
+          - substitutions:
+              - param: color1
+                value: "pink"
+              - param: color2
+                value: "yellow"
+            answers: ["pink"]
+          - substitutions:
+              - param: color1
+                value: "black"
+              - param: color2
+                value: "pink"
+            answers: ["black"]
+          - substitutions:
+              - param: color1
+                value: "red"
+              - param: color2
+                value: "orange"
+            answers: ["red"]
+          - substitutions:
+              - param: color1
+                value: "blue"
+              - param: color2
+                value: "pink"
+            answers: ["blue"]
+
+      - id: animal_actions
         templates: ["If {animal1}, {animal2} and {animal3} are in the {location}, which one can {action}?"]
         substitution_sets:
           - substitutions:
@@ -1247,7 +2476,7 @@ categories:
                 value: "garden"
               - param: action
                 value: "fly"
-            answers: ["a bird", "bird", "the bird", "birds"]
+            answers: ["a bird", "bird", "the bird"]
           - substitutions:
               - param: animal1
                 value: "a dog"
@@ -1259,7 +2488,7 @@ categories:
                 value: "garden"
               - param: action
                 value: "bark"
-            answers: ["a dog", "dog", "the dog", "dogs"]
+            answers: ["a dog", "dog", "the dog"]
           - substitutions:
               - param: animal1
                 value: "a kangaroo"
@@ -1270,17 +2499,5 @@ categories:
               - param: location
                 value: "zoo"
               - param: action
-                value: "carry its babies in their pouch?"
-            answers: ["a kangaroo", "the kangaroo", "kangaroo", "kangaroos"]
-          - substitutions:
-              - param: animal1
-                value: "a snake"
-              - param: animal2
-                value: "a monkey"
-              - param: animal3
-                value: "a parrot"
-              - param: location
-                value: "jungle"
-              - param: action
-                value: "climb trees?"
-            answers: ["a monkey", "monkey", "the monkey", "monkeys"]
+                value: "has two legs"
+            answers: ["a kangaroo", "the kangaroo", "kangaroo"]
