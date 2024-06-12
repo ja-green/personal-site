@@ -26,7 +26,7 @@ class Messages(object):
     core_footer_license_source2 = "GNU AGPLv3.0 License"
     core_footer_license_source3 = "and can be found"
     core_footer_license_content1 = "The content on this website is licensed under the"
-    core_footer_license_content2 = "Creative Commons Attribution-NoDerivs 4.0 International License"
+    core_footer_license_content2 = "Creative Commons Attribution-ShareAlike 4.0 International License"
     core_e500_heading = "500"
     core_e404_heading = "404"
     core_e405_heading = "405"
