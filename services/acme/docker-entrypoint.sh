@@ -19,11 +19,21 @@ issue_acme_cert() {
 }
 
 renew_acme_cert() {
-    echo "Renewing ACME certificate for ${domain}"
     domain=${1}
 
-    openssl x509 -checkend 86400 -noout -in "${CERT_PATH}/${domain}/fullchain.pem" || return
+    exp_time="$(openssl x509 -noout -enddate -in "${CERT_PATH}/${domain}/fullchain.pem" | cut -d= -f2)"
+    echo "Certificate for ${domain} expires at ${exp_time}"
 
+    exp_time_unix="$(date -d "${exp_time}" +%s)"
+    now_unix="$(date +%s)"
+    days_remaining="$(( (exp_time_unix - now_unix) / 86400 ))"
+
+    if [ "${days_remaining}" -gt 30 ]; then
+        echo "Certificate for ${domain} is still valid for ${days_remaining} days - skipping renewal"
+        return
+    fi
+
+    echo "Renewing ACME certificate for ${domain}"
     /root/.acme.sh/acme.sh --renew -d "${domain}" --force --alpn --ocsp --server "${CA}" \
         --key-file "${CERT_PATH}/${domain}/privkey.pem" \
         --fullchain-file "${CERT_PATH}/${domain}/fullchain.pem" \
