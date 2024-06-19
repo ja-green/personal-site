@@ -265,8 +265,8 @@ run-app: build-essential
 # run the flask app in full mode
 run-full: build-full
 	@echo "info: running in full mode (build-env: $(BUILD_ENV))"
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) down --volumes
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) up
+	@trap 'BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) down --volumes; exit 0' EXIT; \
+		BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) up
 
 # fn/run
 #
