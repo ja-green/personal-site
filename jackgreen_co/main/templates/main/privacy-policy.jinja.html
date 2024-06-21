@@ -30,28 +30,28 @@
 
 {% block content %}
 <p class="text-muted-foreground mb-4">{{ messages["main_privacy_date"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d, %Y") }}</p>
-<p>{{ messages["main_privacy_lead"] }}</p>
+<p class="text-muted-foreground">{{ messages["main_privacy_lead"] }}</p>
 <div class="py-12">
-<div><b>{{ messages["main_privacy_q1"] }}</b><p class="mt-2">{{ messages["main_privacy_a1"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q2"] }}</b><p class="mt-2">{{ messages["main_privacy_a2"] }}</p>
-    <ol class="list-decimal pl-12 mt-2">
+<div><b>{{ messages["main_privacy_q1"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a1"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q2"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a2"] }}</p>
+    <ol class="text-muted-foreground list-decimal pl-12 mt-2">
         <li><b>{{ messages["main_privacy_a2_list1_title"] }}</b> {{ messages["main_privacy_a2_list1_info"] }}</li>
         <li><b>{{ messages["main_privacy_a2_list2_title"] }}</b> {{ messages["main_privacy_a2_list2_info"] }}</li>
     </ol>
 </div>
-<div class="mt-4"><b>{{ messages["main_privacy_q3"] }}</b><p class="mt-2">{{ messages["main_privacy_a3"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q4"] }}</b><p class="mt-2">{{ messages["main_privacy_a4"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q5"] }}</b><p class="mt-2">{{ messages["main_privacy_a5"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q6"] }}</b><p class="mt-2">{{ messages["main_privacy_a6"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q7"] }}</b><p class="mt-2">{{ messages["main_privacy_a7"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q8"] }}</b><p class="mt-2">{{ messages["main_privacy_a8"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q9"] }}</b><p class="mt-2">{{ messages["main_privacy_a9"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q10"] }}</b><p class="mt-2">{{ messages["main_privacy_a10"] }}</p></div>
-<div class="mt-4"><b>{{ messages["main_privacy_q11"] }}</b><p class="mt-2">{{ messages["main_privacy_a11"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q3"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a3"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q4"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a4"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q5"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a5"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q6"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a6"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q7"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a7"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q8"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a8"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q9"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a9"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q10"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a10"] }}</p></div>
+<div class="mt-4"><b>{{ messages["main_privacy_q11"] }}</b><p class="text-muted-foreground mt-2">{{ messages["main_privacy_a11"] }}</p></div>
 
-<div class="mt-4">
-    <p>{{ messages["main_privacy_close1"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d. %Y") }}{{ messages["core_period"] }}</p>
-    <p class="mt-4">
+<div class="pt-12">
+    <p class="text-muted-foreground">{{ messages["main_privacy_close1"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d. %Y") }}{{ messages["core_period"] }}</p>
+    <p class="text-muted-foreground mt-4">
         {{ messages["main_privacy_close2p1"] }} {{ link(messages["core_here"], url_for("main.contact")) }} 
         {{ messages["main_privacy_close2p2"] }} {{ link(messages["core_here"], url_for("main.email")) }}{{ messages["core_period"] }}
     </p>
