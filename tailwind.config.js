@@ -82,6 +82,11 @@ module.exports = {
                             padding: "1em 1.5em",
                             position: "relative",
                         },
+                        code: {
+                            color: "hsl(var(--foreground))",
+                            fontSize: "small",
+                            lineHeight: "1.7",
+                        },
                         li: {
                             marginTop: "0.2rem",
                             marginBottom: "0.2rem",
@@ -95,6 +100,12 @@ module.exports = {
                             color: "hsl(var(--muted-foreground))",
                             fontStyle: "italic",
                             textAlign: "center",
+                        },
+                        hr: {
+                            borderColor: "hsl(var(--border))",
+                            borderTopWidth: "1px",
+                            marginBottom: "3em",
+                            marginTop: "3em",
                         },
                     },
                 },

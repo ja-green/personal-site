@@ -241,6 +241,19 @@ pre > code > .cpf {
     font-style: italic;
 }
 
+code {
+    color: hsl(var(--foreground));
+    font-size: small;
+    line-height: 1.7;
+}
+
+hr {
+    border-color: hsl(var(--border));
+    border-top-width: 1px;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
 @media (max-width: 640px) {
     .container {
         @apply px-4;
