@@ -37,11 +37,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
-PROJECT_ROOT = (
-    subprocess.check_output(["git", "rev-parse", "--show-toplevel"])
-    .decode("utf-8")
-    .strip()
-)
+PROJECT_ROOT = subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").strip()
 if PROJECT_ROOT not in sys.path:
     sys.path.append(PROJECT_ROOT)
 
@@ -236,9 +232,7 @@ def convert_images(html_content):
         )
         picture.append(source_jpeg)
 
-        new_img = soup.new_tag(
-            "img", src=f"/assets/media/images/{img_name}-640.jpg", alt=img_alt
-        )
+        new_img = soup.new_tag("img", src=f"/assets/media/images/{img_name}-640.jpg", alt=img_alt)
 
         picture.append(new_img)
         figure.append(picture)
@@ -258,6 +252,9 @@ def apply_pygments(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
     code_blocks = soup.find_all("code")
     for block in code_blocks:
+        if block.parent.name != "pre":
+            continue
+
         lang = None
         for class_ in block.get("class", []):
             if class_.startswith("language-"):
@@ -363,9 +360,7 @@ def read_and_process_markdown_files(blog_dir):
                 post_document = {
                     "_id": generate_object_id(),
                     "title": post_metadata["title"],
-                    "date": datetime.combine(
-                        post_metadata["date"], datetime.min.time()
-                    ),
+                    "date": datetime.combine(post_metadata["date"], datetime.min.time()),
                     "image": post_metadata["image"],
                     "preview": preview,
                     "read_time": read_time,
