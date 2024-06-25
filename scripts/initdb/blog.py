@@ -160,11 +160,13 @@ def parse_args():
 
 
 def generate_slug(title):
+    title = re.sub(r"[-_]+", " ", title)
+
     words = title.lower().split()
     filtered_words = [word for word in words if word not in STOP_WORDS]
     slug_base = " ".join(filtered_words)
 
-    slug = re.sub(r"[\s_]+", "-", slug_base)
+    slug = re.sub(r"[\s]+", "-", slug_base)
     slug = re.sub(r"[^\w-]", "", slug)
     slug = slug.strip("-")
 
