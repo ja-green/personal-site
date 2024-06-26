@@ -25,7 +25,7 @@
 {% set class_ = kwargs.pop('class_', '') %}
 {% set subtitle = kwargs.pop('subtitle', '') %}
 
-<div class="col-span-2 flex flex-col gap-2">
+<div class="col-span-3 flex flex-col gap-2 lg:col-span-2">
     {% if subtitle %}
     <hgroup>
         <h1 class="text-2xl font-bold leading-tight tracking-tighter mb-2 md:text-3xl lg:leading-[1.1] {{ class_ }}">
@@ -46,7 +46,7 @@
 {% macro header_extra() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<div class="grid justify-end content-center gap-2">
+<div class="hidden justify-end content-center gap-2 lg:grid">
     {{ caller() }}
 </div>
 {% endmacro %}
