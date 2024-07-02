@@ -26,7 +26,7 @@
 {% macro navbar_left() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<div class="mr-4 hidden md:flex {{ class_ }}">
+<div class="mr-4 flex {{ class_ }}">
     {{ caller() }}
 </div>
 {% endmacro %}
@@ -34,7 +34,7 @@
 {% macro navbar_right() %}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+<div class="flex flex-1 items-center space-x-2 justify-end">
     {{ caller() }}
 </div>
 {% endmacro %}
