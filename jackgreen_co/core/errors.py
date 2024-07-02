@@ -32,17 +32,17 @@ def route_error(e: int) -> ResponseReturnValue:
     return render_template("errors/%s.jinja.html" % (e), title="Error %s" % (e), is_error=True), e
 
 
-def global_e400() -> ResponseReturnValue:
+def global_e400(_) -> ResponseReturnValue:
     return route_error(400)
 
 
-def global_e404() -> ResponseReturnValue:
+def global_e404(_) -> ResponseReturnValue:
     return route_error(404)
 
 
-def global_e405() -> ResponseReturnValue:
+def global_e405(_) -> ResponseReturnValue:
     return route_error(405)
 
 
-def global_e500() -> ResponseReturnValue:
+def global_e500(_) -> ResponseReturnValue:
     return route_error(500)
