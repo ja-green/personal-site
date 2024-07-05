@@ -402,7 +402,6 @@ def read_and_process_markdown_files(blog_dir):
                 "id": generate_object_id(),
                 "slug": generate_slug(series_metadata["title"]),
                 "description": series_metadata["description"],
-                "image": series_metadata["image"],
             },
         )["id"]
 
@@ -456,7 +455,6 @@ def main():
                 "title": title,
                 "slug": data["slug"],
                 "description": data["description"],
-                "image": data["image"],
             }
             f.write(f"\t{json.dumps(series_data, cls=JSONEncoder)},\n")
         f.write("]));\n\n")

@@ -42,7 +42,6 @@ class Series:
         self.title = data.get("title")
         self.slug = data.get("slug")
         self.description = data.get("description")
-        self.image = data.get("image")
         self.post_count = data.get("post_count")
 
     def __repr__(self: Self) -> str:
