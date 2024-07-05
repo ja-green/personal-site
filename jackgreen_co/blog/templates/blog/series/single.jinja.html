@@ -30,12 +30,12 @@
 
 {% block header %}
 {% call header() %}
-    {{ header_title(tag.title, subtitle=messages["blog_tag_subheading"] | format(tag.title)) }}
+    {{ header_title(series_item.title, subtitle=series_item.description) }}
     {% call header_extra() %}
         {% call breadcrumb() %}
             {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
-            {{ breadcrumb_item(messages["blog_tags_heading"], href=url_for("blog.tags", page=1)) }}
-            {{ breadcrumb_item(tag.title, active=true) }}
+            {{ breadcrumb_item(messages["blog_series_heading"], href=url_for("blog.series", page=1)) }}
+            {{ breadcrumb_item(series_item.title, active=true) }}
         {% endcall %}
     {% endcall %}
 {% endcall %}
@@ -74,12 +74,12 @@
 
 {% call pagination() %}
     {% if page == 1 %}
-        {{ pagination_previous(href=url_for("blog.tag", slug=tag.slug, page=page), disabled=true) }}
+        {{ pagination_previous(href=url_for("blog.single_series", slug=series_item.slug, page=page), disabled=true) }}
     {% else %}
-        {{ pagination_previous(href=url_for("blog.tag", slug=tag.slug, page=page-1)) }}
+        {{ pagination_previous(href=url_for("blog.single_series", slug=series_item.slug, page=page-1)) }}
     {% endif %}
 
-    {{ pagination_page(1, href=url_for("blog.tag", slug=tag.slug, page=1), current=(page==1)) }}
+    {{ pagination_page(1, href=url_for("blog.single_series", slug=series_item.slug, page=1), current=(page==1)) }}
     {% if page > 4 %}
         {{ pagination_more() }}
     {% endif %}
@@ -89,9 +89,9 @@
 
     {% for i in range(start_page, end_page + 1) %}
         {% if page == i or page - 1 == i or page + 1 == i %}
-            {{ pagination_page(text=i, href=url_for("blog.tag", slug=tag.slug, page=i), current=(page==i)) }}
+            {{ pagination_page(text=i, href=url_for("blog.single_series", slug=series_item.slug, page=i), current=(page==i)) }}
         {% else %}
-            {{ pagination_page(i, href=url_for("blog.tag", slug=tag.slug, page=i), class_="hidden sm:inline-flex") }}
+            {{ pagination_page(i, href=url_for("blog.single_series", slug=series_item.slug, page=i), class_="hidden sm:inline-flex") }}
         {% endif %}
     {% endfor %}
 
@@ -100,13 +100,13 @@
     {% endif %}
 
     {% if total_pages > 1 %}
-        {{ pagination_page(total_pages, href=url_for("blog.tag", slug=tag.slug, page=total_pages), current=(page==total_pages)) }}
+        {{ pagination_page(total_pages, href=url_for("blog.single_series", slug=series_item.slug, page=total_pages), current=(page==total_pages)) }}
     {% endif %}
 
     {% if page == total_pages %}
-        {{ pagination_next(href=url_for("blog.tag", slug=tag.slug, page=page), disabled=true) }}
+        {{ pagination_next(href=url_for("blog.single_series", slug=series_item.slug, page=page), disabled=true) }}
     {% else %}
-        {{ pagination_next(href=url_for("blog.tag", slug=tag.slug, page=page+1)) }}
+        {{ pagination_next(href=url_for("blog.single_series", slug=series_item.slug, page=page+1)) }}
     {% endif %}
 {% endcall %}
 {% endblock content %}
@@ -143,11 +143,11 @@
     </ul>
     {{ link(messages["blog_posts_viewtags"], href=url_for("blog.tags", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
 </div>
-{% call button_link_outline(href=url_for("blog.tags", page=1), class_="mt-6") %}
+{% call button_link_outline(href=url_for("blog.categories", page=1), class_="mt-6") %}
     <svg aria-hidden="true" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 me-2">
         <path d="M8.84160 3.13508C8.64015 2.94621 8.32373 2.95642 8.13486 3.15788L4.38490 7.15788C4.20460 7.35020 4.20460 7.64949 4.38490 7.84182L8.13486 11.84180C8.32373 12.04330 8.64015 12.05350 8.84160 11.86460C9.04306 11.67570 9.05327 11.35930 8.86440 11.15790L5.43500 7.49985L8.86440 3.84182C9.05327 3.64036 9.04306 3.32394 8.84160 3.13508" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
     </svg>
-    {{ messages["blog_back_to_tags"] }}
+    {{ messages["blog_back_to_series"] }}
 {% endcall %}
 {% endblock sidebar %}
 

@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 from flask import current_app, make_response, render_template, request, url_for
 from flask.typing import ResponseReturnValue
 
-from jackgreen_co.blog.services import category_service, post_service, tag_service
+from jackgreen_co.blog.services import category_service, post_service, series_service, tag_service
 
 
 def sitemap() -> ResponseReturnValue:
@@ -53,6 +53,11 @@ def sitemap() -> ResponseReturnValue:
             "loc": "%s" % (url_for("blog.post", slug=post.slug)),
             "lastmod": post.date.strftime("%Y-%m-%d"),
         }
+        dynamic_urls.append(url)
+
+    series, _ = series_service.get()
+    for series_item in series:
+        url = {"loc": "%s" % (url_for("blog.single_series", slug=series_item.slug))}
         dynamic_urls.append(url)
 
     categories, _ = category_service.get()

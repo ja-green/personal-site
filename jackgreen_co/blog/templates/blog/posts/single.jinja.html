@@ -18,8 +18,11 @@
 {% from "components/badge.jinja.html" import badge_link_secondary %}
 {% from "components/breadcrumb.jinja.html" import breadcrumb, breadcrumb_item %}
 {% from "components/button.jinja.html" import button_link_outline %}
+{% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
 {% from "components/header.jinja.html" import header, header_title, header_extra %}
+{% from "components/image.jinja.html" import image %}
 {% from "components/link.jinja.html" import link %}
+{% from "components/pagination.jinja.html" import pagination_full, pagination_previous_boxed, pagination_next_boxed %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -29,18 +32,42 @@
 {% call header() %}
     {{ header_title(post.title, subtitle=post.date.strftime("%B %d, %Y")) }}
     {% call header_extra() %}
-        {% call breadcrumb() %}
-            {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
-            {{ breadcrumb_item(post.title, active=true) }}
-        {% endcall %}
+        {% if post.series %}
+            {% call breadcrumb() %}
+                {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
+                {{ breadcrumb_item(messages["blog_series_heading"], href=url_for("blog.series", page=1)) }}
+                {{ breadcrumb_item(post.series.title, text_short="...", href=url_for("blog.single_series", slug=post.series.slug, page=1)) }}
+                {{ breadcrumb_item(post.title, active=true) }}
+            {% endcall %}
+        {% else %}
+            {% call breadcrumb() %}
+                {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
+                {{ breadcrumb_item(post.title, active=true) }}
+            {% endcall %}
+        {% endif %}
     {% endcall %}
 {% endcall %}
 {% endblock header %}
 
 {% block content %}
+{% if post.series %}
+    <p class="mb-6 text-muted-foreground"><em>
+        {{ messages["blog_post_isseries"] }}
+        {{- link(post.series.title, href=url_for("blog.single_series", slug=post.series.slug, page=1)) -}}
+        {{ messages["core_period"] }}
+    </em></p>
+{% endif %}
 <article class="prose mb-12">
     {{ post.content | safe }}
 </article>
+{% call pagination_full() %}
+    {% if prev_post %}
+        {{ pagination_previous_boxed(title=prev_post.title, title_short="Previous post", href=url_for("blog.post", slug=prev_post.slug)) }}
+    {% endif %}
+    {% if next_post %}
+        {{ pagination_next_boxed(title=next_post.title, title_short="Next post", href=url_for("blog.post", slug=next_post.slug)) }}
+    {% endif %}
+{% endcall %}
 {% endblock content %}
 
 {% block sidebar %}
@@ -48,6 +75,14 @@
 <nav class="prose mb-6 text-sm prose-ul:list-none prose-ul:ps-0">
     {{ post.toc | safe }}
 </nav>
+{% if post.series %}
+    <h2 class="text-lg font-semibold mb-4">{{ messages["blog_post_series_heading"] }}</h2>
+    <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
+        <li class="mt-[0.2rem] mb-[0.2rem]">
+            {{ link(post.series.title, href=url_for("blog.single_series", slug=post.series.slug, page=1)) }}
+        </li>
+    </ul>
+{% endif %}
 <h2 class="text-lg font-semibold mb-4">{{ messages["blog_post_categories_heading"] }}</h2>
 <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
     {% for category in post.categories %}

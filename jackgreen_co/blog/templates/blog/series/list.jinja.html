@@ -1,0 +1,146 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% extends "layouts/two-column/right-sidebar-reverse.jinja.html" %}
+
+{% from "components/breadcrumb.jinja.html" import breadcrumb, breadcrumb_item %}
+{% from "components/button.jinja.html" import button_link_outline %}
+{% from "components/card.jinja.html" import card, card_body, card_aside, card_header, card_title, card_content %}
+{% from "components/header.jinja.html" import header, header_title, header_extra %}
+{% from "components/image.jinja.html" import image %}
+{% from "components/link.jinja.html" import link %}
+{% from "components/pagination.jinja.html" import pagination, pagination_previous, pagination_next, pagination_more, pagination_page %}
+
+{% block navbar %}
+{% include 'main/partials/navbar.jinja.html' %}
+{% endblock navbar %}
+
+{% block header %}
+{% call header() %}
+    {{ header_title(messages["blog_series_heading"], subtitle=messages["blog_series_subheading"]) }}
+    {% call header_extra() %}
+        {% call breadcrumb() %}
+            {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
+            {{ breadcrumb_item(messages["blog_series_heading"], active=true) }}
+        {% endcall %}
+    {% endcall %}
+{% endcall %}
+{% endblock header %}
+
+{% block content %}
+{% for series_item in series %}
+    <hgroup class="mb-4 items-center">
+        <h2 class="text-lg font-bold leading-tight tracking-tight md:text-xl mb-2">{{ series_item.title }}</h2>
+        {% if series_item.post_count == 1 %}
+            <p class="text-sm text-muted-foreground">{{ messages["blog_series_showing_singular"] | format(posts[series_item.object_id] | length, series_item.post_count) }}</p>
+        {% else %}
+            <p class="text-sm text-muted-foreground">{{ messages["blog_series_showing_plural"] | format(posts[series_item.object_id] | length, series_item.post_count) }}</p>
+        {% endif %}
+    </hgroup>
+    <div class="mb-12">
+        <ul>
+            {% for post in posts[series_item.object_id] %}
+                <li>
+                    {% call card(class_="mb-6") %}
+                        {% call card_aside() %}
+                            <a href="{{ url_for("blog.post", slug=post.slug) }}" class="block h-full w-full">
+                                {{ image(post.image, post.title, width=200, height=200, theme=theme, class_="object-cover h-full rounded-l-lg") }}
+                            </a>
+                        {% endcall %}
+                        {% call card_body() %}
+                            {% call card_header() %}
+                                {% call card_title(post.title, href=url_for("blog.post", slug=post.slug)) %}
+                                    <time datetime="{{ post.date.strftime("%Y-%m-%d") }}" class="mr-1">
+                                        {{ post.date.strftime("%B %-d, %Y") }}
+                                    </time>
+                                    &middot;
+                                    <span class="ml-1">
+                                        {{ messages["blog_minute_read"] | format(post.read_time) }}
+                                    </span>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call card_content() %}
+                                <p>{{ post.preview }}</p>
+                            {% endcall %}
+                        {% endcall %}
+                    {% endcall %}
+                </li>
+            {% endfor %}
+        </ul>
+        {{ link(messages["blog_series_seeall"] | format(series_item.title), href=url_for("blog.series", slug=series_item.slug)) }}
+    </div>
+{% endfor %}
+
+{% call pagination() %}
+    {% if page == 1 %}
+        {{ pagination_previous(href=url_for("blog.series", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_previous(href=url_for("blog.series", page=page-1)) }}
+    {% endif %}
+
+    {{ pagination_page(1, href=url_for("blog.series", page=1), current=(page==1)) }}
+    {% if page > 4 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% set start_page = [page - 3, 2] | max %}
+    {% set end_page = [page + 3, total_pages - 1] | min %}
+
+    {% for i in range(start_page, end_page + 1) %}
+        {% if page == i or page - 1 == i or page + 1 == i %}
+            {{ pagination_page(text=i, href=url_for("blog.series", page=i), current=(page==i)) }}
+        {% else %}
+            {{ pagination_page(i, href=url_for("blog.series", page=i), class_="hidden sm:inline-flex") }}
+        {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages - 3 %}
+        {{ pagination_more() }}
+    {% endif %}
+
+    {% if total_pages > 1 %}
+        {{ pagination_page(total_pages, href=url_for("blog.series", page=total_pages), current=(page==total_pages)) }}
+    {% endif %}
+
+    {% if page == total_pages %}
+        {{ pagination_next(href=url_for("blog.series", page=page), disabled=true) }}
+    {% else %}
+        {{ pagination_next(href=url_for("blog.series", page=page+1)) }}
+    {% endif %}
+{% endcall %}
+{% endblock content %}
+
+{% block sidebar %}
+<h2 class="text-lg font-semibold mb-4">{{ messages["blog_series_all_heading"] }}</h2>
+<ul class="pl-1.5 text-sm text-muted-foreground mb-6">
+    {% for series_item in all_series %}
+        <li class="mt-[0.2rem] mb-[0.2rem]">
+            {{ link(series_item.title, href=url_for("blog.single_series", slug=series_item.slug, page=1)) }}
+        </li>
+    {% endfor %}
+</ul>
+{% call button_link_outline(href=url_for("blog.posts", page=1), class_="mt-6") %}
+    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 me-2">
+        <path d="M8.84160 3.13508C8.64015 2.94621 8.32373 2.95642 8.13486 3.15788L4.38490 7.15788C4.20460 7.35020 4.20460 7.64949 4.38490 7.84182L8.13486 11.84180C8.32373 12.04330 8.64015 12.05350 8.84160 11.86460C9.04306 11.67570 9.05327 11.35930 8.86440 11.15790L5.43500 7.49985L8.86440 3.84182C9.05327 3.64036 9.04306 3.32394 8.84160 3.13508" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+    </svg>
+    {{ messages["blog_back_to_posts"] }}
+{% endcall %}
+{% endblock sidebar %}
+
+{% block footer %}
+{% include 'main/partials/footer.jinja.html' %}
+{% endblock footer %}
+
+{# vim: set ft=htmldjango: #}

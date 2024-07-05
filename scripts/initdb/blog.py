@@ -131,6 +131,10 @@ def report_fatal(msg, status=1):
     sys.exit(status)
 
 
+def report_warning(msg):
+    print(f"warning: {msg}")
+
+
 def parse_args():
     options = {}
     usage = "usage: blog.py [-h|--help] [-i|--input <path>] [-o|--output <path>]"
@@ -325,56 +329,92 @@ def generate_object_id():
     return ObjectId()
 
 
+def read_series_metadata(filepath):
+    with open(filepath, "r") as file:
+        return yaml.safe_load(file.read())
+
+
+def process_markdown_file(filepath, series_id, cats, tags):
+    with open(filepath, "r") as file:
+        content = file.read()
+        front_matter, markdown_content = content.split("---", 2)[1:]
+        post_metadata = yaml.safe_load(front_matter)
+
+    cat_ids = [
+        cats.setdefault(cat, {"id": generate_object_id(), "slug": generate_slug(cat)})["id"]
+        for cat in post_metadata.get("categories", [])
+    ]
+    tag_ids = [
+        tags.setdefault(tag, {"id": generate_object_id(), "slug": generate_slug(tag)})["id"]
+        for tag in post_metadata.get("tags", [])
+    ]
+
+    html_content, toc = markdown_to_html(markdown_content)
+    text_content = BeautifulSoup(html_content, "html.parser").get_text()
+    preview = generate_preview(text_content)
+    read_time = calculate_read_time(text_content)
+    slug = generate_slug(post_metadata["title"])
+
+    return {
+        "_id": generate_object_id(),
+        "title": post_metadata["title"],
+        "date": datetime.combine(post_metadata["date"], datetime.min.time()),
+        "series_index": post_metadata.get("series-index", 0),
+        "image": post_metadata["image"],
+        "preview": preview,
+        "read_time": read_time,
+        "slug": slug,
+        "content": html_content,
+        "toc": toc,
+        "series": series_id,
+        "categories": cat_ids,
+        "tags": tag_ids,
+    }
+
+
 def read_and_process_markdown_files(blog_dir):
     posts = []
+    series = {}
     categories = {}
     tags = {}
 
     if not os.path.exists(blog_dir):
         report_fatal(f"blog directory '{blog_dir}' does not exist")
 
-    for filename in os.listdir(blog_dir):
-        if filename.endswith(".md"):
-            filepath = os.path.join(blog_dir, filename)
-            with open(filepath, "r") as file:
-                content = file.read()
-                front_matter, markdown_content = content.split("---", 2)[1:]
-                post_metadata = yaml.safe_load(front_matter)
+    for dirname in os.listdir(blog_dir):
+        dirpath = os.path.join(blog_dir, dirname)
 
-                category_ids = []
-                for category in post_metadata.get("categories", []):
-                    if category not in categories:
-                        categories[category] = generate_object_id()
-                    category_ids.append(categories[category])
+        if dirpath.endswith(("/.git", "/drafts")):
+            continue
 
-                tag_ids = []
-                for tag in post_metadata.get("tags", []):
-                    if tag not in tags:
-                        tags[tag] = generate_object_id()
-                    tag_ids.append(tags[tag])
+        if not os.path.isdir(dirpath):
+            continue
 
-                html_content, toc = markdown_to_html(markdown_content)
-                text_content = BeautifulSoup(html_content, "html.parser").get_text()
-                preview = generate_preview(text_content)
-                read_time = calculate_read_time(text_content)
-                slug = generate_slug(post_metadata["title"])
+        index_path = os.path.join(dirpath, ".index")
+        if not os.path.exists(index_path):
+            report_warning(f"missing .index file in '{dirpath}'")
+            continue
 
-                post_document = {
-                    "_id": generate_object_id(),
-                    "title": post_metadata["title"],
-                    "date": datetime.combine(post_metadata["date"], datetime.min.time()),
-                    "image": post_metadata["image"],
-                    "preview": preview,
-                    "read_time": read_time,
-                    "slug": slug,
-                    "content": html_content,
-                    "toc": toc,
-                    "categories": category_ids,
-                    "tags": tag_ids,
-                }
-                posts.append(post_document)
+        series_metadata = read_series_metadata(index_path)
+        series_id = series.setdefault(
+            series_metadata["title"],
+            {
+                "id": generate_object_id(),
+                "slug": generate_slug(series_metadata["title"]),
+                "description": series_metadata["description"],
+                "image": series_metadata["image"],
+            },
+        )["id"]
 
-    return posts, categories, tags
+        for filename in os.listdir(dirpath):
+            if not filename.endswith(".md"):
+                continue
+
+            filepath = os.path.join(dirpath, filename)
+            post_document = process_markdown_file(filepath, series_id, categories, tags)
+            posts.append(post_document)
+
+    return posts, series, categories, tags
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -388,15 +428,19 @@ class JSONEncoder(json.JSONEncoder):
 
 def main():
     options = parse_args()
-    posts, categories, tags = read_and_process_markdown_files(options["input"])
 
     output_file = os.path.join(options["output"], "initdb.js")
-
     if not os.path.exists(options["output"]):
         report_fatal(f"output directory '{options['output']}' does not exist")
 
+    with open(output_file, "w") as f:
+        f.write("")
+
+    posts, series, categories, tags = read_and_process_markdown_files(options["input"])
+
     with open(output_file, "a") as f:
         f.write("db.posts.drop();\n")
+        f.write("db.series.drop();\n")
         f.write("db.categories.drop();\n")
         f.write("db.tags.drop();\n\n")
 
@@ -405,27 +449,40 @@ def main():
             f.write(f"\t{json.dumps(post, cls=JSONEncoder)},\n")
         f.write("]));\n\n")
 
-        f.write("db.categories.insertMany(EJSON.deserialize([\n")
-        for title, object_id in categories.items():
-            category = {
-                "_id": ObjectId(object_id),
+        f.write("db.series.insertMany(EJSON.deserialize([\n")
+        for title, data in series.items():
+            series_data = {
+                "_id": ObjectId(data["id"]),
                 "title": title,
-                "slug": generate_slug(title),
+                "slug": data["slug"],
+                "description": data["description"],
+                "image": data["image"],
             }
-            f.write(f"\t{json.dumps(category, cls=JSONEncoder)},\n")
+            f.write(f"\t{json.dumps(series_data, cls=JSONEncoder)},\n")
+        f.write("]));\n\n")
+
+        f.write("db.categories.insertMany(EJSON.deserialize([\n")
+        for title, data in categories.items():
+            category_data = {
+                "_id": ObjectId(data["id"]),
+                "title": title,
+                "slug": data["slug"],
+            }
+            f.write(f"\t{json.dumps(category_data, cls=JSONEncoder)},\n")
         f.write("]));\n\n")
 
         f.write("db.tags.insertMany(EJSON.deserialize([\n")
-        for title, object_id in tags.items():
-            tag = {
-                "_id": ObjectId(object_id),
+        for title, data in tags.items():
+            tag_data = {
+                "_id": ObjectId(data["id"]),
                 "title": title,
-                "slug": generate_slug(title),
+                "slug": data["slug"],
             }
-            f.write(f"\t{json.dumps(tag, cls=JSONEncoder)},\n")
+            f.write(f"\t{json.dumps(tag_data, cls=JSONEncoder)},\n")
         f.write("]));\n")
 
     print(f"inserted posts into init-mongo.js ({len(posts)} posts)")
+    print(f"inserted series into init-mongo.js ({len(series)} series)")
     print(f"inserted categories into init-mongo.js ({len(categories)} categories)")
     print(f"inserted tags into init-mongo.js ({len(tags)} tags)")
 

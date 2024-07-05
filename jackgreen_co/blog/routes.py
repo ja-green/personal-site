@@ -17,7 +17,7 @@ from flask import abort, make_response, redirect, render_template, request, url_
 from flask.typing import ResponseReturnValue
 
 from jackgreen_co.blog import blog
-from jackgreen_co.blog.services import category_service, post_service, tag_service
+from jackgreen_co.blog.services import category_service, post_service, tag_service, series_service
 
 
 @blog.route("/")
@@ -33,10 +33,19 @@ def posts() -> ResponseReturnValue:
     posts, total_pages = post_service.get(page=page)
     if not posts or len(posts) == 0:
         abort(404)
+
+    series, _ = series_service.get(limit=5)
     categories, _ = category_service.get(limit=5)
     tags, _ = tag_service.get(limit=10)
+
     return render_template(
-        "blog/posts/list.jinja.html", page=page, posts=posts, total_pages=total_pages, categories=categories, tags=tags
+        "blog/posts/list.jinja.html",
+        page=page,
+        posts=posts,
+        total_pages=total_pages,
+        categories=categories,
+        tags=tags,
+        series=series,
     )
 
 
@@ -48,7 +57,68 @@ def post(slug: str) -> ResponseReturnValue:
     if len(posts) > 1:
         abort(500)
 
-    return render_template("blog/posts/single.jinja.html", post=posts[0])
+    prev_post = None
+    next_post = None
+
+    post = posts[0]
+
+    if post.series:
+        prev_post, _ = post_service.get({"series_index": post.series_index - 1, "series": post.series.object_id})
+        next_post, _ = post_service.get({"series_index": post.series_index + 1, "series": post.series.object_id})
+
+    prev_post = None if not prev_post or len(prev_post) == 0 else prev_post[0]
+    next_post = None if not next_post or len(next_post) == 0 else next_post[0]
+
+    return render_template("blog/posts/single.jinja.html", post=post, prev_post=prev_post, next_post=next_post)
+
+
+@blog.route("/series")
+def series() -> ResponseReturnValue:
+    page = request.args.get("page", 1, type=int)
+    if page < 1:
+        return redirect(url_for("blog.series", page=1), code=301)
+    series, total_pages = series_service.get(page=page)
+    if not series or len(series) == 0:
+        abort(404)
+    all_series, _ = series_service.get()
+    posts = {series.object_id: post_service.get({"series": series.object_id}, limit=3)[0] for series in series}
+    return render_template(
+        "blog/series/list.jinja.html",
+        page=page,
+        series=series,
+        total_pages=total_pages,
+        posts=posts,
+        all_series=all_series,
+    )
+
+
+@blog.route("/series/<slug>")
+def single_series(slug: str) -> ResponseReturnValue:
+    page = request.args.get("page", 1, type=int)
+    if page < 1:
+        return redirect(url_for("blog.single_series", slug=slug, page=1), code=301)
+    series, _ = series_service.get({"slug": slug})
+    if not series:
+        abort(404)
+    if len(series) > 1:
+        abort(500)
+    series_item = series[0]
+    posts, total_pages = post_service.get({"series": series_item.object_id}, page=page)
+    if not posts or len(posts) == 0:
+        abort(404)
+    series, _ = series_service.get(limit=5)
+    categories, _ = category_service.get(limit=5)
+    tags, _ = tag_service.get(limit=10)
+    return render_template(
+        "blog/series/single.jinja.html",
+        series_item=series_item,
+        page=page,
+        posts=posts,
+        total_pages=total_pages,
+        series=series,
+        categories=categories,
+        tags=tags,
+    )
 
 
 @blog.route("/categories")
@@ -87,6 +157,7 @@ def category(slug: str) -> ResponseReturnValue:
     posts, total_pages = post_service.get({"categories": category.object_id}, page=page)
     if not posts or len(posts) == 0:
         abort(404)
+    series, _ = series_service.get(limit=5)
     categories, _ = category_service.get(limit=5)
     tags, _ = tag_service.get(limit=10)
     return render_template(
@@ -95,6 +166,7 @@ def category(slug: str) -> ResponseReturnValue:
         page=page,
         posts=posts,
         total_pages=total_pages,
+        series=series,
         categories=categories,
         tags=tags,
     )
@@ -129,6 +201,7 @@ def tag(slug: str) -> ResponseReturnValue:
     posts, total_pages = post_service.get({"tags": tag.object_id}, page=page)
     if not posts or len(posts) == 0:
         abort(404)
+    series, _ = series_service.get(limit=5)
     categories, _ = category_service.get(limit=5)
     tags, _ = tag_service.get(limit=10)
     return render_template(
@@ -137,6 +210,7 @@ def tag(slug: str) -> ResponseReturnValue:
         page=page,
         posts=posts,
         total_pages=total_pages,
+        series=series,
         categories=categories,
         tags=tags,
     )

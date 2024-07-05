@@ -21,12 +21,22 @@
         {{ caller() }}
     </ul>
 </nav>
+{% endmacro %}
 
-<a href="{{ href }}" class="underline underline-offset-4 transition-colors hover:text-foreground/80 {{ class_ }}">{{ text }}</a>
+{% macro pagination_full() -%}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center mb-6">
+    <ul class="flex flex-row items-center gap-1 w-full">
+        {{ caller() }}
+    </ul>
+</nav>
 {% endmacro %}
 
 {% macro pagination_previous(href) -%}
 {% set class_ = kwargs.pop('class_', '') %}
+{% set title = kwargs.pop('title', 'Previous') %}
+{% set title_sort = kwargs.pop('title_sort', 'Prev') %}
 {% set disabled = kwargs.pop('disabled', false) %}
 
 <li>
@@ -35,7 +45,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="m15 18-6-6 6-6"></path>
             </svg>
-            <span>Previous</span>
+            <span class="hidden md:inline-flex">Previous</span>
         </span>
     {% else %}
         <a href="{{ href }}" rel="prev" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5 {{ class_ }}" aria-label="Go to previous page">
@@ -50,12 +60,14 @@
 
 {% macro pagination_next(href) -%}
 {% set class_ = kwargs.pop('class_', '') %}
+{% set title = kwargs.pop('title', 'Next') %}
+{% set title_sort = kwargs.pop('title_sort', 'Next') %}
 {% set disabled = kwargs.pop('disabled', false) %}
 
 <li>
     {% if disabled %}
         <span class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors pointer-events-none h-10 px-4 py-2 gap-1 pr-2.5 text-muted-foreground {{ class_ }}" aria-label="Go to next page">
-            <span>Next</span>
+            <span class="hidden md:inline-flex">Next</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="m9 18 6-6-6-6"></path>
             </svg>
@@ -63,6 +75,60 @@
     {% else %}
         <a href="{{ href }}" rel="next" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5 {{ class_ }}" aria-label="Go to next page">
             <span class="hidden md:inline-flex">Next</span>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </a>
+    {% endif %}
+</li>
+{% endmacro %}
+
+{% macro pagination_previous_boxed(href) -%}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set title = kwargs.pop('title', 'Previous') %}
+{% set title_short = kwargs.pop('title_short', 'Prev') %}
+{% set disabled = kwargs.pop('disabled', false) %}
+
+<li class="rounded-lg border bg-card text-card-foreground shadow-sm flex mb-6 w-full">
+    {% if disabled %}
+        <span class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors pointer-events-none h-10 px-4 py-2 gap-1 pr-2.5 text-muted-foreground w-full {{ class_ }}" aria-label="Go to next page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            <span class="inline-flex md:hidden">{{ title_short }}</span>
+            <span class="hidden md:inline-flex">{{ title }}</span>
+        </span>
+    {% else %}
+        <a href="{{ href }}" rel="prev" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5 w-full {{ class_ }}" aria-label="Go to previous page">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            <span class="inline-flex md:hidden">{{ title_short }}</span>
+            <span class="hidden md:inline-flex">{{ title }}</span>
+        </a>
+    {% endif %}
+</li>
+{% endmacro %}
+
+{% macro pagination_next_boxed(href) -%}
+{% set class_ = kwargs.pop('class_', '') %}
+{% set title = kwargs.pop('title', 'Next') %}
+{% set title_short = kwargs.pop('title_short', 'Next') %}
+{% set disabled = kwargs.pop('disabled', false) %}
+
+<li class="rounded-lg border bg-card text-card-foreground shadow-sm flex mb-6 w-full">
+    {% if disabled %}
+        <span class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors pointer-events-none h-10 px-4 py-2 gap-1 pr-2.5 text-muted-foreground w-full {{ class_ }}" aria-label="Go to next page">
+            <span class="inline-flex md:hidden">{{ title_short }}</span>
+            <span class="hidden md:inline-flex">{{ title }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </span>
+    {% else %}
+        <a href="{{ href }}" rel="next" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5 w-full {{ class_ }}" aria-label="Go to next page">
+            <span class="inline-flex md:hidden">{{ title_short }}</span>
+            <span class="hidden md:inline-flex">{{ title }}</span>
             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="m9 18 6-6-6-6"></path>
             </svg>

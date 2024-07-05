@@ -39,10 +39,12 @@ def get(terms: dict = {}, limit: int = None, page: int = None) -> tuple[list[pos
     pipeline = [
         {"$match": terms},
         {"$sort": {"date": -1}},
+        {"$lookup": {"from": "series", "localField": "series", "foreignField": "_id", "as": "series"}},
         {"$lookup": {"from": "categories", "localField": "categories", "foreignField": "_id", "as": "categories"}},
         {"$lookup": {"from": "tags", "localField": "tags", "foreignField": "_id", "as": "tags"}},
         {
             "$addFields": {
+                "series": {"$arrayElemAt": ["$series", 0]},
                 "categories": {
                     "$map": {
                         "input": "$categories",

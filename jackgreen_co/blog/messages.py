@@ -18,6 +18,7 @@ from jackgreen_co.core import messages
 
 class Messages(messages.Messages):
     blog_back_to_posts = "Back to posts"
+    blog_back_to_series = "Back to series"
     blog_back_to_categories = "Back to categories"
     blog_back_to_tags = "Back to tags"
     blog_minute_read = "%s minute read"
@@ -28,13 +29,27 @@ class Messages(messages.Messages):
     blog_posts_description = "TODO: Add a description here."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
+    blog_posts_viewseries = "View all series"
     blog_posts_viewcategories = "View all categories"
     blog_posts_viewtags = "View all tags"
     blog_posts_viewrss = "View posts RSS feed"
 
+    blog_post_isseries = "This post is part of a series:"
     blog_post_toc_heading = "Contents"
+    blog_post_series_heading = "Series"
     blog_post_categories_heading = "Categories"
     blog_post_tags_heading = "Tags"
+
+    blog_series_description = "TODO: Add a description here."
+    blog_series_heading = "Series"
+    blog_series_subheading = "Explore my blog posts by series."
+    blog_series_seeall = 'See all posts in "%s"'
+    blog_series_showing_singular = "Showing %s of %s post"
+    blog_series_showing_plural = "Showing %s of %s posts"
+    blog_series_all_heading = "All Series"
+
+    blog_singleseries_description = "TODO: Add a description here."
+    blog_singleseries_subheading = "Explore posts in %s"
 
     blog_categories_description = "TODO: Add a description here."
     blog_categories_heading = "Categories"

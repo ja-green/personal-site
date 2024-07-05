@@ -21,17 +21,32 @@ class Post:
         self.object_id = data.get("_id")
         self.title = data.get("title")
         self.date = data.get("date")
+        self.series_index = data.get("series_index")
         self.image = data.get("image")
         self.content = data.get("content")
         self.toc = data.get("toc")
         self.preview = data.get("preview")
         self.read_time = data.get("read_time")
         self.slug = data.get("slug")
+        self.series = Series(data.get("series")) if data.get("series") else None
         self.categories = [Category(c) for c in data.get("categories", [])]
         self.tags = [Tag(t) for t in data.get("tags", [])]
 
     def __repr__(self: Self) -> str:
         return f"<Post {self.title}>"
+
+
+class Series:
+    def __init__(self: Self, data: dict):
+        self.object_id = data.get("_id")
+        self.title = data.get("title")
+        self.slug = data.get("slug")
+        self.description = data.get("description")
+        self.image = data.get("image")
+        self.post_count = data.get("post_count")
+
+    def __repr__(self: Self) -> str:
+        return f"<Series {self.title}>"
 
 
 class Category:
