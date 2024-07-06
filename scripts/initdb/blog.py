@@ -341,11 +341,11 @@ def process_markdown_file(filepath, series_id, cats, tags):
         post_metadata = yaml.safe_load(front_matter)
 
     cat_ids = [
-        cats.setdefault(cat, {"id": generate_object_id(), "slug": generate_slug(cat)})["id"]
+        cats.setdefault(cat, {"id": generate_object_id(), "slug": generate_slug(cat), "post_count": 0})["id"]
         for cat in post_metadata.get("categories", [])
     ]
     tag_ids = [
-        tags.setdefault(tag, {"id": generate_object_id(), "slug": generate_slug(tag)})["id"]
+        tags.setdefault(tag, {"id": generate_object_id(), "slug": generate_slug(tag), "post_count": 0})["id"]
         for tag in post_metadata.get("tags", [])
     ]
 
@@ -402,6 +402,7 @@ def read_and_process_markdown_files(blog_dir):
                 "id": generate_object_id(),
                 "slug": generate_slug(series_metadata["title"]),
                 "description": series_metadata["description"],
+                "post_count": 0,
             },
         )["id"]
 
@@ -412,6 +413,25 @@ def read_and_process_markdown_files(blog_dir):
             filepath = os.path.join(dirpath, filename)
             post_document = process_markdown_file(filepath, series_id, categories, tags)
             posts.append(post_document)
+
+    for post in posts:
+        series_id = post["series"]
+        for title, data in series.items():
+            if data["id"] == series_id:
+                data["post_count"] += 1
+                break
+
+        for cat_id in post["categories"]:
+            for title, data in categories.items():
+                if data["id"] == cat_id:
+                    data["post_count"] += 1
+                    break
+
+        for tag_id in post["tags"]:
+            for title, data in tags.items():
+                if data["id"] == tag_id:
+                    data["post_count"] += 1
+                    break
 
     return posts, series, categories, tags
 
@@ -455,6 +475,7 @@ def main():
                 "title": title,
                 "slug": data["slug"],
                 "description": data["description"],
+                "post_count": data["post_count"],
             }
             f.write(f"\t{json.dumps(series_data, cls=JSONEncoder)},\n")
         f.write("]));\n\n")
@@ -465,6 +486,7 @@ def main():
                 "_id": ObjectId(data["id"]),
                 "title": title,
                 "slug": data["slug"],
+                "post_count": data["post_count"],
             }
             f.write(f"\t{json.dumps(category_data, cls=JSONEncoder)},\n")
         f.write("]));\n\n")
@@ -475,6 +497,7 @@ def main():
                 "_id": ObjectId(data["id"]),
                 "title": title,
                 "slug": data["slug"],
+                "post_count": data["post_count"],
             }
             f.write(f"\t{json.dumps(tag_data, cls=JSONEncoder)},\n")
         f.write("]));\n")
