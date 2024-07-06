@@ -32,7 +32,7 @@
 {% macro card_aside(text) %}
 {% set class_ = kwargs.pop('class_', '') %}
 
-<div class="flex-none justify-contents-center">
+<div class="hidden flex-none justify-contents-center sm:block">
     {{ caller() }}
 </div>
 {% endmacro %}
