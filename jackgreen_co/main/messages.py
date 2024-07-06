@@ -125,8 +125,9 @@ RhT3NUn60/4WXHUD
     main_privacy_a10 = "By using my site, you consent to this privacy policy."
     main_privacy_q11 = "Changes to my privacy policy"
     main_privacy_a11 = "I may update this privacy policy from time to time. Any changes will be posted on this page with an updated effective date. Significant changes will be communicated through an announcement on the homepage."
-    main_privacy_close1 = "This document is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. It was last updated on"
-    main_privacy_close2p1 = (
+    main_privacy_close1_1 = "This document is licensed under the"
+    main_privacy_close1_2 = "It was last updated on"
+    main_privacy_close2_1 = (
         "For any questions or concerns regarding this privacy policy, please contact me using the contact form"
     )
-    main_privacy_close2p2 = "or via email, of which the details can be found"
+    main_privacy_close2_2 = "or via email, of which the details can be found"
