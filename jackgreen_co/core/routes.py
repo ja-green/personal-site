@@ -57,7 +57,7 @@ def sitemap() -> ResponseReturnValue:
 
     series, _ = series_service.get()
     for series_item in series:
-        url = {"loc": "%s" % (url_for("blog.single_series", slug=series_item.slug))}
+        url = {"loc": "%s" % (url_for("blog.singleseries", slug=series_item.slug))}
         dynamic_urls.append(url)
 
     categories, _ = category_service.get()

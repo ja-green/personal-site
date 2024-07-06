@@ -93,7 +93,7 @@ def series() -> ResponseReturnValue:
 
 
 @blog.route("/series/<slug>")
-def single_series(slug: str) -> ResponseReturnValue:
+def singleseries(slug: str) -> ResponseReturnValue:
     page = request.args.get("page", 1, type=int)
     if page < 1:
         return redirect(url_for("blog.single_series", slug=slug, page=1), code=301)

@@ -127,7 +127,7 @@
 <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
     {% for series_item in all_series %}
         <li class="mt-[0.2rem] mb-[0.2rem]">
-            {{ link(series_item.title, href=url_for("blog.single_series", slug=series_item.slug, page=1)) }}
+            {{ link(series_item.title, href=url_for("blog.singleseries", slug=series_item.slug, page=1)) }}
         </li>
     {% endfor %}
 </ul>

@@ -74,12 +74,12 @@
 
 {% call pagination() %}
     {% if page == 1 %}
-        {{ pagination_previous(href=url_for("blog.single_series", slug=series_item.slug, page=page), disabled=true) }}
+        {{ pagination_previous(href=url_for("blog.singleseries", slug=series_item.slug, page=page), disabled=true) }}
     {% else %}
-        {{ pagination_previous(href=url_for("blog.single_series", slug=series_item.slug, page=page-1)) }}
+        {{ pagination_previous(href=url_for("blog.singleseries", slug=series_item.slug, page=page-1)) }}
     {% endif %}
 
-    {{ pagination_page(1, href=url_for("blog.single_series", slug=series_item.slug, page=1), current=(page==1)) }}
+    {{ pagination_page(1, href=url_for("blog.singleseries", slug=series_item.slug, page=1), current=(page==1)) }}
     {% if page > 4 %}
         {{ pagination_more() }}
     {% endif %}
@@ -89,9 +89,9 @@
 
     {% for i in range(start_page, end_page + 1) %}
         {% if page == i or page - 1 == i or page + 1 == i %}
-            {{ pagination_page(text=i, href=url_for("blog.single_series", slug=series_item.slug, page=i), current=(page==i)) }}
+            {{ pagination_page(text=i, href=url_for("blog.singleseries", slug=series_item.slug, page=i), current=(page==i)) }}
         {% else %}
-            {{ pagination_page(i, href=url_for("blog.single_series", slug=series_item.slug, page=i), class_="hidden sm:inline-flex") }}
+            {{ pagination_page(i, href=url_for("blog.singleseries", slug=series_item.slug, page=i), class_="hidden sm:inline-flex") }}
         {% endif %}
     {% endfor %}
 
@@ -100,13 +100,13 @@
     {% endif %}
 
     {% if total_pages > 1 %}
-        {{ pagination_page(total_pages, href=url_for("blog.single_series", slug=series_item.slug, page=total_pages), current=(page==total_pages)) }}
+        {{ pagination_page(total_pages, href=url_for("blog.singleseries", slug=series_item.slug, page=total_pages), current=(page==total_pages)) }}
     {% endif %}
 
     {% if page == total_pages %}
-        {{ pagination_next(href=url_for("blog.single_series", slug=series_item.slug, page=page), disabled=true) }}
+        {{ pagination_next(href=url_for("blog.singleseries", slug=series_item.slug, page=page), disabled=true) }}
     {% else %}
-        {{ pagination_next(href=url_for("blog.single_series", slug=series_item.slug, page=page+1)) }}
+        {{ pagination_next(href=url_for("blog.singleseries", slug=series_item.slug, page=page+1)) }}
     {% endif %}
 {% endcall %}
 {% endblock content %}
@@ -117,7 +117,7 @@
     <ul class="pl-1.5 text-sm text-muted-foreground mb-4">
         {% for series_item in series %}
             <li class="mt-[0.2rem] mb-[0.2rem]">
-                {{ link(series_item.title, href=url_for("blog.single_series", slug=series_item.slug, page=1)) }}
+                {{ link(series_item.title, href=url_for("blog.singleseries", slug=series_item.slug, page=1)) }}
             </li>
         {% endfor %}
     </ul>

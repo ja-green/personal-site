@@ -36,7 +36,7 @@
             {% call breadcrumb() %}
                 {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
                 {{ breadcrumb_item(messages["blog_series_heading"], href=url_for("blog.series", page=1)) }}
-                {{ breadcrumb_item(post.series.title, text_short="...", href=url_for("blog.single_series", slug=post.series.slug, page=1)) }}
+                {{ breadcrumb_item(post.series.title, text_short="...", href=url_for("blog.singleseries", slug=post.series.slug, page=1)) }}
                 {{ breadcrumb_item(post.title, active=true) }}
             {% endcall %}
         {% else %}
@@ -53,7 +53,7 @@
 {% if post.series %}
     <p class="mb-6 text-muted-foreground"><em>
         {{ messages["blog_post_isseries"] }}
-        {{- link(post.series.title, href=url_for("blog.single_series", slug=post.series.slug, page=1)) -}}
+        {{- link(post.series.title, href=url_for("blog.singleseries", slug=post.series.slug, page=1)) -}}
         {{ messages["core_period"] }}
     </em></p>
 {% endif %}
@@ -79,7 +79,7 @@
     <h2 class="text-lg font-semibold mb-4">{{ messages["blog_post_series_heading"] }}</h2>
     <ul class="pl-1.5 text-sm text-muted-foreground mb-6">
         <li class="mt-[0.2rem] mb-[0.2rem]">
-            {{ link(post.series.title, href=url_for("blog.single_series", slug=post.series.slug, page=1)) }}
+            {{ link(post.series.title, href=url_for("blog.singleseries", slug=post.series.slug, page=1)) }}
         </li>
     </ul>
 {% endif %}
