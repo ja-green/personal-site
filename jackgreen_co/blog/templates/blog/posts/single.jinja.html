@@ -36,7 +36,7 @@
             {% call breadcrumb() %}
                 {{ breadcrumb_item(messages["blog_posts_heading"], href=url_for("blog.posts", page=1)) }}
                 {{ breadcrumb_item(messages["blog_series_heading"], href=url_for("blog.series", page=1)) }}
-                {{ breadcrumb_item(post.series.title, text_short="...", href=url_for("blog.singleseries", slug=post.series.slug, page=1)) }}
+                {{ breadcrumb_item(post.series.title, text_short=messages["core_ellipsis"], href=url_for("blog.singleseries", slug=post.series.slug, page=1)) }}
                 {{ breadcrumb_item(post.title, active=true) }}
             {% endcall %}
         {% else %}

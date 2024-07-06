@@ -18,6 +18,7 @@ class Messages(object):
     core_copyright = "Copyright"
     core_here = "here"
     core_period = "."
+    core_ellipsis = "..."
     core_manifest_description = "Welcome to Jack Green's personal website and blog. Explore articles on tech, security, personal interests, and more. Join me in my passion for self-development and education."
     core_license_source = "GNU AGPLv3.0 License"
     core_license_content = "Creative Commons Attribution-ShareAlike 4.0 International License"
