@@ -16,6 +16,7 @@
 {% extends "layouts/default.jinja.html" %}
 
 {% from "components/header.jinja.html" import header, header_title %}
+{% from "components/link.jinja.html" import link %}
 
 {% block navbar %}
 {% include 'main/partials/navbar.jinja.html' %}
@@ -28,7 +29,26 @@
 {% endblock header %}
 
 {% block content %}
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium fusce id velit ut tortor pretium. Vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames. Sed odio morbi quis commodo odio aenean sed adipiscing diam. Massa enim nec dui nunc mattis enim ut tellus. Id eu nisl nunc mi. Curabitur gravida arcu ac tortor dignissim. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. At lectus urna duis convallis convallis tellus id. Egestas pretium aenean pharetra magna ac placerat. Pretium lectus quam id leo in vitae. Nullam vehicula ipsum a arcu. Enim neque volutpat ac tincidunt vitae semper quis. Morbi tristique senectus et netus et malesuada. Nisl vel pretium lectus quam id leo in. Enim sit amet venenatis urna cursus.</p>
+<div class="pb-12">
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_personal_p1"] }}</p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_personal_p2"] }}</p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_personal_p3"] }}</p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_personal_p4"] }}</p>
+    <p class="text-muted-foreground mb-6">
+        {{ messages["main_about_personal_p5_1"] }} {{- link(messages["core_here"], href=url_for("main.contact")) -}}{{ messages["core_period"] }}
+        {{ messages["main_about_personal_p5_2"] }} {{- link(messages["core_here"], href=url_for("main.email")) -}}{{ messages["core_period"] }}
+    </p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_personal_p6"] }}</p>
+    <h2 class="text-lg font-semibold pt-2 mb-6">{{ messages["main_about_tech_heading"] }}</h2>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_tech_p1"] }}</p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_tech_p2"] }}</p>
+    <p class="text-muted-foreground mb-6">{{ messages["main_about_tech_p3"] }}</p>
+    <p class="text-muted-foreground mb-6">
+        {{ messages["main_about_tech_p4_1"] }} {{- link(messages["core_license_source"], href="https://www.gnu.org/licenses/agpl-3.0.en.html") -}}{{ messages["core_period"] }}
+        {{ messages["main_about_tech_p4_2"] }} {{- link(messages["core_license_content"], href="https://creativecommons.org/licenses/by-sa/4.0/") -}}{{ messages["core_period"] }}
+        {{ messages["main_about_tech_p4_3"] }} {{- link(messages["core_here"], href="https://github.com/ja-green/personal-site") -}}{{ messages["core_period"] }}
+    </p>
+</div>
 {% endblock content %}
 
 {% block footer %}

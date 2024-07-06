@@ -21,11 +21,11 @@
         <p class="mb-3">{{ messages["core_copyright"] }} &copy; {{ current_date.strftime("%Y") }} {{ config["SITE_AUTHOR"] }}</p>
         <p class="mb-3">{{ link(messages["core_footer_privacy"], url_for("main.privacy_policy")) }}</p>
         <p>
-            {{ messages["core_footer_license_source1"] }} {{ link(messages["core_footer_license_source2"], "https://www.gnu.org/licenses/agpl-3.0.en.html") }}
-            {{ messages["core_footer_license_source3"] }} {{ link(messages["core_here"], "https://github.com/ja-green/personal-site") }}{{ messages["core_period"] }}
+            {{ messages["core_footer_license_source1"] }} {{ link(messages["core_license_source"], "https://www.gnu.org/licenses/agpl-3.0.en.html") }}
+            {{ messages["core_footer_license_source2"] }} {{ link(messages["core_here"], "https://github.com/ja-green/personal-site") }}{{ messages["core_period"] }}
         </p>
         <p>
-            {{ messages["core_footer_license_content1"] }} {{ link(messages["core_footer_license_content2"], "https://creativecommons.org/licenses/by-sa/4.0/") }}{{ messages["core_period"] }}
+            {{ messages["core_footer_license_content"] }} {{ link(messages["core_license_content"], "https://creativecommons.org/licenses/by-sa/4.0/") }}{{ messages["core_period"] }}
         </p>
     {% endcall %}
 {% endcall %}
