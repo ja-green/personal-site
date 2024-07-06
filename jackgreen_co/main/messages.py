@@ -17,7 +17,7 @@ from jackgreen_co.core import messages
 
 
 class Messages(messages.Messages):
-    main_index_description = "TODO: Add a description here."
+    main_index_description = "Welcome to Jack Green's personal website and blog. Explore articles on tech, security, personal interests, and more. Join me in my passion for self-development and education."
     main_index_heading = "Hi there, I'm Jack."
     main_index_subheading = "Cyber Security Consultant, developer and life-long learner."
     main_index_button1 = "View my blog"
@@ -25,13 +25,15 @@ class Messages(messages.Messages):
 
     main_about_heading = "About"
     main_about_subheading = "A bit about me and this site."
-    main_about_description = "TODO: Add a description here."
+    main_about_description = "Learn more about Jack Green, a passionate tech enthusiast and educator. Discover my journey, interests, and the motivation behind my blog posts."
     main_about_personal_p1 = "Welcome to my personal website! Here, I combine my enthusiasm for free and open-source software with my love for programming. This site serves as a platform for sharing my projects, thoughts, and interests, aiming to provide an educational and inspiring space for like-minded individuals."
     main_about_personal_p2 = "Stoicism greatly influences my approach to life, emphasising the importance of focusing on what we can control, cultivating inner strength and resilience, and striving for continuous self-improvement. These values are deeply integrated into the content you’ll discover here, reflecting both my personal journey and professional endeavours."
     main_about_personal_p3 = "Programming is a core part of my life. I enjoy working on a variety of open-source projects, ranging from command-line tools to technical tutorials and website development. My projects are constantly evolving, and I plan to share details about them here."
     main_about_personal_p4 = "This website is designed to be more than just a blog; It’s a dynamic space where I nurture and share my ideas. You’ll find a diverse array of content, including articles on philosophy, detailed walkthroughs and tutorials, updates on my latest projects, and reflections on various topics that interest me. My aim is to inspire, educate, and provide valuable insights to my readers."
     main_about_personal_p5_1 = "Feel free to explore the site, and if you have any questions or just want to connect, there’s a contact form available"
-    main_about_personal_p5_2 = "For secure communication, you can also reach me via email using my PGP key, of which the details can be found"
+    main_about_personal_p5_2 = (
+        "For secure communication, you can also reach me via email using my PGP key, of which the details can be found"
+    )
     main_about_personal_p6 = "Thank you for visiting! I hope you find something here that piques your interest or helps you on your personal or professional journey."
     main_about_tech_heading = "Technical Details"
     main_about_tech_p1 = "This website is not just a platform for sharing content; it is also a showcase of the technologies and principles I advocate for. Here are some details about the technical implementation of the site:"
@@ -43,7 +45,7 @@ class Messages(messages.Messages):
 
     main_contact_heading = "Contact"
     main_contact_subheading = "Get in touch."
-    main_contact_description = "TODO: Add a description here."
+    main_contact_description = "Get in touch with me. Reach out for enquiries, feedback, or just to connect. I'm here to engage with readers of my posts."
     main_contact_lead1 = "Feel free to contact me via email; my email details and PGP key can be found "
     main_contact_lead2 = ". Alternatively, you can use the form below and I'll get back to you as soon as I can."
     main_contact_form_captcha_lead = "Please enter the following CAPTCHA to verify that you are not a robot."
@@ -69,7 +71,9 @@ class Messages(messages.Messages):
 
     main_email_heading = "Email"
     main_email_subheading = "Send me an encrypted email."
-    main_email_description = "TODO: Add a description here."
+    main_email_description = (
+        "Send me an encrypted email using my PGP public key. I'd love to communicate securely with you."
+    )
     main_email_lead = "If you prefer to communicate securely via encrypted email rather than using the contact form, my PGP public key is available below. Feel free to import it to your keyring and use it for any encrypted correspondence."
     main_email_pgp_key = """-----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -92,7 +96,7 @@ RhT3NUn60/4WXHUD
 
     main_privacy_heading = "Privacy Policy"
     main_privacy_subheading = "Your privacy is important."
-    main_privacy_description = "TODO: Add a description here."
+    main_privacy_description = "Learn about how I collect, use, and protect your personal information when you use my website. I am committed to safeguarding your privacy and handling your data in an open and transparent manner."
     main_privacy_date = "Effective date:"
     main_privacy_lead = "I am committed to protecting your privacy and handling your data in an open and transparent manner. This privacy policy sets out how I collect, use, store, and protect your personal information when you use my website."
     main_privacy_q1 = "What information do I collect?"

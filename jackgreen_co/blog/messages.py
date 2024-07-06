@@ -24,9 +24,9 @@ class Messages(messages.Messages):
     blog_minute_read = "%s minute read"
 
     blog_rss_heading = "Posts RSS Feed"
-    blog_rss_description = "TODO: Add a description here."
+    blog_rss_description = "Stay up-to-date with my latest blog posts by subscribing to the RSS feed."
 
-    blog_posts_description = "TODO: Add a description here."
+    blog_posts_description = "Welcome to my blog. Explore my posts, covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
     blog_posts_viewseries = "View all series"
@@ -40,7 +40,7 @@ class Messages(messages.Messages):
     blog_post_categories_heading = "Categories"
     blog_post_tags_heading = "Tags"
 
-    blog_series_description = "TODO: Add a description here."
+    blog_series_description = "Discover my blog series' covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_series_heading = "Series"
     blog_series_subheading = "Explore my blog posts by series."
     blog_series_seeall = 'See all posts in "%s"'
@@ -48,10 +48,10 @@ class Messages(messages.Messages):
     blog_series_showing_plural = "Showing %s of %s posts"
     blog_series_all_heading = "All Series"
 
-    blog_singleseries_description = "TODO: Add a description here."
+    blog_singleseries_description = "Explore the %s series on my blog - %s"
     blog_singleseries_subheading = "Explore posts in %s"
 
-    blog_categories_description = "TODO: Add a description here."
+    blog_categories_description = "Discover my blog categories covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_categories_heading = "Categories"
     blog_categories_subheading = "Explore my blog posts by category."
     blog_categories_seeall = "See all posts in %s"
@@ -59,10 +59,10 @@ class Messages(messages.Messages):
     blog_categories_showing_plural = "Showing %s of %s posts"
     blog_categories_all_heading = "All Categories"
 
-    blog_category_description = "TODO: Add a description here."
+    blog_category_description = "Explore the %s category on my blog."
     blog_category_subheading = "Explore posts in %s"
 
-    blog_tags_description = "TODO: Add a description here."
+    blog_tags_description = "Discover my blog tags covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_tags_heading = "Tags"
     blog_tags_subheading = "Explore my blog posts by tag."
     blog_tags_seeall = 'See all posts tagged "%s"'
@@ -70,7 +70,7 @@ class Messages(messages.Messages):
     blog_tags_showing_plural = "Showing %s of %s posts"
     blog_tags_all_heading = "All Tags"
 
-    blog_tag_description = "TODO: Add a description here."
+    blog_tag_description = 'Explore my blog posts tagged with "%s".'
     blog_tag_subheading = 'Explore posts tagged "%s"'
 
     blog_error_action = "Go back to posts"

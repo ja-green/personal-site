@@ -38,7 +38,15 @@
             <meta name="robots" content="index, follow" />
             <link rel="canonical" href="{{ request.url_root[:-1] + request.path }}" />
 
-            {% if messages[endpoint | replace(".", "_") + '_description'] %}
+            {% if endpoint == "blog.tag" and tag %}
+                <meta name="description" content="{{ messages["blog_tag_description"] | format(tag.title) }}" />
+            {% elif endpoint == "blog.category" and category %}
+                <meta name="description" content="{{ messages["blog_category_description"] | format(category.title) }}" />
+            {% elif endpoint == "blog.singleseries" and series_item %}
+                <meta name="description" content="{{ messages["blog_singleseries_description"] | format(series_item.title, series_item.description) }}" />
+            {% elif endpoint == "blog.post" and post %}
+                <meta name="description" content="{{ post.description }}" />
+            {% elif messages[endpoint | replace(".", "_") + '_description'] %}
                 <meta name="description" content="{{ messages[endpoint | replace(".", "_") + '_description'] }}" />
             {% endif %}
 
