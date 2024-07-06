@@ -58,5 +58,5 @@ def email() -> ResponseReturnValue:
 
 
 @main.route("/privacy-policy")
-def privacy_policy() -> ResponseReturnValue:
-    return render_template("main/privacy-policy.jinja.html")
+def privacy() -> ResponseReturnValue:
+    return render_template("main/privacy.jinja.html")
