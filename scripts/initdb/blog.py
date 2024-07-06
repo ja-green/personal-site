@@ -360,6 +360,7 @@ def process_markdown_file(filepath, series_id, cats, tags):
         "title": post_metadata["title"],
         "date": datetime.combine(post_metadata["date"], datetime.min.time()),
         "series_index": post_metadata.get("series-index", 0),
+        "description": post_metadata["description"],
         "image": post_metadata["image"],
         "preview": preview,
         "read_time": read_time,

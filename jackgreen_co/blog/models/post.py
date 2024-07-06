@@ -22,6 +22,7 @@ class Post:
         self.title = data.get("title")
         self.date = data.get("date")
         self.series_index = data.get("series_index")
+        self.description = data.get("description")
         self.image = data.get("image")
         self.content = data.get("content")
         self.toc = data.get("toc")
