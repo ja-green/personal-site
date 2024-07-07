@@ -23,11 +23,11 @@ class FeatureFlags(object):
 
 
 class FeatureFlagsDev(FeatureFlags):
-    BLOG = True
+    pass
 
 
 class FeatureFlagsProd(FeatureFlags):
-    BLOG = True
+    pass
 
 
 class Features(object):

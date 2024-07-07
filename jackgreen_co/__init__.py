@@ -49,8 +49,7 @@ def init() -> Flask:
     app.jinja_env.add_extension("jinja2.ext.do")
 
     app.register_blueprint(bp_main)
-    if app.features["BLOG"]:
-        app.register_blueprint(bp_blog)
+    app.register_blueprint(bp_blog)
 
     if app.config["ENV"] == "development":
         app.after_request(hook.after_request)
