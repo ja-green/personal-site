@@ -80,12 +80,13 @@ module.exports = {
                             marginBottom: "1.5em",
                             overflowX: "auto",
                             padding: "1em 1.5em",
-                            position: "relative",
                         },
                         code: {
                             color: "hsl(var(--foreground))",
                             fontSize: "small",
                             lineHeight: "1.7",
+                            flex: "1",
+                            alignContent: "center",
                         },
                         li: {
                             marginTop: "0.2rem",

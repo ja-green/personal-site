@@ -180,16 +180,17 @@ pre {
     margin-bottom: 1.5em;
     overflow-x: auto;
     padding: 1em 1.5em;
-    position: relative;
 }
 
 pre > button {
-    position: absolute;
+    position: sticky;
     display: none;
     align-items: center;
+    background-color: hsl(var(--background));
     justify-content: center;
     height: 2rem;
     width: 2rem;
+    min-width: 2rem;
     top: 0.5rem;
     right: 0.5rem;
     cursor: pointer;
@@ -197,6 +198,12 @@ pre > button {
     transition-property: color, background-color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+pre:hover > button {
+    opacity: 1;
 }
 
 pre > button:hover {
@@ -213,6 +220,14 @@ pre > button > span {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+}
+
+code {
+    color: hsl(var(--foreground));
+    font-size: small;
+    line-height: 1.7;
+    flex: 1;
+    align-content: center;
 }
 
 pre > code > .k,
@@ -239,12 +254,6 @@ pre > code > .cp,
 pre > code > .cpf {
     color: hsl(240, 5%, 64.9%);
     font-style: italic;
-}
-
-code {
-    color: hsl(var(--foreground));
-    font-size: small;
-    line-height: 1.7;
 }
 
 hr {
