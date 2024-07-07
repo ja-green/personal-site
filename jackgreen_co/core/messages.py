@@ -15,16 +15,19 @@
 
 
 class Messages(object):
+    core_sitename = "JG"
     core_copyright = "Copyright"
     core_here = "here"
     core_period = "."
     core_ellipsis = "..."
+    core_themetoggle = "Toggle theme"
     core_manifest_description = "Welcome to Jack Green's personal website and blog. Explore articles on tech, security, personal interests, and more. Join me in my passion for self-development and education."
     core_license_source = "GNU AGPLv3.0 License"
     core_license_content = "Creative Commons Attribution-ShareAlike 4.0 International License"
     core_header_home = "Home"
     core_header_about = "About"
     core_header_contact = "Contact"
+    core_header_blog = "Blog"
     core_footer_privacy = "Privacy Policy"
     core_footer_license_source1 = "The source code for this website is licensed under the"
     core_footer_license_source2 = "and can be found"
