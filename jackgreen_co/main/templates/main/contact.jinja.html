@@ -33,7 +33,7 @@
 {% block content %}
 <p class="text-muted-foreground">
     {{ messages["main_contact_lead1"] }}
-    {{ link(messages["core_here"], href=url_for("main.email")) }}
+    {{- link(messages["core_here"], href=url_for("main.email")) -}}
     {{ messages["main_contact_lead2"] }}
 </p>
 
