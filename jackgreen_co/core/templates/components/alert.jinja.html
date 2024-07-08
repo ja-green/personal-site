@@ -1,0 +1,29 @@
+{# Copyright (C) 2024 Jack Green (jackgreen.co)
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation, either version 3 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program. If not, see <https://www.gnu.org/licenses/>. #}
+
+{% macro alert_success(text) %}
+{% set title = kwargs.pop('title', 'Success') %}
+{% set class_ = kwargs.pop('class_', '') %}
+
+<div role="alert" class="relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground bg-background text-foreground {{ class_ }}">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    {% if title %}<h5 class="mb-1 font-medium leading-none tracking-tight">{{ title }}</h5>{% endif %}
+    <div class="[&_p]:leading-relaxed">{{ text }}</div>
+</div>
+{% endmacro %}
+
+{# vim: set ft=htmldjango: #}
