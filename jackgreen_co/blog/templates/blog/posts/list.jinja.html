@@ -128,9 +128,11 @@
 </div>
 <div class="mb-6">
     <h2 class="text-lg font-semibold mb-4">{{ messages["blog_tags_heading"] }}</h2>
-    <ul class="flex pl-1.5 text-sm text-muted-foreground mb-4">
+    <ul class="flex flex-wrap pl-1.5 text-sm text-muted-foreground mb-4">
         {% for tag in tags %}
-            {{ badge_link_secondary(tag.title, href=url_for("blog.tag", slug=tag.slug, page=1), class_="mr-1") }}
+            <li class="mt-[0.2rem] mb-[0.2rem]">
+                {{ badge_link_secondary(tag.title, href=url_for("blog.tag", slug=tag.slug, page=1), class_="mr-1") }}
+            </li>
         {% endfor %}
     </ul>
     {{ link(messages["blog_posts_viewtags"], href=url_for("blog.tags", page=1), class_="pl-1.5 text-sm text-muted-foreground") }}
