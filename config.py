@@ -28,7 +28,7 @@ class BaseConfig(object):
     SITE_AUTHOR = "Jack Green"
     ASSETS_MANIFEST = "manifest.txt"
     SESSION_LIFETIME = timedelta(minutes=10)
-    BLOG_POSTS_PER_PAGE = 2
+    BLOG_POSTS_PER_PAGE = 10
     PRIVACY_LAST_UPDATED = datetime(2024, 6, 12)
 
 
