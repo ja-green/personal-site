@@ -41,7 +41,7 @@ class CaptchaValidator(object):
 
 
 class AgeTokenValidator(object):
-    def __init__(self: Self, message: str = None, min_age: int = 60):
+    def __init__(self: Self, message: str = None, min_age: int = 10):
         if not message:
             message = "Please wait before submitting the form again."
         self.message = message
