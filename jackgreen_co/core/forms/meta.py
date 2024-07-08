@@ -15,6 +15,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
+from typing import Self
+
+from wtforms import Field
 from wtforms.fields.core import UnboundField
 from wtforms.meta import DefaultMeta
 from wtforms.validators import Length, NumberRange
@@ -23,7 +26,7 @@ MINMAX_VALIDATORS = (NumberRange,)
 MINMAXLENGTH_VALIDATORS = (Length,)
 
 
-def set_required(field, render_kw=None, force=False):
+def set_required(field: Field, render_kw: dict = None, force: bool = False) -> dict:
     if render_kw is None:
         render_kw = {}
     if "required" in render_kw and not force:
@@ -33,7 +36,7 @@ def set_required(field, render_kw=None, force=False):
     return render_kw
 
 
-def set_invalid(field, render_kw=None):
+def set_invalid(field: Field, render_kw: dict = None) -> dict:
     if render_kw is None:
         render_kw = {}
     if field.errors:
@@ -45,7 +48,7 @@ def set_invalid(field, render_kw=None):
     return render_kw
 
 
-def set_minmax(field, render_kw=None, force=False):
+def set_minmax(field: Field, render_kw: dict = None, force: bool = False) -> dict:
     if render_kw is None:
         render_kw = {}
     for validator in field.validators:
@@ -61,7 +64,7 @@ def set_minmax(field, render_kw=None, force=False):
     return render_kw
 
 
-def set_minmaxlength(field, render_kw=None, force=False):
+def set_minmaxlength(field: Field, render_kw: dict = None, force: bool = False) -> dict:
     if render_kw is None:
         render_kw = {}
     for validator in field.validators:
@@ -77,7 +80,7 @@ def set_minmaxlength(field, render_kw=None, force=False):
     return render_kw
 
 
-def set_title(field, render_kw=None):
+def set_title(field: Field, render_kw: dict = None) -> dict:
     if render_kw is None:
         render_kw = {}
     if "title" not in render_kw and getattr(field, "description"):
@@ -85,7 +88,7 @@ def set_title(field, render_kw=None):
     return render_kw
 
 
-def get_html5_kwargs(field, render_kw=None, force=False):
+def get_html5_kwargs(field: Field, render_kw: dict = None, force: bool = False) -> dict:
     if isinstance(field, UnboundField):
         msg = "This function needs a bound field not: {}"
         raise ValueError(msg.format(field))
@@ -99,7 +102,7 @@ def get_html5_kwargs(field, render_kw=None, force=False):
 
 
 class AutoMeta(DefaultMeta):
-    def render_field(self, field, render_kw):
+    def render_field(self: Self, field: Field, render_kw: dict = None) -> str:
         field_kw = getattr(field, "render_kw", None)
         if field_kw is not None:
             render_kw = dict(field_kw, **render_kw)

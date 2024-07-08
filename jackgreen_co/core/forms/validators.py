@@ -14,18 +14,20 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import time
+from typing import Self
 
 from flask import session
+from wtforms import Field, Form
 from wtforms.validators import ValidationError
 
 
 class CaptchaValidator(object):
-    def __init__(self, message=None):
+    def __init__(self: Self, message: str = None):
         if not message:
             message = "Please verify that you are not a robot."
         self.message = message
 
-    def __call__(self, form, field):
+    def __call__(self: Self, form: Form, field: Field):
         del session["captcha-answers"]
 
         captcha_answer = field.data.lower()
@@ -39,13 +41,13 @@ class CaptchaValidator(object):
 
 
 class AgeTokenValidator(object):
-    def __init__(self, message=None, min_age=60):
+    def __init__(self: Self, message: str = None, min_age: int = 60):
         if not message:
             message = "Please wait before submitting the form again."
         self.message = message
         self.min_age = min_age
 
-    def __call__(self, form, field):
+    def __call__(self: Self, form: Form, field: Field):
         del session["age-token"]
         del session["age-token-timestamp"]
 

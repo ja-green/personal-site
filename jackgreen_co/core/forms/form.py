@@ -13,17 +13,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Self
+
 from flask_wtf import FlaskForm
 
 
 class BaseForm(FlaskForm):
     action = "/"
 
-    def set_action(self, url):
+    def set_action(self: Self, url: str):
         self.action = url
 
     @property
-    def html_id(self):
+    def html_id(self: Self) -> str:
         class_name = self.__class__.__name__
         if class_name.endswith("Form"):
             class_name = class_name[:-4]
