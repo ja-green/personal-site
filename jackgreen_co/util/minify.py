@@ -124,6 +124,9 @@ class Minify(object):
         self.redis = redis
         self.use_cache = app.config.get("MINIFY_USE_CACHE", False)
 
+        if not app.config.get("MINIFY_ENABLED", False):
+            return
+
         with app.app_context():
             app.after_request(self.after_request_compress)
             app.after_request(self.after_request_minify)
