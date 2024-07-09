@@ -220,7 +220,12 @@ def tag(slug: str) -> ResponseReturnValue:
 def rss() -> ResponseReturnValue:
     posts, _ = post_service.get()
 
-    body = render_template("blog/rss.jinja.xml", posts=posts)
+    latest_date = None
+    for post in posts:
+        if not latest_date or post.date > latest_date:
+            latest_date = post.date
+
+    body = render_template("blog/rss.jinja.xml", posts=posts, build_date=latest_date)
     response = make_response(body)
     response.headers["Content-Type"] = "application/rss+xml"
 
