@@ -15,7 +15,7 @@
 
 {% extends "layouts/default.jinja.html" %}
 
-{% from "components/alert.jinja.html" import alert_success %}
+{% from "components/alert.jinja.html" import alert_success, alert_danger %}
 {% from "components/form.jinja.html" import form, form_field, form_fieldset, form_submit %}
 {% from "components/header.jinja.html" import header, header_title %}
 {% from "components/link.jinja.html" import link %}
@@ -37,8 +37,11 @@
     {{ messages["main_contact_lead2"] }}
 </p>
 
-{% for message in get_flashed_messages(category_filter=["info"]) %}
-    {{ alert_success(message, title=messages["main_contact_submitted_heading"], class_="mt-6") }}
+{% for message in get_flashed_messages(category_filter=["success"]) %}
+    {{ alert_success(message, title=messages["main_contact_submitted_success_heading"], class_="mt-6") }}
+{% endfor %}
+{% for message in get_flashed_messages(category_filter=["error"]) %}
+    {{ alert_danger(message, title=messages["main_contact_submitted_error_heading"], class_="mt-6") }}
 {% endfor %}
 
 {% call form(contact_form) %}

@@ -67,8 +67,11 @@ class Messages(messages.Messages):
     main_contact_form_captcha_invalid = "Please verify that you are not a robot."
     main_contact_form_agetoken_invalid = "Please wait a moment before submitting the form again."
     main_contact_form_submit = "Submit"
-    main_contact_submitted_heading = "Message Sent"
-    main_contact_submitted_message = "Thanks %s, your message has been sent successfully"
+    main_contact_submitted_email_subject = "New Contact Form Submission"
+    main_contact_submitted_success_heading = "Message Sent"
+    main_contact_submitted_success_message = "Thanks %s, your message has been sent successfully."
+    main_contact_submitted_error_heading = "Message Not Sent"
+    main_contact_submitted_error_message = "Sorry %s, your message could not be sent. Please try again later."
 
     main_email_heading = "Email"
     main_email_subheading = "Send me an encrypted email."

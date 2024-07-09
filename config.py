@@ -30,6 +30,9 @@ class BaseConfig(object):
     SESSION_LIFETIME = timedelta(minutes=10)
     BLOG_POSTS_PER_PAGE = 10
     PRIVACY_LAST_UPDATED = datetime(2024, 6, 12)
+    MAIL_FROM = "noreply@jackgreen.co"
+    MAIL_TO = "jack@jackgreen.co"
+    MAIL_TOKEN = os.environ.get("MAIL_TOKEN")
 
 
 class ConfigDev(BaseConfig):

@@ -20,7 +20,7 @@ from jackgreen_co import core
 from jackgreen_co.blog import blog as bp_blog
 from jackgreen_co.core import context, errors, hook, routes, session
 from jackgreen_co.main import main as bp_main
-from jackgreen_co.util import assets, features, minify
+from jackgreen_co.util import assets, features, mail, minify
 
 
 def init() -> Flask:
@@ -39,6 +39,7 @@ def init() -> Flask:
     core.redis = core.redis_client.redis
     features.features.init_app(app)
     assets.assets.init_app(app)
+    mail.mail.init_app(app)
     minify.minify.init_app(app, core.redis)
 
     app.session_interface = session.RedisSessionInterface(core.redis)

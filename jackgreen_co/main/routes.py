@@ -13,11 +13,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import current_app, flash, redirect, render_template, request, url_for
 from flask.typing import ResponseReturnValue
 
 from jackgreen_co.main import main, messages
 from jackgreen_co.main.forms import contact_form
+from jackgreen_co.util import mail
 
 
 @main.route("/")
@@ -36,17 +37,24 @@ def contact() -> ResponseReturnValue:
     form.set_action(url_for("main.contact"))
 
     if form.validate_on_submit():
-        flash(
-            messages.Messages.main_contact_submitted_message % (form.first_name.data.title()),
-            "info",
-        )
-
         data = {
             "first_name": form.first_name.data,
             "last_name": form.last_name.data,
             "email": form.email.data,
             "message": form.message.data,
         }
+
+        mail_sent = mail.send_email(
+            messages.Messages.main_contact_submitted_email_subject,
+            "email/contact-form-submission.jinja.html",
+            data,
+            current_app.config["MAIL_TO"],
+        )
+
+        if mail_sent:
+            flash(messages.Messages.main_contact_submitted_success_message % (form.first_name.data.title()), "success")
+        else:
+            flash(messages.Messages.main_contact_submitted_error_message % (form.first_name.data.title()), "error")
 
         return redirect(url_for("main.contact"), 303)
     return render_template("main/contact.jinja.html", contact_form=form)
