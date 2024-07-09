@@ -82,15 +82,15 @@ class CaptchaField(StringField):
     def __init__(self: Self, validators: list = None, **kwargs: dict):
         super(CaptchaField, self).__init__(label=None, validators=validators, **kwargs)
 
+        question = captcha_service.get_random()
+        self.label.text = question.question_text
+
+        if not question:
+            raise RuntimeError("No questions found in the database.")
+
         if not kwargs["_form"].is_submitted():
-            question = captcha_service.get_random()
-
-            if not question:
-                raise RuntimeError("No questions found in the database.")
-
+            session["captcha-answers-last"] = None
             session["captcha-answers"] = question.answers
-
-            self._answers = question.answers
-            self.label.text = question.question_text
         else:
-            self._answers = session.get("captcha-answers", [])
+            session["captcha-answers-last"] = session["captcha-answers"]
+            session["captcha-answers"] = question.answers

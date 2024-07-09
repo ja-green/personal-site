@@ -27,16 +27,16 @@ class CaptchaValidator(object):
             message = "Please verify that you are not a robot."
         self.message = message
 
-    def __call__(self: Self, form: Form, field: Field):
-        del session["captcha-answers"]
-
+    def __call__(self: Self, _: Form, field: Field):
         captcha_answer = field.data.lower()
-        if not field._answers:
+        if not session["captcha-answers-last"]:
+            field.data = ""
             raise ValidationError(field.gettext(self.message))
 
-        valid_answers = [answer.lower() for answer in field._answers]
+        valid_answers = [answer.lower() for answer in session["captcha-answers-last"]]
 
         if not captcha_answer or captcha_answer not in valid_answers:
+            field.data = ""
             raise ValidationError(field.gettext(self.message))
 
 
@@ -47,10 +47,7 @@ class AgeTokenValidator(object):
         self.message = message
         self.min_age = min_age
 
-    def __call__(self: Self, form: Form, field: Field):
-        del session["age-token"]
-        del session["age-token-timestamp"]
-
+    def __call__(self: Self, _: Form, field: Field):
         response_token = field.data
         if not field._token or not response_token:
             raise ValidationError(field.gettext(self.message))
