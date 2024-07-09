@@ -1,5 +1,5 @@
 const form = document.querySelectorAll("form#contact")[0];
-const submit = form.querySelectorAll("button[type=submit]")[0];
+const submit = form.querySelectorAll("button")[0];
 const formFields = form.querySelectorAll("input:not([type=\"hidden\"]), select, textarea");
 
 function checkValidity(e) {

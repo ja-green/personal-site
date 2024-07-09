@@ -37,7 +37,7 @@ def contact() -> ResponseReturnValue:
 
     if form.validate_on_submit():
         flash(
-            messages.Messages.main_contact_submitted % (form.first_name.data.title()),
+            messages.Messages.main_contact_submitted_message % (form.first_name.data.title()),
             "info",
         )
 

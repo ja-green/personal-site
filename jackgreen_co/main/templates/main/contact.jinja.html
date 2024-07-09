@@ -15,7 +15,7 @@
 
 {% extends "layouts/default.jinja.html" %}
 
-{% from "components/card.jinja.html" import card, card_content %}
+{% from "components/alert.jinja.html" import alert_success %}
 {% from "components/form.jinja.html" import form, form_field, form_fieldset, form_submit %}
 {% from "components/header.jinja.html" import header, header_title %}
 {% from "components/link.jinja.html" import link %}
@@ -37,12 +37,8 @@
     {{ messages["main_contact_lead2"] }}
 </p>
 
-{% for message in get_flashed_messages() %}
-    {% call card() %}
-        {% call card_content() %}
-            <p>{{ message }}</p>
-        {% endcall %}
-    {% endcall %}
+{% for message in get_flashed_messages(category_filter=["info"]) %}
+    {{ alert_success(message, title=messages["main_contact_submitted_heading"], class_="mt-6") }}
 {% endfor %}
 
 {% call form(contact_form) %}
