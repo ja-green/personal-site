@@ -34,6 +34,7 @@ services:
       - redis
     environment:
       - BUILD_ENV=${BUILD_ENV}
+      - MAIL_TOKEN=${MAIL_TOKEN}
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - REDIS_USERNAME=${REDIS_USERNAME}
