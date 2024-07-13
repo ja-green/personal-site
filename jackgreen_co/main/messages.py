@@ -23,6 +23,7 @@ class Messages(messages.Messages):
     main_index_button1 = "View my blog"
     main_index_button2 = "See more about me"
 
+    main_about_title = "About"
     main_about_heading = "About"
     main_about_subheading = "A bit about me and this site."
     main_about_description = "Learn more about Jack Green, a passionate tech enthusiast and educator. Discover my journey, interests, and the motivation behind my blog posts."
@@ -43,6 +44,7 @@ class Messages(messages.Messages):
     main_about_tech_p4_2 = "The content is licensed under the"
     main_about_tech_p4_3 = "The code repository is available"
 
+    main_contact_title = "Contact"
     main_contact_heading = "Contact"
     main_contact_subheading = "Get in touch."
     main_contact_description = "Get in touch with me. Reach out for enquiries, feedback, or just to connect. I'm here to engage with readers of my posts."
@@ -73,6 +75,7 @@ class Messages(messages.Messages):
     main_contact_submitted_error_heading = "Message Not Sent"
     main_contact_submitted_error_message = "Sorry %s, your message could not be sent. Please try again later."
 
+    main_email_title = "Email"
     main_email_heading = "Email"
     main_email_subheading = "Send me an encrypted email."
     main_email_description = (
@@ -98,6 +101,7 @@ RhT3NUn60/4WXHUD
     main_email_address_lead = "All emails can be directed to:"
     main_email_address = "jack at jackgreen dot co"
 
+    main_privacy_title = "Privacy Policy"
     main_privacy_heading = "Privacy Policy"
     main_privacy_subheading = "Your privacy is important."
     main_privacy_description = "Learn about how I collect, use, and protect your personal information when you use my website. I am committed to safeguarding your privacy and handling your data in an open and transparent manner."

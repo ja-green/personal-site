@@ -69,7 +69,9 @@ def post(slug: str) -> ResponseReturnValue:
     prev_post = None if not prev_post or len(prev_post) == 0 else prev_post[0]
     next_post = None if not next_post or len(next_post) == 0 else next_post[0]
 
-    return render_template("blog/posts/single.jinja.html", post=post, prev_post=prev_post, next_post=next_post)
+    return render_template(
+        "blog/posts/single.jinja.html", title=post.title, post=post, prev_post=prev_post, next_post=next_post
+    )
 
 
 @blog.route("/series")
@@ -111,6 +113,7 @@ def singleseries(slug: str) -> ResponseReturnValue:
     tags, _ = tag_service.get(limit=10)
     return render_template(
         "blog/series/single.jinja.html",
+        title=series_item.title,
         series_item=series_item,
         page=page,
         posts=posts,
@@ -162,6 +165,7 @@ def category(slug: str) -> ResponseReturnValue:
     tags, _ = tag_service.get(limit=10)
     return render_template(
         "blog/categories/single.jinja.html",
+        title=category.title,
         category=category,
         page=page,
         posts=posts,
@@ -206,6 +210,7 @@ def tag(slug: str) -> ResponseReturnValue:
     tags, _ = tag_service.get(limit=10)
     return render_template(
         "blog/tags/single.jinja.html",
+        title=tag.title.title(),
         tag=tag,
         page=page,
         posts=posts,

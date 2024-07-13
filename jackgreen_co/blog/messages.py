@@ -26,6 +26,7 @@ class Messages(messages.Messages):
     blog_rss_heading = "Posts RSS Feed"
     blog_rss_description = "Stay up-to-date with my latest blog posts by subscribing to the RSS feed."
 
+    blog_posts_title = "Blog Posts"
     blog_posts_description = "Welcome to my blog. Explore my posts, covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_posts_heading = "Posts"
     blog_posts_subheading = "Explore and read my blog posts."
@@ -40,6 +41,7 @@ class Messages(messages.Messages):
     blog_post_categories_heading = "Categories"
     blog_post_tags_heading = "Tags"
 
+    blog_series_title = "Blog Series"
     blog_series_description = "Discover my blog series' covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_series_heading = "Series"
     blog_series_subheading = "Explore my blog posts by series."
@@ -51,6 +53,7 @@ class Messages(messages.Messages):
     blog_singleseries_description = "Explore the %s series on my blog - %s"
     blog_singleseries_subheading = "Explore posts in %s"
 
+    blog_categories_title = "Blog Categories"
     blog_categories_description = "Discover my blog categories covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_categories_heading = "Categories"
     blog_categories_subheading = "Explore my blog posts by category."
@@ -62,6 +65,7 @@ class Messages(messages.Messages):
     blog_category_description = "Explore the %s category on my blog."
     blog_category_subheading = "Explore posts in %s"
 
+    blog_tags_title = "Blog Tags"
     blog_tags_description = "Discover my blog tags covering a variety of topics including technology, security, my personal hobbies, and more. Follow along with detailed, educational content."
     blog_tags_heading = "Tags"
     blog_tags_subheading = "Explore my blog posts by tag."
