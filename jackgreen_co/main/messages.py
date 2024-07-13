@@ -19,7 +19,7 @@ from jackgreen_co.core import messages
 class Messages(messages.Messages):
     main_index_description = "Welcome to Jack Green's personal website and blog. Explore articles on tech, security, personal interests, and more. Join me in my passion for self-development and education."
     main_index_heading = "Hi there, I'm Jack."
-    main_index_subheading = "Cyber Security Consultant, developer and life-long learner."
+    main_index_subheading = "Discover my open-source projects, philosophy, and joy of perpetual learning."
     main_index_button1 = "View my blog"
     main_index_button2 = "See more about me"
 
