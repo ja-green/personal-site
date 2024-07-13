@@ -13,13 +13,14 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program. If not, see <https://www.gnu.org/licenses/>. #}
 
-{% macro image(image, alt, theme) -%}
+{% macro image(image, alt) -%}
 {% set class_ = kwargs.pop('class_', '') %}
 {% set width  = kwargs.pop('width', '') %}
+{% set sizes  = kwargs.pop('sizes', '') %}
 {% set height = kwargs.pop('height', '') %}
 {% set lazy   = kwargs.pop('lazy', false) %}
 
-{% set widths = [1920, 1600, 1366, 1024, 768, 640] %}
+{% set widths = [1920, 1600, 1366, 1024, 768, 640, 480, 320] %}
 {% set srcset_jpeg = [] %}
 {% set srcset_webp = [] %}
 {% set img_name = image.rsplit('.', 1)[0] %}
@@ -30,13 +31,14 @@
 {%- endfor -%}
 
 <picture>
-    <source type="image/webp" srcset="{{ srcset_webp | join(", ") }}" />
-    <source type="image/jpeg" srcset="{{ srcset_jpeg | join(", ") }}"  />
+    <source type="image/webp" srcset="{{ srcset_webp | join(", ") }}" {% if sizes %}sizes="{{ sizes }}"{% endif %} />
+    <source type="image/jpeg" srcset="{{ srcset_jpeg | join(", ") }}" {% if sizes %}sizes="{{ sizes }}"{% endif %} />
     <img src="{{ url_for("static", filename=img_name ~ "-640.jpg") }}"
-         alt="{{ alt }}"
-         {% if width %}width="{{ width }}"{% endif %} {% if height %}height="{{ height }}"{% endif %}
-         {% if lazy %}loading="lazy"{% endif %}
-         class="{{ class_ }}" />
+        alt="{{ alt }}"
+        {% if width %}width="{{ width }}"{% endif %} {% if height %}height="{{ height }}"{% endif %}
+        {% if lazy %}loading="lazy"{% endif %}
+        {% if sizes %}sizes="{{ sizes }}"{% endif %}
+        class="{{ class_ }}" />
 </picture>
 
 {% endmacro %}

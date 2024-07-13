@@ -122,11 +122,11 @@ convert_image() {
     local image_extn="${1##*.}"
     local output_path="${2}"
 
-    local widths="1920 1600 1366 1024 768 640"
+    local widths="1920 1600 1366 1024 768 640 480 320"
 
     for width in ${widths}; do
         if test "${verbose}"; then
-            printf "converting ${image} to ${width}...\n"
+            printf "converting ${image_name} to ${width}...\n"
         fi
 
         cp "${image}" "${output_path}/${image_name}-original.${image_extn}"
@@ -162,7 +162,7 @@ convert_image() {
 
     if test "${lqip}"; then
         if test "${verbose}"; then
-            printf "converting ${image} to lqip...\n"
+            printf "converting ${image_name} to lqip...\n"
         fi
 
         cp "${image}" "${output_path}/${image_name}-original.${image_extn}"
@@ -224,7 +224,7 @@ create_cache() {
 #
 # check if an image hash is in the cache
 check_cache() {
-    local image_name="${1}"
+    local image_name="${1%.*}"; image_name="${image_name##*/}"
     local image_hash="${2}"
     local cache_dir="${opts_cache_dir}/${image_hash}"
 
