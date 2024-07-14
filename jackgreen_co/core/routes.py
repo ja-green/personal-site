@@ -89,4 +89,8 @@ def webmanifest() -> ResponseReturnValue:
     response = make_response(body)
     response.headers["Content-Type"] = "application/manifest+json"
 
+    origin = request.environ.get("HTTP_ORIGIN")
+    if origin and origin.endswith("." + current_app.config["SERVER_NAME"]):
+        response.headers["Access-Control-Allow-Origin"] = origin
+
     return response
