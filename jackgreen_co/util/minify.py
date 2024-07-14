@@ -32,14 +32,18 @@ class Minify(object):
         pass
 
     def apply_minify_html(self: Self, html: str, path: str) -> str:
-        key = f"cache:{hash(path)}"
+        data = minify_html.minify(html)
 
-        if self.use_cache and self.redis.exists(key):
+        if not self.use_cache or path in self.cache_exclude:
+            return data
+
+        theme = request.cookies.get("theme", "dark")
+        key = f"cache:{hash(f'{path}:{theme}')}"
+
+        if self.redis.exists(key):
             return self.redis.get(key)
 
-        data = minify_html.minify(html)
         self.redis.set(key, data)
-
         return data
 
     def create_gzip_with_padding(self: Self, data: bytes, padding_size: int) -> bytes:
@@ -120,9 +124,23 @@ class Minify(object):
         alg = self.select_compression_algorithm(request.headers.get("Accept-Encoding", ""))
         return alg(response)
 
+    def before_request_check_cache(self: Self) -> Response:
+        if not self.use_cache:
+            return None
+
+        theme = request.cookies.get("theme", "dark")
+        key = f"cache:{hash(f'{request.path}:{theme}')}"
+        if self.use_cache and request.path not in self.cache_exclude and self.redis.exists(key):
+            response = Response(self.redis.get(key))
+            response.headers["Content-Type"] = "text/html"
+            return response
+
+        return None
+
     def init_app(self: Self, app: Flask, redis: StrictRedis):
         self.redis = redis
         self.use_cache = app.config.get("MINIFY_USE_CACHE", False)
+        self.cache_exclude = app.config.get("MINIFY_CACHE_EXCLUDE", [])
 
         if not app.config.get("MINIFY_ENABLED", False):
             return
@@ -130,6 +148,7 @@ class Minify(object):
         with app.app_context():
             app.after_request(self.after_request_compress)
             app.after_request(self.after_request_minify)
+            app.before_request(self.before_request_check_cache)
 
 
 minify = Minify()
