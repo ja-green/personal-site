@@ -75,7 +75,7 @@
             {{ messages["main_privacy_close1_1"] }} {{- link(messages["core_license_content"], href="https://creativecommons.org/licenses/by-sa/4.0/") -}}{{ messages["core_period"] }}
             {{ messages["main_privacy_close1_2"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d. %Y") }}{{ messages["core_period"] }}</p>
         <p class="text-muted-foreground">
-            {{ messages["main_privacy_close2_1"] }} {{- link(messages["core_here"], href=url_for("main.contact")) -}} 
+            {{ messages["main_privacy_close2_1"] }} {{ link(messages["core_here"], href=url_for("main.contact")) }}
             {{ messages["main_privacy_close2_2"] }} {{- link(messages["core_here"], href=url_for("main.email")) -}}{{ messages["core_period"] }}
         </p>
     </div>
