@@ -89,15 +89,4 @@ for domain in ${DOMAINS}; do
     fi
 done
 
-if [ ! -f "${CERT_PATH}/dhparam.pem" ]; then
-    bits=4096
-
-    if [ "${BUILD_ENV}" = "staging" ]; then
-        bits=2048
-    fi
-
-    echo "Generating DH parameters (${bits} bits)"
-    openssl dhparam -out "${CERT_PATH}/dhparam.pem" "${bits}" >/dev/null 2>&1
-fi
-
 chown -R 101:101 "${CERT_PATH}"
