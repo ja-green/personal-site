@@ -59,9 +59,9 @@
         </h3>
     </a>
     {% else %}
-    <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
+    <h2 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
         {{ text }}
-    </h3>
+    </h2>
     {% endif %}
     <p class="text-sm text-muted-foreground">
         {{ subtitle }}
@@ -70,9 +70,9 @@
 {% elif caller %}
 {% if href %}
 <a href="{{ href }}" class="transition-colors hover:text-foreground/80">
-    <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
+    <h2 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
         {{ text }}
-    </h3>
+    </h2>
 </a>
 {% else %}
 <h3 class="font-semibold leading-none tracking-tight mb-2 {{ class_ }}">
@@ -83,9 +83,9 @@
     {{ caller() }}
 </div>
 {% else %}
-<h3 class="font-semibold leading-none tracking-tight {{ class_ }}">
+<h2 class="font-semibold leading-none tracking-tight {{ class_ }}">
     {{ text }}
-</h3>
+</h2>
 {% endif %}
 {% endmacro %}
 
