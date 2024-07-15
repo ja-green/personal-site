@@ -19,8 +19,7 @@ set -e
 
 DOMAINS="jackgreen.co blog.jackgreen.co"
 CERT_PATH="/etc/ssl/public"
-#CA="${ACME_CA:-letsencrypt}"
-CA="letsencrypt_test"
+CA="${ACME_CA:-letsencrypt}"
 
 issue_acme_cert() {
     echo "Issuing ACME certificate for ${domain}"
