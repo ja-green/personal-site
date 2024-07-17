@@ -20,6 +20,8 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY ./services/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./services/nginx/error-pages /usr/share/nginx/html/error-pages
+COPY ./build/ssl/nginx-cert.pem /etc/ssl/internal/nginx-cert.pem
+COPY ./build/ssl/nginx-key.pem /etc/ssl/internal/nginx-key.pem
 COPY ./build/ssl/ca.pem /etc/ssl/internal/ca.pem
 COPY ./jackgreen_co/core/static /usr/share/nginx/html/assets
 

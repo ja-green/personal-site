@@ -56,8 +56,8 @@ endif
 .DEFAULT_GOAL := build-full
 
 .PHONY: help clean build-css build-js build-images build-favicons build-fonts build-initdb build-containers \
-	create-ca build-cert-app build-cert-mongo build-cert-redis build-certs build-essential build-full build \
-	run-app run-full run deploy teardown
+	create-ca build-cert-nginx build-cert-app build-cert-mongo build-cert-redis build-certs build-essential \
+	build-full build run-app run-full run deploy teardown
 
 # fn/help
 #
@@ -80,6 +80,7 @@ targets:\n\
     build-initdb     build the database import files\n\
     build-containers build the docker container\n\
     create-ca        generate a CA key and certificate\n\
+    build-cert-nginx generate ECC key and certificate for nginx\n\
     build-cert-app   generate ECC key and certificate for the python application\n\
     build-cert-mongo generate ECC key and certificate for mongo\n\
     build-cert-redis generate ECC key and certificate for redis\n\
@@ -188,6 +189,21 @@ create-ca:
 		-out $(DIR_CERTS)/ca.pem >/dev/null 2>&1; \
 	fi
 
+# fn/build-cert-nginx
+#
+# generate ECC key and certificate for nginx
+build-cert-nginx: create-ca
+	@$(MKDIR_P) $(DIR_CERTS)
+	@echo "info: generating ECC key and certificate for nginx"
+	@$(OPENSSL) req -new -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -nodes \
+		-subj "/C=UK/ST=London/L=London/O=jackgreen.co/OU=Internal/CN=nginx.internal" \
+		-out $(DIR_CERTS)/nginx-csr.pem -keyout $(DIR_CERTS)/nginx-key.pem >/dev/null 2>&1
+	@$(OPENSSL) x509 -req -days 365 -in $(DIR_CERTS)/nginx-csr.pem -CA $(DIR_CERTS)/ca.pem \
+		-extfile <(printf "subjectAltName=DNS:nginx.internal,DNS:nginx") \
+		-CAkey $(DIR_CERTS)/ca.key -CAcreateserial \
+		-out $(DIR_CERTS)/nginx-cert.pem >/dev/null 2>&1
+	@$(CAT) $(DIR_CERTS)/nginx-key.pem $(DIR_CERTS)/nginx-cert.pem > $(DIR_CERTS)/nginx.pem
+
 # fn/build-cert-app
 #
 # generate ECC key and certificate for the python application
@@ -236,7 +252,7 @@ build-cert-redis: create-ca
 # fn/build-certs
 #
 # generate certificates for internal services
-build-certs: build-cert-app build-cert-mongo build-cert-redis
+build-certs: build-cert-nginx build-cert-app build-cert-mongo build-cert-redis
 
 # fn/build-essential
 #
