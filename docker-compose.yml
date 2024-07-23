@@ -13,14 +13,22 @@ services:
         condition: service_completed_successfully
       app:
         condition: service_started
+      logrotate:
+        condition: service_started
     volumes:
-      - acme-certs:/etc/ssl/public:ro
+      - acme-certs:/etc/ssl/public:rw
       - nginx-logs:/var/log/nginx:rw
+      - nginx-control:/etc/nginx/control:rw
     environment:
       - BUILD_ENV=${BUILD_ENV}
     networks:
       - proxy_net
       - internal_net
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
   app:
     build:
       context: .
@@ -42,6 +50,11 @@ services:
     networks:
       - proxy_net
       - internal_net
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
   mongo:
     build:
       context: .
@@ -56,6 +69,11 @@ services:
       - MONGO_INITDB_DATABASE=jackgreen_co
     networks:
       - internal_net
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
   redis:
     build:
       context: .
@@ -69,6 +87,11 @@ services:
       - REDIS_INITDB_PASSWORD=${REDIS_PASSWORD}
     networks:
       - internal_net
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
   acme:
     build:
       context: .
@@ -81,6 +104,26 @@ services:
       - acme-certs:/etc/ssl/public:rw
     environment:
       - BUILD_ENV=${BUILD_ENV}
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
+  logrotate:
+    build:
+      context: .
+      dockerfile: services/logrotate/Dockerfile
+    container_name: logrotate
+    restart: unless-stopped
+    init: true
+    volumes:
+      - nginx-logs:/var/log/nginx:rw
+      - nginx-control:/etc/nginx/control:rw
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: 2
 networks:
   proxy_net:
     driver: bridge
@@ -89,4 +132,10 @@ networks:
     internal: true
 volumes:
   acme-certs:
+  nginx-control:
   nginx-logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /var/log/nginx

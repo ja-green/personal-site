@@ -89,4 +89,4 @@ for domain in ${DOMAINS}; do
     fi
 done
 
-chown -R 101:101 "${CERT_PATH}"
+chown -R nginx:nginx "${CERT_PATH}"

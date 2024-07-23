@@ -22,4 +22,48 @@ if [ "${BUILD_ENV}" = "staging" ]; then
     sed -i 's/ssl_stapling_verify on;/ssl_stapling_verify off;/g' /etc/nginx/nginx.conf
 fi
 
+ln -sf /dev/stdout /var/log/nginx/stdout-access.log
+ln -sf /dev/stdout /var/log/nginx/stdout-error.log
+
+touch /var/log/nginx/access.log
+touch /var/log/nginx/error.log
+
+control_pipe="/etc/nginx/control/pipe"
+
+if [ -e "${control_pipe}" ]; then
+    rm -f "${control_pipe}"
+fi
+
+mkfifo "${control_pipe}"
+
+send_nginx_signal() {
+    signal=${1}
+    nginx_pid=$(cat /var/run/nginx.pid)
+
+    if [ -n "${nginx_pid}" ]; then
+        kill -${signal} ${nginx_pid}
+        echo "Signal ${signal} sent to nginx"
+    fi
+}
+
+(
+    echo "Started nginx signal listener"
+    while true; do
+        if read line < "${control_pipe}"; then
+            echo "Received command: ${line}"
+            case "${line}" in
+                reopen_logs)
+                    send_nginx_signal USR1
+                    ;;
+                reload)
+                    send_nginx_signal HUP
+                    ;;
+                *)
+                    echo "Unknown command: ${line}"
+                    ;;
+            esac
+        fi
+    done
+) &
+
 exec "${@}"

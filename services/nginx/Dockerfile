@@ -13,10 +13,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-FROM nginx:latest
+FROM alpine:latest
+
+RUN apk update && apk add --no-cache nginx openssl luajit nginx-mod-http-lua lua-resty-string
+
+RUN deluser nginx && addgroup -g 1000 -S nginx && adduser -u 1000 -S nginx -G nginx
 
 RUN mkdir -p /etc/ssl
-RUN rm -rf /usr/share/nginx/html/*
+RUN rm -rf /usr/share/nginx/html/* /var/log/nginx/*
 
 COPY ./services/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./services/nginx/error-pages /usr/share/nginx/html/error-pages

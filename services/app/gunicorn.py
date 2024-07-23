@@ -13,6 +13,7 @@ accesslog = "-"
 errorlog = "-"
 loglevel = "info"
 capture_output = True
+access_log_format = "%(l)s %(u)s %(t)s %(r)s %(s)s %(b)s %(f)s %(a)s"
 
 keyfile = "/etc/ssl/internal/app-key.pem"
 certfile = "/etc/ssl/internal/app-cert.pem"

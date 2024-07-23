@@ -15,14 +15,10 @@
 
 FROM alpine:latest
 
-RUN apk add --no-cache curl socat openssl
-RUN curl --silent https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh | \
-    sh -s -- --install-online
+RUN apk add --no-cache logrotate openssl
 
-RUN addgroup -g 1000 -S nginx && adduser -u 1000 -S nginx -G nginx
+COPY ./services/logrotate/logrotate.conf /etc/logrotate.conf
+COPY ./services/logrotate/docker-entrypoint.sh /usr/local/bin/entrypoint.sh
 
-COPY ./services/acme/docker-entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +rx /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-
-EXPOSE 443
