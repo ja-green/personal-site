@@ -29,7 +29,7 @@ class BaseConfig(object):
     ASSETS_MANIFEST = "manifest.txt"
     SESSION_LIFETIME = timedelta(minutes=10)
     BLOG_POSTS_PER_PAGE = 10
-    PRIVACY_LAST_UPDATED = datetime(2024, 6, 12)
+    PRIVACY_LAST_UPDATED = datetime(2024, 7, 27)
     MAIL_FROM = "noreply@jackgreen.co"
     MAIL_TO = "jack@jackgreen.co"
     MAIL_TOKEN = os.environ.get("MAIL_TOKEN")
