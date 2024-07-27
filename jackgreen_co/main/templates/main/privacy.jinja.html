@@ -41,13 +41,15 @@
     <ol class="text-muted-foreground list-decimal pl-12 mt-4 mb-6">
         <li><b>{{ messages["main_privacy_a2_list1_title"] }}</b> {{ messages["main_privacy_a2_list1_info"] }}</li>
         <li><b>{{ messages["main_privacy_a2_list2_title"] }}</b> {{ messages["main_privacy_a2_list2_info"] }}</li>
+        <li><b>{{ messages["main_privacy_a2_list3_title"] }}</b> {{ messages["main_privacy_a2_list3_info"] }}</li>
     </ol>
 
     <h2 class="text-lg font-semibold pt-2 mb-6">{{ messages["main_privacy_q3"] }}</h2>
     <p class="text-muted-foreground mt-2 mb-6">{{ messages["main_privacy_a3"] }}</p>
 
     <h2 class="text-lg font-semibold pt-2 mb-6">{{ messages["main_privacy_q4"] }}</h2>
-    <p class="text-muted-foreground mt-2 mb-6">{{ messages["main_privacy_a4"] }}</p>
+    <p class="text-muted-foreground mt-2">{{ messages["main_privacy_a4_p1"] }}</p>
+    <p class="text-muted-foreground mt-2 mb-6">{{ messages["main_privacy_a4_p2"] }}</p>
 
     <h2 class="text-lg font-semibold pt-2 mb-6">{{ messages["main_privacy_q5"] }}</h2>
     <p class="text-muted-foreground mt-2 mb-6">{{ messages["main_privacy_a5"] }}</p>
@@ -72,7 +74,7 @@
 
     <div class="pt-6">
         <p class="text-muted-foreground mb-6">
-            {{ messages["main_privacy_close1_1"] }} {{- link(messages["core_license_content"], href="https://creativecommons.org/licenses/by-sa/4.0/") -}}{{ messages["core_period"] }}
+            {{ messages["main_privacy_close1_1"] }} {{- link(messages["core_license_content"], href="https://creativecommons.org/licenses/by-sa/4.0/") }}
             {{ messages["main_privacy_close1_2"] }} {{ config["PRIVACY_LAST_UPDATED"].strftime("%B %-d. %Y") }}{{ messages["core_period"] }}</p>
         <p class="text-muted-foreground">
             {{ messages["main_privacy_close2_1"] }} {{ link(messages["core_here"], href=url_for("main.contact")) }}

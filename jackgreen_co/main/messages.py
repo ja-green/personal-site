@@ -119,10 +119,13 @@ RhT3NUn60/4WXHUD
     main_privacy_a2_list2_info = (
         "The email address you provide may be used respond to your inquiries, requests or questions."
     )
+    main_privacy_a2_list3_title = "To maintain security:"
+    main_privacy_a2_list3_info = "Server logs are used to monitor and maintain the security of my website, analyse performance, troubleshoot issues, and detect and prevent malicious activity."
     main_privacy_q3 = "How do I protect your information?"
     main_privacy_a3 = "I implement a variety of security measures to maintain the safety of your personal information when you enter, submit, or access your personal information. I collect only the minimum amount of information necessary for the website to function and for me to address any issues. Access to your personal data is limited to just myself. I employ security measures to protect your information and keep my systems up-to-date."
     main_privacy_q4 = "What is my data retention policy?"
-    main_privacy_a4 = "I retain the personal information you provide in the contact form only for as long as necessary to respond to your inquiry or resolve your issue. Once the enquiry/conversation has completed, the communication will be deleted and no personal data will be stored for future use."
+    main_privacy_a4_p1 = "I retain the personal information you provide in the contact form only for as long as necessary to respond to your inquiry or resolve your issue. Once the enquiry/conversation has completed, the communication will be deleted and no personal data will be stored for future use."
+    main_privacy_a4_p2 = "Server logs are retained for a period of 7 days, after which they are automatically deleted. After 24 hours, any IP addresses stored in the logs are automatically anonymized to SHA-256 hashes with a randomly generated salt that rotates daily."
     main_privacy_q5 = "Do I use cookies?"
     main_privacy_a5 = 'Yes, but only a single session cookie (named "session" if you\'d like to inspect it yourself). Session cookies are temporary and are automatically deleted after the browser session ends. These cookies help me understand and save your preferences for your current session, for example, your preference of light-mode or dark-mode.'
     main_privacy_q6 = "Do I disclose any information to outside parties?"
@@ -138,7 +141,7 @@ RhT3NUn60/4WXHUD
     main_privacy_q11 = "Changes to my privacy policy"
     main_privacy_a11 = "I may update this privacy policy from time to time. Any changes will be posted on this page with an updated effective date. Significant changes will be communicated through an announcement on the homepage."
     main_privacy_close1_1 = "This document is licensed under the"
-    main_privacy_close1_2 = "It was last updated on"
+    main_privacy_close1_2 = "and was last updated on"
     main_privacy_close2_1 = (
         "For any questions or concerns regarding this privacy policy, please contact me using the contact form"
     )
