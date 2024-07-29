@@ -2190,7 +2190,7 @@ categories:
     questions:
 
       - id: pattern_logic
-        templates: ["The {index} {identifier} from {list} is?", "What is the {index} {indentifier} in the following list: {list}?"]
+        templates: ["The {index} {identifier} from {list} is?", "What is the {index} {identifier} in the following list: {list}?"]
         substitution_sets:
           - substitutions:
               - param: index
