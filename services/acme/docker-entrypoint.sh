@@ -38,12 +38,8 @@ renew_acme_cert() {
     exp_time="$(openssl x509 -noout -enddate -in "${CERT_PATH}/${domain}/fullchain.pem" | cut -d= -f2)"
     echo "Certificate for ${domain} expires at ${exp_time}"
 
-    exp_time_unix="$(date -d "${exp_time}" +%s)"
-    now_unix="$(date +%s)"
-    days_remaining="$(( (exp_time_unix - now_unix) / 86400 ))"
-
-    if [ "${days_remaining}" -gt 30 ]; then
-        echo "Certificate for ${domain} is still valid for ${days_remaining} days - skipping renewal"
+    if openssl x509 -checkend 2592000 -noout -in "${CERT_PATH}/${domain}/fullchain.pem" >/dev/null 2>&1; then
+        echo "Certificate for ${domain} is still valid for more than 30 days - skipping renewal"
         return
     fi
 
