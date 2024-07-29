@@ -13,15 +13,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-FROM python:latest
+FROM alpine:latest
 
 RUN mkdir -p /app /data /etc/gunicorn /etc/ssl
 
-WORKDIR /app
+RUN apk add --no-cache python3 py3-pip rust cargo && \
+    pip3 install --no-cache --break-system-packages --upgrade pip setuptools
+
+COPY ./requirements.txt /app
+RUN pip3 install --no-cache --break-system-packages -r /app/requirements.txt && \
+    pip3 install --no-cache --break-system-packages gunicorn
 
 COPY ./jackgreen_co/ /app/jackgreen_co/
 COPY ./config.py /app
-COPY ./requirements.txt /app
 COPY ./wsgi.py /app
 
 COPY ./services/app/gunicorn.py /etc/gunicorn/gunicorn.py
@@ -32,12 +36,9 @@ COPY ./build/ssl/app-key.pem /etc/ssl/internal/app-key.pem
 COPY ./build/ssl/app.pem /etc/ssl/internal/app.pem
 COPY ./build/ssl/ca.pem /etc/ssl/internal/ca.pem
 
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install gunicorn
-
-RUN groupadd -r www && useradd -r -g www www && \
+RUN addgroup -S www && adduser -S -G www www && \
     chown -R www:www /app /data /etc/gunicorn /etc/ssl
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--config", "/etc/gunicorn/gunicorn.py", "wsgi:app"]
+CMD ["gunicorn", "--config", "/etc/gunicorn/gunicorn.py", "--chdir", "/app", "wsgi:app"]
