@@ -27,7 +27,7 @@ def index() -> ResponseReturnValue:
 
 
 @main.route("/about")
-def about() -> str:
+def about() -> ResponseReturnValue:
     return render_template("main/about.jinja.html")
 
 

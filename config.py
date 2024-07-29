@@ -33,7 +33,7 @@ class BaseConfig(object):
     MAIL_FROM = "noreply@jackgreen.co"
     MAIL_TO = "jack@jackgreen.co"
     MAIL_TOKEN = os.environ.get("MAIL_TOKEN")
-    MINIFY_CACHE_EXCLUDE = ["/contact"]
+    MINIFY_CACHE_EXCLUDE = ["main.contact", "blog.index"]
 
 
 class ConfigDev(BaseConfig):

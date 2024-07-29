@@ -31,14 +31,14 @@ class Minify(object):
     def __init__(self: Self):
         pass
 
-    def apply_minify_html(self: Self, html: str, path: str) -> str:
+    def apply_minify_html(self: Self, html: str, path: str, endpoint: str) -> str:
         data = minify_html.minify(html)
 
-        if not self.use_cache or path in self.cache_exclude:
+        if not self.use_cache or endpoint in self.cache_exclude:
             return data
 
         theme = request.cookies.get("theme", "dark")
-        key = f"cache:{hash(f'{path}:{theme}')}"
+        key = f"cache:{hash(f'{endpoint}:{path}:{theme}')}"
 
         if self.redis.exists(key):
             return self.redis.get(key)
@@ -116,7 +116,7 @@ class Minify(object):
     def after_request_minify(self: Self, response: Response) -> Response:
         response.direct_passthrough = False
         if response.content_type.startswith("text/html") and request.method == "GET":
-            data = self.apply_minify_html(response.get_data(as_text=True), request.path)
+            data = self.apply_minify_html(response.get_data(as_text=True), request.path, request.endpoint)
             response.set_data(data)
         return response
 
@@ -129,8 +129,8 @@ class Minify(object):
             return None
 
         theme = request.cookies.get("theme", "dark")
-        key = f"cache:{hash(f'{request.path}:{theme}')}"
-        if self.use_cache and request.path not in self.cache_exclude and self.redis.exists(key):
+        key = f"cache:{hash(f'{request.endpoint}:{request.path}:{theme}')}"
+        if self.use_cache and request.endpoint not in self.cache_exclude and self.redis.exists(key):
             response = Response(self.redis.get(key))
             response.headers["Content-Type"] = "text/html"
             return response
