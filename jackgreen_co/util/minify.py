@@ -18,11 +18,10 @@ import secrets
 import struct
 from typing import Callable, Self
 
+import minify_html
 import zstandard as zstd
 from flask import Flask, Response, request
 from redis.client import StrictRedis
-
-import minify_html
 
 MAX_PADDING_SIZE = 512
 
@@ -31,14 +30,21 @@ class Minify(object):
     def __init__(self: Self):
         pass
 
-    def apply_minify_html(self: Self, html: str, path: str, endpoint: str) -> str:
-        data = minify_html.minify(html)
+    def generate_cache_key(self: Self) -> str:
+        theme = request.cookies.get("theme", "dark")
 
-        if not self.use_cache or endpoint in self.cache_exclude:
+        qparams = {key: request.args.get(key) for key in self.cache_query_params.get(request.endpoint, [])}
+        qparams_str = "&".join([f"{key}={value}" for key, value in sorted(qparams.items())])
+
+        return f"{request.endpoint}:{request.path}:{theme}:{qparams_str}"
+
+    def apply_minify_html(self: Self, response: Response) -> str:
+        data = minify_html.minify(response.get_data(as_text=True))
+
+        if not self.use_cache or request.endpoint in self.cache_exclude or response.status_code != 200:
             return data
 
-        theme = request.cookies.get("theme", "dark")
-        key = f"cache:{hash(f'{endpoint}:{path}:{theme}')}"
+        key = f"cache:{hash(self.generate_cache_key())}"
 
         if self.redis.exists(key):
             return self.redis.get(key)
@@ -116,7 +122,7 @@ class Minify(object):
     def after_request_minify(self: Self, response: Response) -> Response:
         response.direct_passthrough = False
         if response.content_type.startswith("text/html") and request.method == "GET":
-            data = self.apply_minify_html(response.get_data(as_text=True), request.path, request.endpoint)
+            data = self.apply_minify_html(response)
             response.set_data(data)
         return response
 
@@ -128,8 +134,7 @@ class Minify(object):
         if not self.use_cache:
             return None
 
-        theme = request.cookies.get("theme", "dark")
-        key = f"cache:{hash(f'{request.endpoint}:{request.path}:{theme}')}"
+        key = f"cache:{hash(self.generate_cache_key())}"
         if self.use_cache and request.endpoint not in self.cache_exclude and self.redis.exists(key):
             response = Response(self.redis.get(key))
             response.headers["Content-Type"] = "text/html"
@@ -141,6 +146,7 @@ class Minify(object):
         self.redis = redis
         self.use_cache = app.config.get("MINIFY_USE_CACHE", False)
         self.cache_exclude = app.config.get("MINIFY_CACHE_EXCLUDE", [])
+        self.cache_query_params = app.config.get("MINIFY_CACHE_QUERY_PARAMS", {})
 
         if not app.config.get("MINIFY_ENABLED", False):
             return

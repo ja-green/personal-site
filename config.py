@@ -34,6 +34,15 @@ class BaseConfig(object):
     MAIL_TO = "jack@jackgreen.co"
     MAIL_TOKEN = os.environ.get("MAIL_TOKEN")
     MINIFY_CACHE_EXCLUDE = ["main.contact", "blog.index"]
+    MINIFY_CACHE_QUERY_PARAMS = {
+        "blog.posts": ["page"],
+        "blog.series": ["page"],
+        "blog.singleseries": ["page"],
+        "blog.categories": ["page"],
+        "blog.category": ["page"],
+        "blog.tags": ["page"],
+        "blog.tag": ["page"],
+    }
 
 
 class ConfigDev(BaseConfig):
