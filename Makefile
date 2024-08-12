@@ -45,7 +45,7 @@ ifeq ($(BUILD_ENV),)
     ifneq ($(filter run-app,$(MAKECMDGOALS)),)
         BUILD_ENV := development
     endif
-    ifneq ($(filter run run-full build build-initdb build-containers,$(MAKECMDGOALS)),)
+    ifneq ($(filter run run-full build build-initdb,$(MAKECMDGOALS)),)
         BUILD_ENV := staging
     endif
     ifneq ($(filter deploy teardown,$(MAKECMDGOALS)),)
@@ -55,8 +55,8 @@ endif
 
 .DEFAULT_GOAL := build-full
 
-.PHONY: help clean build-css build-js build-images build-favicons build-fonts build-initdb build-containers \
-	create-ca build-cert-nginx build-cert-app build-cert-mongo build-cert-redis build-certs build-essential \
+.PHONY: help clean build-css build-js build-images build-favicons build-fonts build-initdb create-ca \
+	build-cert-nginx build-cert-app build-cert-mongo build-cert-redis build-certs build-essential \
 	build-full build run-app run-full run deploy teardown
 
 # fn/help
@@ -78,15 +78,14 @@ targets:\n\
     build-favicons   copy all favicons to the dist directory\n\
     build-fonts      copy all fonts to the dist directory\n\
     build-initdb     build the database import files\n\
-    build-containers build the docker container\n\
     create-ca        generate a CA key and certificate\n\
     build-cert-nginx generate ECC key and certificate for nginx\n\
     build-cert-app   generate ECC key and certificate for the python application\n\
     build-cert-mongo generate ECC key and certificate for mongo\n\
     build-cert-redis generate ECC key and certificate for redis\n\
     build-certs      generate certificates for internal services\n\
-    build-essential  run all build tasks except for building the docker container and certificates\n\
-    build-full       run all build tasks including building the docker container and certificates\n\
+    build-essential  run all build tasks except for building the certificates\n\
+    build-full       run all build tasks including building the certificates\n\
     build            alias for build-essential\n\
     run-app          run the flask app in app-only mode\n\
     run-full         run the flask app in full mode\n\
@@ -168,13 +167,6 @@ build-initdb:
 		echo "info: importing database"; \
 		$(MONGOSH) --host 127.0.0.1 --port 27017 --quiet jackgreen_co $(DIR_BUILD)/initdb.js; \
 	fi
-
-# fn/build-container
-#
-# build the docker container
-build-containers:
-	@echo "info: building docker containers"
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) build
 
 # fn/create-ca
 #
@@ -262,7 +254,7 @@ build-essential: clean build-css build-js build-images build-favicons build-font
 # fn/build-full
 #
 # run all build tasks including building the docker container and certificates
-build-full: build-essential build-certs build-containers
+build-full: build-essential build-certs
 
 # fn/build
 #
@@ -282,7 +274,7 @@ run-app: build-essential
 run-full: build-full
 	@echo "info: running in full mode (build-env: $(BUILD_ENV))"
 	@trap 'BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) down --volumes; exit 0' EXIT; \
-		BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) up
+		BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) up --build
 
 # fn/run
 #
@@ -303,7 +295,8 @@ deploy: build-full
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
 	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d --build
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER) image prune -f >/dev/null 2>&1
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
 
