@@ -32,6 +32,7 @@ PYTHON         := $(shell command -v python)
 RM_RF          := $(shell command -v rm) -rf
 TAILWIND       := $(shell command -v tailwindcss)
 TOUCH          := $(shell command -v touch)
+MV 		       := $(shell command -v mv)
 
 DIR_SCRIPTS    := $(PROJECT_ROOT)/scripts
 DIR_ASSETS     := $(PROJECT_ROOT)/assets
@@ -110,9 +111,10 @@ build-css:
 	@$(MKDIR_P) $(DIR_DIST)/css
 	@shopt -s nullglob; for file in $(DIR_ASSETS)/css/*; do \
 		filename=$$(basename $$file); \
-		filehash=$$(sha1sum $$file | awk '{print $$1}'); \
+		$(TAILWIND) -i $$file -o $(DIR_DIST)/css/$$filename --minify >/dev/null 2>&1; \
+		filehash=$$(sha1sum $(DIR_DIST)/css/$$filename | awk '{print $$1}'); \
+		$(MV) $(DIR_DIST)/css/$$filename $(DIR_DIST)/css/$$filehash.css; \
 		echo "css/$$filename:css/$$filehash.css" >> $(DIR_DIST)/manifest.txt; \
-		$(TAILWIND) -i $$file -o $(DIR_DIST)/css/$$filehash.css --minify >/dev/null 2>&1; \
 	done
 
 # fn/build-js
