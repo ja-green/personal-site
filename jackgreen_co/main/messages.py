@@ -43,6 +43,18 @@ class Messages(messages.Messages):
     main_about_tech_p4_1 = "The source code for this website is open-source and available on GitHub under the"
     main_about_tech_p4_2 = "The content is licensed under the"
     main_about_tech_p4_3 = "The code repository is available"
+    main_about_tech_reports = (
+        "Tools and resources used to evaluate and score performance, security and accessibility include:"
+    )
+    main_about_tech_reports_view = "View detailed report"
+    main_about_tech_reports_l1_name = "Qualys SSL Labs"
+    main_about_tech_reports_l1_score = "SSL/TLS security score of A+"
+    main_about_tech_reports_l2_name = "Mozilla Observatory"
+    main_about_tech_reports_l2_score = "Security score of A+"
+    main_about_tech_reports_l3_name = "Google PageSpeed Insights"
+    main_about_tech_reports_l3_score = "Performance score of 100, accessibility score of 100"
+    main_about_tech_reports_l4_name = "SecurityHeaders"
+    main_about_tech_reports_l4_score = "Security score of A+"
 
     main_contact_title = "Contact"
     main_contact_heading = "Contact"

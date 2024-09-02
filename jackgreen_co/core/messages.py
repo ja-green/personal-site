@@ -19,6 +19,7 @@ class Messages(object):
     core_copyright = "Copyright"
     core_here = "here"
     core_period = "."
+    core_colon = ":"
     core_ellipsis = "..."
     core_themetoggle = "Toggle theme"
     core_manifest_description = "Welcome to Jack Green's personal website and blog. Explore articles on tech, security, personal interests, and more. Join me in my passion for self-development and education."
