@@ -18,7 +18,7 @@
 {% set rel = kwargs.pop('rel', '') %}
 {% set target = kwargs.pop('target', '') %}
 
-{%- set is_external = (href.startswith("http://") or href.startswith("https://")) and config["SERVER_NAME"] not in href -%}
+{% set is_external = is_external_url(href) %}
 
 {% if not rel and is_external %}
     {% set rel = 'noopener noreferrer' %}

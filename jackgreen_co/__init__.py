@@ -20,7 +20,7 @@ from jackgreen_co import core
 from jackgreen_co.blog import blog as bp_blog
 from jackgreen_co.core import context, errors, hook, routes, session
 from jackgreen_co.main import main as bp_main
-from jackgreen_co.util import assets, features, mail, minify
+from jackgreen_co.util import assets, features, jinja, mail, minify
 
 
 def init() -> Flask:
@@ -41,6 +41,7 @@ def init() -> Flask:
     assets.assets.init_app(app)
     mail.mail.init_app(app)
     minify.minify.init_app(app, core.redis)
+    jinja.jinja.init_app(app)
 
     app.session_interface = session.RedisSessionInterface(core.redis)
 
@@ -48,6 +49,7 @@ def init() -> Flask:
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
     app.jinja_env.add_extension("jinja2.ext.do")
+    app.jinja_env.globals["is_external_url"] = jinja.jinja.is_external_url
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_blog)
