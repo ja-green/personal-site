@@ -92,7 +92,8 @@ targets:\n\
     run-full         run the flask app in full mode\n\
     run              alias for run-app\n\
     deploy           deploy the app to the production server\n\
-    teardown         stop and remove all containers on the production server\n"
+	down			 stop all containers on the production server\n\
+    destroy          stop and remove all containers on the production server\n"
 
 # fn/clean
 #
@@ -302,17 +303,34 @@ deploy: build-full
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
 
-# fn/teardown
+# fn/down
+#
+# stop all containers on the production server
+down:
+	@if test -z "$(SERVER)"; then \
+		echo "error: SERVER is not set"; \
+		exit 1; \
+	fi
+	@echo "WARNING: you are about to stop services on the production server."
+	@read -p "are you sure you want to continue? [y/N] " confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || (echo "down aborted." && exit 1)
+	@echo "info: taking down production server"
+	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
+	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
+	@$(DOCKER) context use default >/dev/null 2>&1
+	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
+
+# fn/destroy
 #
 # stop and remove all containers on the production server
-teardown:
+destroy:
 	@if test -z "$(SERVER)"; then \
 		echo "error: SERVER is not set"; \
 		exit 1; \
 	fi
 	@echo "WARNING: you are about to take down the production server."
 	@read -p "are you sure you want to continue? [y/N] " confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || (echo "down aborted." && exit 1)
-	@echo "info: taking down production server"
+	@echo "info: destroying production server"
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
 	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down --volumes
