@@ -298,7 +298,7 @@ deploy: build-full
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
 	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d --build
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml up -d --build --pull always --remove-orphans
 	@BUILD_ENV=$(BUILD_ENV) $(DOCKER) image prune -f >/dev/null 2>&1
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
@@ -316,7 +316,7 @@ down:
 	@echo "info: taking down production server"
 	@$(DOCKER) context create $(DOCKER_CONTEXT) --docker "host=ssh://$(SERVER)" >/dev/null 2>&1
 	@$(DOCKER) context use $(DOCKER_CONTEXT) >/dev/null 2>&1
-	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down
+	@BUILD_ENV=$(BUILD_ENV) $(DOCKER_COMPOSE) -f $(PROJECT_ROOT)/docker-compose.yml down --remove-orphans
 	@$(DOCKER) context use default >/dev/null 2>&1
 	@$(DOCKER) context rm $(DOCKER_CONTEXT) >/dev/null 2>&1
 
