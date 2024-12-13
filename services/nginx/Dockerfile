@@ -15,11 +15,11 @@
 
 FROM alpine:latest
 
-RUN apk update && apk add --no-cache nginx openssl luajit nginx-mod-http-lua lua-resty-string
+RUN apk update && apk add --no-cache openresty openssl
 
-RUN deluser nginx && addgroup -g 1000 -S nginx && adduser -u 1000 -S nginx -G nginx
+RUN deluser nginx; addgroup -g 1000 -S nginx && adduser -u 1000 -S nginx -G nginx
 
-RUN mkdir -p /etc/ssl
+RUN mkdir -p /etc/ssl /var/log/nginx /var/lib/nginx
 RUN rm -rf /usr/share/nginx/html/* /var/log/nginx/*
 
 COPY ./services/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -29,7 +29,7 @@ COPY ./build/ssl/nginx-key.pem /etc/ssl/internal/nginx-key.pem
 COPY ./build/ssl/ca.pem /etc/ssl/internal/ca.pem
 COPY ./jackgreen_co/core/static /usr/share/nginx/html/assets
 
-RUN chown -R nginx:nginx /usr/share/nginx/html /etc/ssl /var/log/nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html /etc/ssl /var/log/nginx /var/lib/nginx
 
 COPY ./services/nginx/docker-entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +rx /usr/local/bin/entrypoint.sh
