@@ -44,7 +44,7 @@ renew_acme_cert() {
     fi
 
     echo "Renewing ACME certificate for ${domain}"
-    /root/.acme.sh/acme.sh --renew -d "${domain}" --force --alpn --ocsp --server "${CA}" \
+    /root/.acme.sh/acme.sh --issue -d "${domain}" --force --alpn --ocsp --server "${CA}" \
         --key-file "${CERT_PATH}/${domain}/privkey.pem" \
         --fullchain-file "${CERT_PATH}/${domain}/fullchain.pem" \
         --ca-file "${CERT_PATH}/${domain}/chain.pem"
